@@ -1,0 +1,104 @@
+.manage-schedule-container {
+  padding: 20px 0;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+
+  .m-s-title {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 22px;
+    color: #45c3d2;
+    margin-bottom: 30px;
+  }
+
+  .section-selection {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 25px;
+
+    label {
+      font-weight: 600;
+      margin-bottom: 8px;
+      display: block;
+      color: #555;
+      i {
+        color: #45c3d2;
+        margin-right: 5px;
+      }
+    }
+  }
+
+  .pick-hour-container {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+
+    label {
+      font-weight: 600;
+      color: #555;
+    }
+
+    .list-time {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px; // Khoảng cách giữa các nút
+
+      .btn-time {
+        width: 120px;
+        padding: 10px 0;
+        border: 1px solid #ddd;
+        background: #fff;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-weight: 500;
+
+        &:hover {
+          background-color: #f0f0f0;
+          border-color: #45c3d2;
+        }
+
+        &.active {
+          background-color: #f7d919; // Màu vàng đặc trưng bookingcare
+          border-color: #f7d919;
+          color: #333;
+          box-shadow: 0 4px 10px rgba(247, 217, 25, 0.3);
+        }
+      }
+    }
+  }
+
+  .btn-save-schedule {
+    width: fit-content;
+    padding: 10px 30px;
+    font-weight: 600;
+    text-transform: uppercase;
+    display: block;
+    margin-top: 10px;
+    background-color: #f7d919;
+    border-color: #f7d919;
+    color: #333;
+
+    &:hover {
+      background-color: #e5c817;
+      border-color: #e5c817;
+    }
+  }
+}
+
+// Responsive cho mobile
+@media (max-width: 768px) {
+  .manage-schedule-container {
+    .list-time {
+      justify-content: space-between;
+      .btn-time {
+        width: 30%; // 3 nút 1 hàng trên mobile
+      }
+    }
+  }
+}

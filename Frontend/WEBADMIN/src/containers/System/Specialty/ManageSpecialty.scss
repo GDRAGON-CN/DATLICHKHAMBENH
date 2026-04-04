@@ -1,0 +1,93 @@
+.manage-specialty-container {
+  padding: 20px;
+  background-color: #f5f7f9;
+  min-height: 100vh;
+
+  .ms-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #2c3e50;
+    text-transform: uppercase;
+    margin-bottom: 25px;
+    text-align: center;
+  }
+
+  .specialty-info-card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid #eef2f7;
+
+    label {
+      font-weight: 600;
+      color: #495057;
+    }
+  }
+
+  .btn-save-specialty {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s;
+    display: block;
+    margin: 25px auto 0;
+    min-width: 200px;
+    background-color: #45c3d2;
+    color: white;
+
+    &:hover {
+      background-color: #38a5b2;
+      transform: translateY(-2px);
+    }
+
+    &.btn-edit-mode {
+      background-color: #ffc107;
+      color: #212529;
+      &:hover {
+        background-color: #e0a800;
+      }
+    }
+  }
+
+  .table-manage-specialty {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+
+    thead {
+      background-color: #45c3d2;
+      color: white;
+      tr th {
+        border: none;
+        padding: 15px;
+      }
+    }
+
+    .btn-edit {
+      color: #ffc107;
+      border: 1px solid #ffc107;
+      background: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      &:hover {
+        background: #ffc107;
+        color: white;
+      }
+    }
+
+    .btn-delete {
+      color: #dc3545;
+      border: 1px solid #dc3545;
+      background: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      &:hover {
+        background: #dc3545;
+        color: white;
+      }
+    }
+  }
+}

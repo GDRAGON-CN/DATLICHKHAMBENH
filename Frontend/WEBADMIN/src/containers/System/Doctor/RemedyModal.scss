@@ -1,0 +1,16 @@
+.remedy-modal-container {
+  .modal-header {
+    background-color: #45c3d2;
+    color: white;
+    .close {
+      color: white;
+      opacity: 1;
+    }
+  }
+  .form-group {
+    label {
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+  }
+}

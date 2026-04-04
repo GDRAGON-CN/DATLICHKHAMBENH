@@ -1,0 +1,53 @@
+.profile-doctor-container {
+  padding: 10px 15px;
+
+  .intro-doctor {
+    display: flex; // Chia đôi theo hàng ngang
+    width: 100%;
+    gap: 20px; // Khoảng cách giữa ảnh và chữ
+
+    .content-left {
+      flex: 0 0 25%; // Giảm xuống 25% cho ảnh gọn hơn nữa
+      display: flex;
+      justify-content: center; // Căn giữa cái ảnh trong khối 25%
+      align-items: flex-start;
+
+      .avatar-img {
+        width: 100px; // Thu nhỏ ảnh lại cho gọn
+        height: 100px;
+        border-radius: 50%;
+        background-size: cover;
+        background-position: center;
+        border: 2px solid #45c3d2;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    .content-right {
+      flex: 0 0 75%; // Phần thông tin chiếm 75% còn lại
+      display: flex;
+      flex-direction: column;
+
+      .up {
+        font-size: 18px;
+        font-weight: 700;
+        color: #333;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+      }
+
+      .down {
+        font-size: 14px;
+        color: #666;
+        line-height: 1.5;
+        text-align: justify;
+
+        // Cắt bớt nếu mô tả quá dài để form không bị đẩy xuống quá sâu
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+    }
+  }
+}

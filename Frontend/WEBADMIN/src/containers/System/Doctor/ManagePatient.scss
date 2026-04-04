@@ -1,0 +1,123 @@
+.manage-patient-container {
+  padding: 20px;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+
+  .m-p-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: #45c3d2;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+  }
+
+  .date-picker-custom {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    padding: 10px;
+    &:focus {
+      border-color: #45c3d2;
+      box-shadow: 0 0 0 0.2rem rgba(69, 195, 210, 0.25);
+    }
+  }
+
+  .table-manage-patient {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px; // Tạo khoảng cách giữa các dòng
+    background-color: transparent;
+
+    thead {
+      tr {
+        background-color: #45c3d2;
+        th {
+          color: white;
+          padding: 15px;
+          font-weight: 600;
+          text-align: left;
+          &:first-child {
+            border-radius: 8px 0 0 8px;
+            text-align: center;
+          }
+          &:last-child {
+            border-radius: 0 8px 8px 0;
+            text-align: center;
+          }
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        background-color: white;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+
+        &:hover {
+          transform: scale(1.01);
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        td {
+          padding: 15px;
+          vertical-align: middle;
+          border-top: 1px solid #eee;
+          border-bottom: 1px solid #eee;
+
+          &:first-child {
+            border-left: 1px solid #eee;
+            border-radius: 8px 0 0 8px;
+          }
+          &:last-child {
+            border-right: 1px solid #eee;
+            border-radius: 0 8px 8px 0;
+            text-align: center;
+          }
+
+          &.time-cell {
+            color: #28a745;
+            font-weight: 600;
+          }
+
+          &.no-data {
+            text-align: center;
+            color: #ffc107;
+            font-style: italic;
+            background: white;
+          }
+        }
+      }
+    }
+
+    .action-btns {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+
+      button {
+        padding: 6px 15px;
+        border: none;
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: opacity 0.2s;
+
+        &:hover {
+          opacity: 0.8;
+        }
+
+        &.btn-confirm {
+          background-color: #ffc107;
+          color: #000;
+        }
+
+        &.btn-bill {
+          background-color: #45c3d2;
+          color: #fff;
+        }
+      }
+    }
+  }
+}

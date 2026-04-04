@@ -1,0 +1,129 @@
+.schedule-doctor {
+  display: flex;
+  margin-top: 20px;
+  padding: 0 10%;
+  gap: 30px; // Tạo khoảng cách an toàn giữa cột trái và phải
+
+  .schedule-left {
+    width: 60%;
+    padding-left: 100px; // Căn chỉnh để khớp với nội dung bác sĩ phía trên
+
+    .schedule-date {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 20px;
+
+      select {
+        border: none;
+        border-bottom: 2px solid #45c3d2; // Gạch chân xanh thương hiệu
+        font-size: 16px;
+        font-weight: 600;
+        color: #45c3d2; // Màu chữ xanh đồng bộ với gạch chân
+        padding: 5px 10px 5px 0;
+        outline: none;
+        cursor: pointer;
+        background: transparent;
+        text-transform: capitalize; // Viết hoa chữ cái đầu cho ngày tháng
+        transition: all 0.3s ease;
+
+        &:hover {
+          color: darken(#45c3d2, 15%);
+          border-bottom-color: darken(#45c3d2, 15%);
+        }
+
+        option {
+          color: #333; // Màu chữ bên trong menu xổ xuống cho dễ đọc
+          background: #fff;
+          font-weight: normal;
+        }
+      }
+    }
+
+    .calendar-title {
+      display: flex;
+      align-items: center;
+      text-transform: uppercase;
+      font-weight: 700;
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 15px;
+
+      i {
+        margin-right: 8px;
+        color: #45c3d2; // Icon lịch màu xanh cho nổi bật
+        font-size: 16px;
+      }
+    }
+
+    .schedule-time {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+
+      .time-btn {
+        background: #fff04b; // Màu vàng đặc trưng
+        border: 1px solid #ffde00;
+        padding: 10px 20px;
+        font-size: 15px;
+        font-weight: 600;
+        border-radius: 4px;
+        min-width: 110px;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          transform 0.1s,
+          background 0.2s;
+
+        &:hover {
+          background: #078e9a;
+          transform: translateY(-2px); // Hiệu ứng nổi nhẹ khi di chuột
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        &:active {
+          transform: translateY(0);
+        }
+      }
+    }
+  }
+
+  .schedule-right {
+    width: 40%;
+    border-left: 2px solid #f1f1f1; // Làm đường kẻ ngăn cách rõ ràng hơn
+    padding-left: 30px;
+
+    .doctor-address,
+    .doctor-price {
+      margin-bottom: 15px;
+
+      .title {
+        font-weight: 700;
+        color: #777;
+        font-size: 13px;
+        letter-spacing: 0.5px;
+      }
+
+      .detail {
+        font-weight: 600;
+        color: #333;
+        margin-top: 5px;
+        line-height: 1.4;
+      }
+    }
+
+    .see-detail {
+      display: inline-block;
+      margin-top: 5px;
+      color: #45c3d2;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      border-bottom: 1px dashed #45c3d2; // Gạch chân nét đứt cho tinh tế
+
+      &:hover {
+        color: darken(#45c3d2, 15%);
+        border-bottom-style: solid;
+      }
+    }
+  }
+}
