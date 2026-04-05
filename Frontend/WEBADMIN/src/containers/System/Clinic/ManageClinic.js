@@ -20,6 +20,7 @@ class ManageClinic extends Component {
     super(props);
     this.state = {
       name: "",
+      address: "", // Thêm dòng này
       imageBase64: "",
       descriptionHTML: "",
       descriptionMarkdown: "",
@@ -136,6 +137,7 @@ class ManageClinic extends Component {
     }
   };
   render() {
+    let { listClinics } = this.state;
     return (
       <div className="manage-specialty-container">
         <div className="ms-title">Quản lý phòng khám</div>
@@ -158,6 +160,17 @@ class ManageClinic extends Component {
                 type="file"
                 onChange={(event) => this.handleOnChangeImage(event)}
               />
+              <div
+                className="preview-image"
+                style={{
+                  backgroundImage: `url(${this.state.imageBase64})`,
+                  width: "100px",
+                  height: "60px",
+                  backgroundSize: "cover",
+                  marginTop: "10px",
+                  border: "1px solid #ddd",
+                }}
+              ></div>
             </div>
             <div className="col-12 form-group mt-3">
               <label>Địa Chỉ Phòng Khám</label>
@@ -205,7 +218,32 @@ class ManageClinic extends Component {
                 <th>Hành động</th>
               </tr>
             </thead>
-            <tbody>{/* map data của bạn ở đây */}</tbody>
+            <tbody>
+              {listClinics &&
+                listClinics.length > 0 &&
+                listClinics.map((item, index) => {
+                  return (
+                    <tr key={index}>
+                      <td>{item.name}</td>
+                      <td>{item.address}</td>
+                      <td className="d-flex gap-2">
+                        <button
+                          className="btn-edit"
+                          onClick={() => this.handleEditClinic(item)}
+                        >
+                          <i className="fas fa-pencil-alt"></i> Sửa
+                        </button>
+                        <button
+                          className="btn-delete"
+                          onClick={() => this.handleDeleteClinic(item)}
+                        >
+                          <i className="fas fa-trash"></i> Xóa
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+            </tbody>
           </table>
         </div>
       </div>

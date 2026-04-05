@@ -6,6 +6,7 @@ import { getProfileInforDoctorById } from "../../../services/userService";
 import _ from "lodash";
 import moment from "moment";
 import { NumericFormat } from "react-number-format";
+import { Link } from "react-router-dom";
 
 class ProfileDoctor extends Component {
   constructor(props) {
@@ -119,7 +120,12 @@ class ProfileDoctor extends Component {
                   {dataProfile &&
                     dataProfile.Markdown &&
                     dataProfile.Markdown.descriptions && (
-                      <span>{dataProfile.Markdown.descriptions}</span>
+                      <div>
+                        <span>{dataProfile.Markdown.descriptions}</span>
+                        <Link to={`/detail-doctor/${dataProfile.id}`}>
+                          Xem thêm
+                        </Link>
+                      </div>
                     )}
                 </>
               ) : (

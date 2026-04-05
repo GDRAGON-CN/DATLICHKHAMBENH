@@ -67,11 +67,25 @@ let handleDeleteClinic = async (req, res) => {
     });
   }
 };
-
+let getTopClinicHome = async (req, res) => {
+  let limit = req.query.limit;
+  if (!limit) limit = 10;
+  try {
+    let response = await clinicService.getTopClinicHome(+limit);
+    return res.status(200).json(response);
+  } catch (e) {
+    console.log(e);
+    return res.status(200).json({
+      errCode: -1,
+      errMessage: "Error từ server...",
+    });
+  }
+};
 module.exports = {
   createClinic: createClinic,
   getAllClinic: getAllClinic,
   getDetailClinicById: getDetailClinicById,
   handleEditClinic: handleEditClinic,
   handleDeleteClinic: handleDeleteClinic,
+  getTopClinicHome: getTopClinicHome,
 };

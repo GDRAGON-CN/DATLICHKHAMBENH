@@ -27,7 +27,9 @@ import Doctor from "../routes/Doctor.js";
 import DetailSpecialty from "./Patient/Specialty/DetailSpecialty.js";
 import DetailClinic from "./Patient/Clinic/DetailClinic.js";
 import VerifyEmail from "./Patient/VerifyEmail.js";
-
+import AllSpecialty from "./Patient/All-List/AllSpecialty.js";
+import AllClinic from "./Patient/All-List/AllClinic.js";
+import AllDoctor from "./Patient/All-List/AllDoctor.js";
 class App extends Component {
   handlePersistorState = () => {
     const { persistor } = this.props;
@@ -69,6 +71,9 @@ class App extends Component {
                     component={userIsAuthenticated(Doctor)}
                   />
                   <Route path={path.HOMEPAGE} component={HomePage} />
+                  <Route path={path.ALL_SPECIALTY} component={AllSpecialty} />
+                  <Route path={path.ALL_CLINIC} component={AllClinic} />
+                  <Route path={path.ALL_DOCTOR} component={AllDoctor} />
                   <Route path={path.DETAIL_DOCTOR} component={DetailDoctor} />
                   <Route path={path.DETAIL_CLINIC} component={DetailClinic} />
                   <Route

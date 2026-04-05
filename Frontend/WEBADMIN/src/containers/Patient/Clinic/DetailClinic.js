@@ -101,9 +101,6 @@ class DetailClinic extends Component {
                         doctorId={item}
                         isShowDescriptionDoctor={true}
                       />
-                      <div className="view-detail-doctor">
-                        <Link to={`/detail-doctor/${item}`}>Xem thêm</Link>
-                      </div>
                     </div>
 
                     {/* RIGHT SCHEDULE */}

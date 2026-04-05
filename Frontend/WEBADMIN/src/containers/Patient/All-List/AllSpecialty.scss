@@ -1,0 +1,105 @@
+.all-specialty-container {
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  .all-specialty-content {
+    padding: 20px 10%; // Tạo khoảng trống 2 bên
+    margin-top: 20px;
+
+    .title {
+      font-size: 20px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+
+    .list-specialty {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px; // Khoảng cách giữa các item
+
+      .specialty-child {
+        width: calc(25% - 15px); // Chia 4 cột trên desktop
+        background-color: white;
+        border-radius: 8px;
+        overflow: hidden;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 1px solid #eee;
+
+        &:hover {
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          transform: translateY(-3px);
+
+          .specialty-name {
+            color: #45c3d2; // Màu chủ đạo của BookingCare
+          }
+        }
+
+        .bg-image {
+          width: 100%;
+          height: 150px;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+          background-color: #eee;
+        }
+
+        .specialty-name {
+          padding: 12px;
+          font-size: 15px;
+          font-weight: 500;
+          color: #333;
+          text-align: center;
+          // Giới hạn 2 dòng nếu tên quá dài
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          height: 45px;
+        }
+      }
+    }
+  }
+}
+
+// Responsive cho Mobile và Tablet
+@media (max-width: 1024px) {
+  .all-specialty-container {
+    .all-specialty-content {
+      padding: 20px 5%;
+      .list-specialty {
+        .specialty-child {
+          width: calc(33.33% - 14px); // Chia 3 cột
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .all-specialty-container {
+    .all-specialty-content {
+      .list-specialty {
+        .specialty-child {
+          width: calc(50% - 10px);
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .all-specialty-container {
+    .all-specialty-content {
+      .list-specialty {
+        .specialty-child {
+          width: 100%; // 1 cột duy nhất
+        }
+      }
+    }
+  }
+}

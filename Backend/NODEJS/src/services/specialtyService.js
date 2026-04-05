@@ -160,11 +160,53 @@ let deleteSpecialty = (specialtyId) => {
     }
   });
 };
+let getTopSpecialtyHome = (limitInput) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let specialties = await db.Specialty.findAll({
+        limit: limitInput,
+        attributes: {
+          include: [
+            [
+              db.sequelize.literal(`(
+                SELECT COUNT(*)
+                FROM Doctor_Infor AS d
+                WHERE d.specialtyId = Specialty.id
+              )`),
+              "doctorCount",
+            ],
+          ],
+        },
+        order: [
+          [db.sequelize.literal("doctorCount"), "DESC"],
+          ["createdAt", "DESC"], // fallback
+        ],
+        raw: true,
+      });
+      if (specialties && specialties.length > 0) {
+        specialties = specialties.map((item) => {
+          if (item.image) {
+            // Encode lại ảnh từ Buffer sang Binary/Base64 để FE đọc được
+            item.image = Buffer.from(item.image, "base64").toString("binary");
+          }
+          return item;
+        });
+      }
+
+      resolve({
+        errCode: 0,
+        data: specialties,
+      });
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
 module.exports = {
   createSpecialty: createSpecialty,
   getAllSpecialty: getAllSpecialty,
   getDetailSpecialtyById: getDetailSpecialtyById,
   deleteSpecialty: deleteSpecialty,
   updateSpecialtyData: updateSpecialtyData,
+  getTopSpecialtyHome: getTopSpecialtyHome,
 };
-// function to calculate sum of two numbers

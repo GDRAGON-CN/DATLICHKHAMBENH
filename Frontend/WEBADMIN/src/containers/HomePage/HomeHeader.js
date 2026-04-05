@@ -4,23 +4,85 @@ import "./HomeHeader.scss";
 import { FormattedMessage } from "react-intl";
 import { LANGUAGES } from "../../utils";
 import { changeLanguageApp } from "../../store/actions";
+import { withRouter } from "react-router-dom";
+import { getSearchSuggestionsService } from "../../services/userService";
 class HomeHeader extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      keyword: "",
+      listSuggest: [],
+      showSuggest: false,
+    };
+    // Tạo ref để đóng dropdown khi click ra ngoài
+    this.searchRef = React.createRef();
+  }
+  componentDidMount() {
+    document.addEventListener("mousedown", this.handleClickOutside);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("mousedown", this.handleClickOutside);
+  }
+
+  handleClickOutside = (event) => {
+    if (
+      this.searchRef.current &&
+      !this.searchRef.current.contains(event.target)
+    ) {
+      this.setState({ showSuggest: false });
+    }
+  };
+  handleOnChangeInput = async (event) => {
+    let value = event.target.value;
+    this.setState({ keyword: value });
+
+    if (value.length > 1) {
+      let res = await getSearchSuggestionsService(value);
+      if (res && res.errCode === 0) {
+        this.setState({
+          listSuggest: res.data,
+          showSuggest: true,
+        });
+      }
+    } else {
+      this.setState({ listSuggest: [], showSuggest: false });
+    }
+  };
+  handleOnClickSuggest = (item) => {
+    this.setState({ keyword: "", showSuggest: false });
+    if (item.type === "SPECIALTY") {
+      this.props.history.push(`/detail-specialty/${item.id}`);
+    } else if (item.type === "CLINIC") {
+      this.props.history.push(`/detail-clinic/${item.id}`);
+    } else if (item.type === "DOCTOR") {
+      this.props.history.push(`/detail-doctor/${item.id}`);
+    }
+  };
   changeLanguage = (language) => {
     this.props.changeLanguageAppRedux(language);
   };
   render() {
     let language = this.props.language;
-    console.log("Check language", language);
+    let { keyword, listSuggest, showSuggest } = this.state;
     return (
       <React.Fragment>
         <div className="home-header-container">
           <div className="home-header-content">
             <div className="left-content">
               <i className="fas fa-bars"></i>
-              <div className="header-logo"> </div>
+              <div
+                className="header-logo"
+                onClick={() => this.props.history.push("/home")}
+              >
+                {" "}
+              </div>
             </div>
             <div className="center-content">
-              <div className="child-content">
+              <div
+                className="child-content"
+                onClick={() => this.props.history.push("/all-specialty")}
+              >
                 <div>
                   <b>
                     <FormattedMessage id="homeheader.specialty" />
@@ -30,7 +92,10 @@ class HomeHeader extends Component {
                   <FormattedMessage id="homeheader.searchdoctor" />
                 </div>
               </div>
-              <div className="child-content">
+              <div
+                className="child-content"
+                onClick={() => this.props.history.push("/all-clinic")}
+              >
                 <div>
                   <b>
                     <FormattedMessage id="homeheader.health-facility" />
@@ -40,7 +105,10 @@ class HomeHeader extends Component {
                   <FormattedMessage id="homeheader.select-room" />
                 </div>
               </div>
-              <div className="child-content">
+              <div
+                className="child-content"
+                onClick={() => this.props.history.push("/all-doctor")}
+              >
                 <div>
                   <b>
                     <FormattedMessage id="homeheader.doctor" />
@@ -48,16 +116,6 @@ class HomeHeader extends Component {
                 </div>
                 <div className="subs-title">
                   <FormattedMessage id="homeheader.select-doctor" />
-                </div>
-              </div>
-              <div className="child-content">
-                <div>
-                  <b>
-                    <FormattedMessage id="homeheader.fee" />
-                  </b>
-                </div>
-                <div className="subs-title">
-                  <FormattedMessage id="homeheader.check-health" />
                 </div>
               </div>
             </div>
@@ -102,9 +160,42 @@ class HomeHeader extends Component {
                   <FormattedMessage id="banner.title2" />
                 </b>
               </div>
-              <div className="search">
+              <div className="search" ref={this.searchRef}>
                 <i className="fas fa-search"></i>
-                <input type="text" placeholder="Tim kiem theo lua chon" />
+                <input
+                  type="text"
+                  value={keyword}
+                  placeholder={
+                    language === LANGUAGES.VI
+                      ? "Tìm chuyên khoa, bác sĩ, bệnh viện..."
+                      : "Search specialty, doctor, hospital..."
+                  }
+                  onChange={(event) => this.handleOnChangeInput(event)}
+                />
+
+                {showSuggest && listSuggest && listSuggest.length > 0 && (
+                  <div className="search-result-dropdown">
+                    {listSuggest.map((item, index) => {
+                      let icon = "fas fa-user-md";
+                      if (item.type === "SPECIALTY") icon = "fas fa-flask";
+                      if (item.type === "CLINIC") icon = "fas fa-hospital";
+
+                      return (
+                        <div
+                          className="suggest-item"
+                          key={index}
+                          onClick={() => this.handleOnClickSuggest(item)}
+                        >
+                          <i className={icon}></i>
+                          <div className="info">
+                            <div className="name">{item.name}</div>
+                            <div className="type">{item.type}</div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             </div>
             <div className="content-down">
@@ -179,4 +270,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomeHeader);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(HomeHeader),
+);

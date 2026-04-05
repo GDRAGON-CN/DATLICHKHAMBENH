@@ -1,5 +1,6 @@
 import db from "../models";
 import bcrypt from "bcryptjs";
+const { Op } = require("sequelize");
 
 const salt = bcrypt.genSaltSync(10);
 
@@ -232,6 +233,58 @@ let getAllCodeService = (typeInput) => {
     }
   });
 };
+let getSearchSuggestions = (keyword) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!keyword) return resolve({ errCode: 0, data: [] });
+
+      // 1. Tìm trong bảng Chuyên khoa
+      let specialties = await db.Specialty.findAll({
+        where: { name: { [Op.like]: `%${keyword}%` } },
+        attributes: ["id", "name"],
+        limit: 3,
+        raw: true, // Ép về dữ liệu thuần
+      });
+
+      // 2. Tìm trong bảng Phòng khám (Clinic)
+      let clinics = await db.Clinic.findAll({
+        where: { name: { [Op.like]: `%${keyword}%` } },
+        attributes: ["id", "name"],
+        limit: 3,
+        raw: true, // Ép về dữ liệu thuần
+      });
+
+      // 3. Tìm trong bảng Bác sĩ
+      let doctors = await db.User.findAll({
+        where: {
+          roleId: "R2",
+          [Op.or]: [
+            { firstName: { [Op.like]: `%${keyword}%` } },
+            { lastName: { [Op.like]: `%${keyword}%` } },
+          ],
+        },
+        attributes: ["id", "firstName", "lastName"],
+        limit: 3,
+        raw: true, // Ép về dữ liệu thuần
+      });
+
+      // Gộp kết quả: BỎ .get() và chuẩn hóa trường 'name' cho Doctor
+      let result = [
+        ...specialties.map((i) => ({ ...i, type: "SPECIALTY" })),
+        ...clinics.map((i) => ({ ...i, type: "CLINIC" })),
+        ...doctors.map((i) => ({
+          ...i,
+          name: `${i.lastName} ${i.firstName}`, // Tạo trường name cho bác sĩ để FE dễ hiển thị
+          type: "DOCTOR",
+        })),
+      ];
+
+      resolve({ errCode: 0, data: result });
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
 module.exports = {
   handleUserLogin: handleUserLogin,
   getAllUsers: getAllUsers,
@@ -239,4 +292,5 @@ module.exports = {
   deleteUser: deleteUser,
   updateUserData: updateUserData,
   getAllCodeService: getAllCodeService,
+  getSearchSuggestions: getSearchSuggestions,
 };

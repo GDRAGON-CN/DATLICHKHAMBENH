@@ -67,6 +67,19 @@ let getAllCode = async (req, res) => {
     });
   }
 };
+let getSearchSuggestions = async (req, res) => {
+  try {
+    let keyword = req.query.keyword;
+    let response = await userService.getSearchSuggestions(keyword);
+    return res.status(200).json(response);
+  } catch (e) {
+    console.log(e);
+    return res.status(200).json({
+      errCode: -1,
+      errMessage: "Error from server...",
+    });
+  }
+};
 module.exports = {
   handleLogin: handleLogin,
   handleGetAllUsers: handleGetAllUsers,
@@ -74,4 +87,5 @@ module.exports = {
   handleEditUser: handleEditUser,
   handleDeleteUser: handleDeleteUser,
   getAllCode: getAllCode,
+  getSearchSuggestions: getSearchSuggestions,
 };

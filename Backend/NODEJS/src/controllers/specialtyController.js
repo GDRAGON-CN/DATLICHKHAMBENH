@@ -70,10 +70,26 @@ let handleDeleteSpecialty = async (req, res) => {
     });
   }
 };
+let getTopSpecialtyHome = async (req, res) => {
+  let limit = req.query.limit;
+  if (!limit) limit = 10; // Mặc định lấy 10 chuyên khoa nếu không truyền limit
+  try {
+    // Chú ý: Nhớ import userService hoặc specialtyService ở đầu file
+    let response = await specialtyService.getTopSpecialtyHome(+limit); // Dấu + để ép kiểu string sang number
+    return res.status(200).json(response);
+  } catch (e) {
+    console.log(e);
+    return res.status(200).json({
+      errCode: -1,
+      errMessage: "Error from server...",
+    });
+  }
+};
 module.exports = {
   createSpecialty: createSpecialty,
   getAllSpecialty: getAllSpecialty,
   getDetailSpecialtyById: getDetailSpecialtyById,
   handleEditSpecialty: handleEditSpecialty,
   handleDeleteSpecialty: handleDeleteSpecialty,
+  getTopSpecialtyHome: getTopSpecialtyHome,
 };

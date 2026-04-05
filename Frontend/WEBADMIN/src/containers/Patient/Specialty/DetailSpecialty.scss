@@ -49,52 +49,29 @@
       .doctor-info {
         flex: 1.6;
         display: flex;
-        gap: 18px;
+        flex-direction: column; // Ép nội dung xếp theo chiều dọc
+
+        .info-content {
+          display: flex;
+          flex-direction: column; // Đảm bảo ProfileDoctor và nút Xem thêm xếp chồng lên nhau
+
+          // Nếu trong ProfileDoctor bạn dùng display flex cho avatar và text,
+          // thì nút Xem thêm sẽ tự động nhảy xuống dưới cùng.
+        }
 
         .view-detail-doctor {
-          padding-top: 50px;
-          padding-left: 10px; // Canh lề cho bằng với text mô tả
-          margin-top: -10px; // Ép nó lên gần đoạn mô tả hơn (tùy giao diện của bạn)
+          // Xóa padding-top: 50px cũ đi vì nó làm nút bay quá xa
+          padding-top: 10px;
+          padding-left: 105px; // Căn lề này thường bằng: Chiều rộng Avatar + Gap (90px + 15px)
+
           a {
             color: #45c3d2;
             text-decoration: none;
             font-size: 14px;
+            font-weight: 500;
+
             &:hover {
               color: #28a745;
-              text-decoration: underline;
-            }
-          }
-        }
-
-        .doctor-avatar {
-          width: 90px;
-          height: 90px;
-          border-radius: 50%;
-          background-size: cover;
-          background-position: center;
-          flex-shrink: 0;
-        }
-
-        .doctor-content {
-          .doctor-name {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 6px;
-          }
-
-          .doctor-desc {
-            font-size: 14px;
-            color: #444;
-            line-height: 1.6;
-            margin-bottom: 8px;
-          }
-
-          .see-more {
-            color: #45c3d2;
-            font-size: 14px;
-            cursor: pointer;
-
-            &:hover {
               text-decoration: underline;
             }
           }

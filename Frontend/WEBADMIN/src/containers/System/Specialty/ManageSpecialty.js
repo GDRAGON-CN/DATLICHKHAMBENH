@@ -65,7 +65,7 @@ class ManageSpecialty extends Component {
   };
   handleSaveNewSpecialty = async () => {
     let { action } = this.state;
-    let res = await createNewSpecialty(this.state);
+    let res;
 
     if (action === "CREATE") {
       res = await createNewSpecialty(this.state);

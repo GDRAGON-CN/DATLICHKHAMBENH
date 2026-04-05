@@ -42,7 +42,10 @@ class OutStandingDoctor extends Component {
             <span className="title-section">
               <FormattedMessage id="homepage.out-standing-doctor" />
             </span>
-            <button className="btn-section">
+            <button
+              className="btn-section"
+              onClick={() => this.props.history.push("/all-doctor")}
+            >
               <FormattedMessage id="homepage.more-information" />
             </button>
           </div>

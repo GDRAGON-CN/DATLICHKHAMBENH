@@ -13,10 +13,26 @@ let getTopDoctorHome = (limitInput) => {
       let users = await db.User.findAll({
         limit: limitInput,
         where: { roleId: "R2" },
-        order: [["createdAt", "DESC"]],
         attributes: {
           exclude: ["password"],
+          // Thêm một thuộc tính ảo để đếm lượt đặt lịch thành công (S3 thường là 'Done')
+          include: [
+            [
+              db.sequelize.literal(`(
+                SELECT COUNT(*)
+                FROM Bookings AS booking
+                WHERE booking.doctorId = User.id AND booking.statusId = 'S3'
+              )`),
+              "bookingCount",
+            ],
+          ],
         },
+        order: [
+          // Tiêu chí 1: Số lượng đặt lịch giảm dần
+          [db.sequelize.literal("bookingCount"), "DESC"],
+          // Tiêu chí 2: Bác sĩ mới nhất (createdAt giảm dần)
+          ["createdAt", "DESC"],
+        ],
         include: [
           {
             model: db.Allcode,
@@ -28,6 +44,18 @@ let getTopDoctorHome = (limitInput) => {
             as: "genderData",
             attributes: ["valueEn", "valueVi"],
           },
+          // Nên include thêm thông tin chuyên khoa để hiển thị ở trang danh sách cho đẹp
+          {
+            model: db.Doctor_Infor,
+            attributes: ["specialtyId"],
+            include: [
+              {
+                model: db.Specialty,
+                as: "specialtyData",
+                attributes: ["name"],
+              },
+            ],
+          },
         ],
         raw: true,
         nest: true,
@@ -37,6 +65,7 @@ let getTopDoctorHome = (limitInput) => {
         data: users,
       });
     } catch (e) {
+      console.log("Error from service:", e);
       reject(e);
     }
   });
@@ -48,7 +77,31 @@ let getAllDoctor = () => {
       let doctors = await db.User.findAll({
         where: { roleId: "R2" },
         attributes: { exclude: ["password"] },
+        include: [
+          // 1. Lấy Chức danh trực tiếp từ User thông qua positionId
+          {
+            model: db.Allcode,
+            as: "positionData",
+            attributes: ["valueEn", "valueVi"],
+          },
+          // 2. Đi vào bảng Doctor_Infor để lấy specialtyId
+          {
+            model: db.Doctor_Infor,
+            attributes: ["specialtyId"],
+            include: [
+              // 3. Từ Doctor_Infor, đi tiếp vào bảng Specialty để lấy Tên chuyên khoa
+              {
+                model: db.Specialty,
+                as: "specialtyData",
+                attributes: ["name"],
+              },
+            ],
+          },
+        ],
+        raw: true,
+        nest: true,
       });
+
       resolve({
         errCode: 0,
         data: doctors,

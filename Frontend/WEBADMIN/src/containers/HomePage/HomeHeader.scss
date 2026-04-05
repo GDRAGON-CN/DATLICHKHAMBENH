@@ -37,6 +37,7 @@
       justify-content: space-between;
       align-items: center;
       .child-content {
+        cursor: pointer;
         .subs-title {
           font-weight: 400;
           font-size: 12px;
@@ -94,24 +95,81 @@
       margin-bottom: 15px;
     }
     .search {
-      border: 1px;
+      position: relative;
       display: flex;
       justify-content: center;
-      margin: 0 auto;
       align-items: center;
-      padding: 10px;
-      width: fit-content;
+      margin: 0 auto;
+      width: 450px;
+      padding: 5px 10px;
       border-radius: 30px;
-      background: rgb(206, 169, 4);
+      background: rgba(197, 178, 10, 0.9);
+      border: 1px solid #ccc;
+
       i {
-        margin: 0 5px;
+        margin-left: 10px;
+        color: #333;
       }
+
       input {
-        height: 30px;
-        width: 400px;
+        height: 35px;
+        width: 100%;
         background: transparent;
         border: none;
         outline: none;
+        padding-left: 10px;
+        font-size: 15px;
+      }
+
+      // Dropdown kết quả
+      .search-result-dropdown {
+        position: absolute;
+        top: 50px;
+        left: 0;
+        width: 100%;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+        max-height: 350px;
+        overflow-y: auto;
+        text-align: left;
+
+        .suggest-item {
+          padding: 12px 15px;
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+          border-bottom: 1px solid #f1f1f1;
+
+          &:hover {
+            background-color: #f8f8f8;
+            .info .name {
+              color: #45c3d2;
+            }
+          }
+
+          i {
+            font-size: 16px;
+            color: #45c3d2;
+            width: 25px;
+            margin: 0;
+          }
+
+          .info {
+            margin-left: 10px;
+            .name {
+              font-size: 14px;
+              color: #333;
+              font-weight: 500;
+            }
+            .type {
+              font-size: 11px;
+              color: #999;
+              text-transform: uppercase;
+            }
+          }
+        }
       }
     }
   }

@@ -104,7 +104,7 @@
       }
 
       &.section-medical-facility {
-        background-image: url("../../assets/medical-facility/csyt1.jpg");
+        // background-image: url("../../assets/medical-facility/csyt1.jpg");
       }
 
       &.section-handbook {
@@ -130,6 +130,7 @@
     .bg-image {
       width: 120px;
       height: 120px;
+      image-rendering: pixelated;
 
       border-radius: 50%;
       margin: auto;

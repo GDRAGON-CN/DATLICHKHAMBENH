@@ -153,10 +153,44 @@ let deleteClinic = (clinicId) => {
     }
   });
 };
+let getTopClinicHome = (limitInput) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let clinics = await db.Clinic.findAll({
+        limit: limitInput,
+        attributes: {
+          include: [
+            [
+              db.sequelize.literal(`(
+                SELECT COUNT(*)
+                FROM Doctor_Infor AS d
+                WHERE d.clinicId = Clinic.id
+              )`),
+              "doctorCount",
+            ],
+          ],
+        },
+        order: [
+          [db.sequelize.literal("doctorCount"), "DESC"],
+          ["createdAt", "DESC"],
+        ],
+        raw: true,
+      });
+
+      resolve({
+        errCode: 0,
+        data: clinics,
+      });
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
 module.exports = {
   createClinic: createClinic,
   getAllClinic: getAllClinic,
   getDetailClinicById: getDetailClinicById,
   deleteClinic: deleteClinic,
   updateClinicData: updateClinicData,
+  getTopClinicHome: getTopClinicHome,
 };
