@@ -186,7 +186,6 @@ let getTopSpecialtyHome = (limitInput) => {
       if (specialties && specialties.length > 0) {
         specialties = specialties.map((item) => {
           if (item.image) {
-            // Encode lại ảnh từ Buffer sang Binary/Base64 để FE đọc được
             item.image = Buffer.from(item.image, "base64").toString("binary");
           }
           return item;

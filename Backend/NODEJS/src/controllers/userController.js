@@ -10,10 +10,6 @@ let handleLogin = async (req, res) => {
     });
   }
   let userData = await userService.handleUserLogin(email, password);
-  // check email exist
-  //compare password
-  //return userinfor
-  //access_token:JWT
   return res.status(200).json({
     errCode: userData.errCode,
     message: userData.errMessage,
@@ -80,6 +76,27 @@ let getSearchSuggestions = async (req, res) => {
     });
   }
 };
+let handleGetAllBookingForAdmin = async (req, res) => {
+  try {
+    let info = await userService.getAllBookingForAdmin(req.query.date);
+    return res.status(200).json(info);
+  } catch (e) {
+    return res
+      .status(200)
+      .json({ errCode: -1, errMessage: "Error from server" });
+  }
+};
+
+let handleUpdateStatus = async (req, res) => {
+  try {
+    let info = await userService.updateBookingStatus(req.body);
+    return res.status(200).json(info);
+  } catch (e) {
+    return res
+      .status(200)
+      .json({ errCode: -1, errMessage: "Error from server" });
+  }
+};
 module.exports = {
   handleLogin: handleLogin,
   handleGetAllUsers: handleGetAllUsers,
@@ -88,4 +105,6 @@ module.exports = {
   handleDeleteUser: handleDeleteUser,
   getAllCode: getAllCode,
   getSearchSuggestions: getSearchSuggestions,
+  handleGetAllBookingForAdmin: handleGetAllBookingForAdmin,
+  handleUpdateStatus: handleUpdateStatus,
 };

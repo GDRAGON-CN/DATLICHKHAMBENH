@@ -21,8 +21,6 @@ let handleUserLogin = (email, password) => {
       let userData = {};
       let isExist = await checkUserEmail(email);
       if (isExist) {
-        //user already exist
-        // compare password
         let user = await db.User.findOne({
           attributes: [
             "email",
@@ -60,7 +58,6 @@ let handleUserLogin = (email, password) => {
       } else {
         userData.errCode = 1;
         userData.errMessage = "Your email is not exist";
-        //return error
       }
       resolve(userData);
     } catch (e) {
@@ -238,23 +235,20 @@ let getSearchSuggestions = (keyword) => {
     try {
       if (!keyword) return resolve({ errCode: 0, data: [] });
 
-      // 1. Tìm trong bảng Chuyên khoa
       let specialties = await db.Specialty.findAll({
         where: { name: { [Op.like]: `%${keyword}%` } },
         attributes: ["id", "name"],
         limit: 3,
-        raw: true, // Ép về dữ liệu thuần
+        raw: true,
       });
 
-      // 2. Tìm trong bảng Phòng khám (Clinic)
       let clinics = await db.Clinic.findAll({
         where: { name: { [Op.like]: `%${keyword}%` } },
         attributes: ["id", "name"],
         limit: 3,
-        raw: true, // Ép về dữ liệu thuần
+        raw: true,
       });
 
-      // 3. Tìm trong bảng Bác sĩ
       let doctors = await db.User.findAll({
         where: {
           roleId: "R2",
@@ -265,21 +259,92 @@ let getSearchSuggestions = (keyword) => {
         },
         attributes: ["id", "firstName", "lastName"],
         limit: 3,
-        raw: true, // Ép về dữ liệu thuần
+        raw: true,
       });
 
-      // Gộp kết quả: BỎ .get() và chuẩn hóa trường 'name' cho Doctor
       let result = [
         ...specialties.map((i) => ({ ...i, type: "SPECIALTY" })),
         ...clinics.map((i) => ({ ...i, type: "CLINIC" })),
         ...doctors.map((i) => ({
           ...i,
-          name: `${i.lastName} ${i.firstName}`, // Tạo trường name cho bác sĩ để FE dễ hiển thị
+          name: `${i.lastName} ${i.firstName}`,
           type: "DOCTOR",
         })),
       ];
 
       resolve({ errCode: 0, data: result });
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+let getAllBookingForAdmin = (date) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!date) {
+        resolve({ errCode: 1, errMessage: "Thiếu tham số ngày tháng!" });
+      } else {
+        let data = await db.Booking.findAll({
+          where: { date: date },
+          include: [
+            {
+              model: db.User,
+              as: "patientData",
+              attributes: ["email", "firstName", "address", "gender"],
+              include: [
+                {
+                  model: db.Allcode,
+                  as: "genderData",
+                  attributes: ["valueEn", "valueVi"],
+                },
+              ],
+            },
+            {
+              model: db.Allcode,
+              as: "timeTypeDataPatient",
+              attributes: ["valueEn", "valueVi"],
+            },
+            {
+              model: db.Allcode,
+              as: "statusData",
+              attributes: ["valueEn", "valueVi"],
+            },
+            {
+              model: db.User,
+              as: "doctorData",
+              attributes: ["firstName", "lastName"],
+            }, // Xem lịch của bác sĩ nào
+          ],
+          raw: false,
+          nest: true,
+        });
+        resolve({ errCode: 0, data: data });
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
+// Cập nhật trạng thái lịch hẹn (Admin/Doctor dùng chung)
+let updateBookingStatus = (data) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!data.id || !data.statusId) {
+        resolve({ errCode: 1, errMessage: "Thiếu ID hoặc Status!" });
+      } else {
+        let booking = await db.Booking.findOne({
+          where: { id: data.id },
+          raw: false,
+        });
+        if (booking) {
+          booking.statusId = data.statusId;
+          await booking.save();
+          resolve({ errCode: 0, errMessage: "ok" });
+        } else {
+          resolve({ errCode: 2, errMessage: "Lịch hẹn không tồn tại" });
+        }
+      }
     } catch (e) {
       reject(e);
     }
@@ -293,4 +358,6 @@ module.exports = {
   updateUserData: updateUserData,
   getAllCodeService: getAllCodeService,
   getSearchSuggestions: getSearchSuggestions,
+  getAllBookingForAdmin: getAllBookingForAdmin,
+  updateBookingStatus: updateBookingStatus,
 };

@@ -22,11 +22,11 @@ let getBodyHTMLEmail = (dataSend) => {
   if (dataSend.language === "vi") {
     result = `
     <h3>Xinchao ${dataSend.patientName} !</h3>
-    <p>Bạn nhận ddc email này vì đã đặt lịch khám bệnh online </p>
+    <p>Bạn nhận được email này vì đã đặt lịch khám bệnh online </p>
     <p>Thông tin đặt lịch khám bệnh:</p>
     <div><b>Thời gian: ${dataSend.time}</b></div>
     <div><b>Bác sĩ: ${dataSend.doctorName}</b></div>
-    <p>Nếu các thoogn tin trên đúng sự thật, vui lòng click vào đường link bên dưới để xác nhận</p>
+    <p>Nếu các thông tin trên đúng sự thật, vui lòng click vào đường link bên dưới để xác nhận</p>
     <div>
     <a href="${dataSend.redirectLink}" target="_blank">Click here</a>
     </div>
@@ -54,7 +54,7 @@ let getBodyHTMLEmailRemedy = (dataSend) => {
   if (dataSend.language === "vi") {
     result = `
     <h3> Xin Chao ${dataSend.patientName}</h3>
-    <p>Ban nahn duoc email nay vi da dat lich kham benh online tren Booking Care </p>
+    <p>Ban nhan duoc email nay vi da dat lich kham benh online tren Booking Care </p>
     <p> Thong tin don thuoc/hoa don duoc gui trong file dinh kem </p>
     <div> Xin chan thanh cam on</div>
     `;

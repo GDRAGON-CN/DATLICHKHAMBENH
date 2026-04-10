@@ -11,7 +11,7 @@ let createClinic = (data) => {
       ) {
         resolve({
           errCode: 1,
-          erMessage: "Mising parameter",
+          errMessage: "Mising parameter",
         });
       } else {
         await db.Clinic.create({
@@ -108,7 +108,7 @@ let updateClinicData = (data) => {
       } else {
         let clinic = await db.Clinic.findOne({
           where: { id: data.id },
-          raw: false, // Để false để dùng được hàm .save()
+          raw: false,
         });
 
         if (clinic) {
@@ -117,7 +117,6 @@ let updateClinicData = (data) => {
           clinic.descriptionHTML = data.descriptionHTML;
           clinic.descriptionMarkdown = data.descriptionMarkdown;
 
-          // Chỉ update ảnh nếu có truyền ảnh mới lên
           if (data.imageBase64) {
             clinic.image = data.imageBase64;
           }

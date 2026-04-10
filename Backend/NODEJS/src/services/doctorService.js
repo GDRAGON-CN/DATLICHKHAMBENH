@@ -15,7 +15,6 @@ let getTopDoctorHome = (limitInput) => {
         where: { roleId: "R2" },
         attributes: {
           exclude: ["password"],
-          // Thêm một thuộc tính ảo để đếm lượt đặt lịch thành công (S3 thường là 'Done')
           include: [
             [
               db.sequelize.literal(`(
@@ -28,9 +27,7 @@ let getTopDoctorHome = (limitInput) => {
           ],
         },
         order: [
-          // Tiêu chí 1: Số lượng đặt lịch giảm dần
           [db.sequelize.literal("bookingCount"), "DESC"],
-          // Tiêu chí 2: Bác sĩ mới nhất (createdAt giảm dần)
           ["createdAt", "DESC"],
         ],
         include: [
@@ -44,7 +41,6 @@ let getTopDoctorHome = (limitInput) => {
             as: "genderData",
             attributes: ["valueEn", "valueVi"],
           },
-          // Nên include thêm thông tin chuyên khoa để hiển thị ở trang danh sách cho đẹp
           {
             model: db.Doctor_Infor,
             attributes: ["specialtyId"],
@@ -78,18 +74,15 @@ let getAllDoctor = () => {
         where: { roleId: "R2" },
         attributes: { exclude: ["password"] },
         include: [
-          // 1. Lấy Chức danh trực tiếp từ User thông qua positionId
           {
             model: db.Allcode,
             as: "positionData",
             attributes: ["valueEn", "valueVi"],
           },
-          // 2. Đi vào bảng Doctor_Infor để lấy specialtyId
           {
             model: db.Doctor_Infor,
             attributes: ["specialtyId"],
             include: [
-              // 3. Từ Doctor_Infor, đi tiếp vào bảng Specialty để lấy Tên chuyên khoa
               {
                 model: db.Specialty,
                 as: "specialtyData",
@@ -121,9 +114,8 @@ let checkRequiredFeilds = (inputData) => {
     "selectedPrice",
     "selectedPayment",
     "selectedProvince",
-    "nameClinic",
-    "addressClinic",
     "specialtyId",
+    "clinicId",
   ];
   let isValid = true;
   let element = "";
@@ -181,8 +173,6 @@ let saveDetailInforDoctor = (inputData) => {
           doctorInfor.priceId = inputData.selectedPrice;
           doctorInfor.provinceId = inputData.selectedProvince;
           doctorInfor.paymentId = inputData.selectedPayment;
-          doctorInfor.nameClinic = inputData.nameClinic;
-          doctorInfor.addressClinic = inputData.addressClinic;
           doctorInfor.note = inputData.note;
           doctorInfor.specialtyId = inputData.specialtyId;
           doctorInfor.clinicId = inputData.clinicId;
@@ -193,8 +183,6 @@ let saveDetailInforDoctor = (inputData) => {
             priceId: inputData.selectedPrice,
             provinceId: inputData.selectedProvince,
             paymentId: inputData.selectedPayment,
-            nameClinic: inputData.nameClinic,
-            addressClinic: inputData.addressClinic,
             note: inputData.note,
             specialtyId: inputData.specialtyId,
             clinicId: inputData.clinicId,
@@ -278,6 +266,7 @@ let getDetailDoctorById = (inputId) => {
     }
   });
 };
+
 let bulkCreateSchedule = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -287,28 +276,27 @@ let bulkCreateSchedule = (data) => {
           errMessage: "Missing parameter",
         });
       } else {
-        // Implementation for bulk creating schedule
         let schedule = data.arrSchedule;
         if (schedule && schedule.length > 0) {
           schedule = schedule.map((item) => {
             item.maxNumber = parseInt(process.env.MAX_NUMBER_SCHEDULE);
+            // Đảm bảo kiểu dữ liệu date đồng nhất (String hoặc Number)
+            item.date = String(item.date);
             return item;
           });
         }
-        let existing = await db.Schedule.findAll({
+
+        await db.Schedule.destroy({
           where: {
             doctorId: data.doctorId,
-            date: data.formattedDate,
+            date: String(data.formattedDate),
           },
-          attributes: ["timeType", "date", "doctorId", "maxNumber"],
-          raw: true,
         });
-        let toCreate = _.differenceWith(schedule, existing, (a, b) => {
-          return a.timeType === b.timeType && +a.date === +b.date;
-        });
-        if (toCreate && toCreate.length > 0) {
-          await db.Schedule.bulkCreate(toCreate);
+
+        if (schedule && schedule.length > 0) {
+          await db.Schedule.bulkCreate(schedule);
         }
+
         resolve({
           errCode: 0,
           errMessage: "OK",
@@ -346,6 +334,18 @@ let getScheduleDoctorByDate = (doctorId, date) => {
           raw: false,
         });
         if (!dataSchedule) dataSchedule = [];
+        for (let i = 0; i < dataSchedule.length; i++) {
+          let count = await db.Booking.count({
+            where: {
+              doctorId: doctorId,
+              date: date,
+              timeType: dataSchedule[i].timeType,
+              statusId: ["S1", "S2"],
+            },
+          });
+
+          dataSchedule[i].currentNumber = count;
+        }
         resolve({
           errCode: 0,
           errMessage: "OK",
@@ -376,6 +376,11 @@ let getExtraInforDoctorById = (doctorId) => {
             exclude: ["id", "doctorId"],
           },
           include: [
+            {
+              model: db.Clinic,
+              as: "clinicData",
+              attributes: ["name", "address"],
+            },
             {
               model: db.Allcode,
               as: "priceTypeData",
@@ -554,6 +559,14 @@ let sendRemedy = (data) => {
           appointment.statusId = "S3";
           await appointment.save();
         }
+        await db.History.create({
+          doctorId: data.doctorId,
+          patientId: data.patientId,
+          description: data.description
+            ? data.description
+            : "Bác sĩ đã xác nhận khám xong và gửi hóa đơn/đơn thuốc.",
+          files: data.imgBase64,
+        });
         await emailService.sendAttachment(data);
         resolve({
           errCode: 0,
@@ -565,6 +578,7 @@ let sendRemedy = (data) => {
     }
   });
 };
+
 module.exports = {
   getTopDoctorHome: getTopDoctorHome,
   getAllDoctor: getAllDoctor,

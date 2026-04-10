@@ -72,10 +72,9 @@ let handleDeleteSpecialty = async (req, res) => {
 };
 let getTopSpecialtyHome = async (req, res) => {
   let limit = req.query.limit;
-  if (!limit) limit = 10; // Mặc định lấy 10 chuyên khoa nếu không truyền limit
+  if (!limit) limit = 10;
   try {
-    // Chú ý: Nhớ import userService hoặc specialtyService ở đầu file
-    let response = await specialtyService.getTopSpecialtyHome(+limit); // Dấu + để ép kiểu string sang number
+    let response = await specialtyService.getTopSpecialtyHome(+limit);
     return res.status(200).json(response);
   } catch (e) {
     console.log(e);

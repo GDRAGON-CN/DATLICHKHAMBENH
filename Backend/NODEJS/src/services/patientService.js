@@ -27,9 +27,6 @@ let postBookAppointment = (data) => {
           errMessage: "Missing required parameter",
         });
       } else {
-        // --- BẮT ĐẦU LOGIC KIỂM TRA GIỚI HẠN (MAX NUMBER) ---
-
-        // 1. Tìm giới hạn (maxNumber) của ca khám này trong bảng Schedule
         let schedule = await db.Schedule.findOne({
           where: {
             doctorId: data.doctorId,
@@ -41,18 +38,14 @@ let postBookAppointment = (data) => {
 
         if (schedule) {
           let maxNumber = schedule.maxNumber;
-
-          // 2. Đếm số lượng người đã đặt lịch thành công (S1 hoặc S2) cho ca này
           let currentBookingCount = await db.Booking.count({
             where: {
               doctorId: data.doctorId,
               date: data.date,
               timeType: data.timeType,
-              statusId: ["S1", "S2"], // Chỉ tính những người đang chờ hoặc đã xác nhận
+              statusId: ["S1", "S2"],
             },
           });
-
-          // 3. So sánh: Nếu đã đủ người thì chặn luôn
           if (currentBookingCount >= maxNumber) {
             return resolve({
               errCode: 3,
@@ -61,9 +54,7 @@ let postBookAppointment = (data) => {
             });
           }
         }
-        // --- KẾT THÚC LOGIC KIỂM TRA GIỚI HẠN ---
 
-        // Nếu còn chỗ, tiếp tục thực hiện gửi email và tạo bản ghi
         let token = uuidv4();
         await emailService.sendSimpleEmail({
           receivedEmail: data.email,
@@ -73,8 +64,6 @@ let postBookAppointment = (data) => {
           language: data.language,
           redirectLink: buildUrlEmail(data.doctorId, token),
         });
-
-        // Upsert patient
         let user = await db.User.findOrCreate({
           where: { email: data.email },
           defaults: {
@@ -85,8 +74,6 @@ let postBookAppointment = (data) => {
             firstName: data.fullName,
           },
         });
-
-        // Create a booking record
         if (user && user[0]) {
           await db.Booking.findOrCreate({
             where: {
@@ -106,6 +93,88 @@ let postBookAppointment = (data) => {
           errCode: 0,
           errMessage: "Save info patient succeed",
         });
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+let getListBookingByPatient = (email) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!email) {
+        resolve({ errCode: 1, errMessage: "Missing email!" });
+      } else {
+        let user = await db.User.findOne({
+          where: { email: email },
+          attributes: ["id"],
+        });
+
+        if (user) {
+          let data = await db.Booking.findAll({
+            where: { patientId: user.id },
+            include: [
+              {
+                model: db.User,
+                as: "doctorData",
+                attributes: ["firstName", "lastName"],
+              },
+              {
+                model: db.Allcode,
+                as: "timeTypeDataPatient",
+                attributes: ["valueVi", "valueEn"],
+              },
+            ],
+            raw: true,
+            nest: true,
+          });
+          resolve({ errCode: 0, data: data });
+        } else {
+          resolve({ errCode: 0, data: [] });
+        }
+      }
+    } catch (e) {
+      console.log(e);
+      reject(e);
+    }
+  });
+};
+
+let cancelBooking = (data) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      console.log(">>> Check data từ React gửi qua:", data);
+      if (!data.patientId || !data.doctorId || !data.timeType || !data.date) {
+        resolve({
+          errCode: 1,
+          errMessage: "Thiếu tham số bắt buộc!",
+        });
+      } else {
+        let appointment = await db.Booking.findOne({
+          where: {
+            patientId: data.patientId,
+            doctorId: data.doctorId,
+            timeType: data.timeType,
+            date: data.date,
+            statusId: ["S1", "S2"],
+          },
+          raw: false,
+        });
+
+        if (appointment) {
+          appointment.statusId = "S4";
+          await appointment.save();
+
+          resolve({
+            errCode: 0,
+            errMessage: "Hủy lịch hẹn thành công!",
+          });
+        } else {
+          resolve({
+            errCode: 2,
+            errMessage: "Lịch hẹn không tồn tại hoặc đã được xử lý trước đó.",
+          });
+        }
       }
     } catch (e) {
       reject(e);
@@ -152,4 +221,6 @@ let postVerifyBookAppointment = (data) => {
 module.exports = {
   postBookAppointment: postBookAppointment,
   postVerifyBookAppointment: postVerifyBookAppointment,
+  cancelBooking: cancelBooking,
+  getListBookingByPatient: getListBookingByPatient,
 };
