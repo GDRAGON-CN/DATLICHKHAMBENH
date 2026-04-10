@@ -11,7 +11,10 @@ import { CRUD_ACTIONS, LANGUAGES, dateFormat } from "../../../utils";
 import * as actions from "../../../store/actions";
 import { toast } from "react-toastify";
 import _ from "lodash";
-import { saveBulkScheduleDoctor } from "../../../services/userService";
+import {
+  saveBulkScheduleDoctor,
+  getScheduleDoctorByDate,
+} from "../../../services/userService";
 
 class ManageSchedule extends Component {
   constructor(props) {
@@ -28,30 +31,39 @@ class ManageSchedule extends Component {
     this.props.fetchAllScheduleTime();
   }
 
-  componentDidUpdate(prevProps, preState, snapshot) {
+  async componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.allDoctors !== this.props.allDoctors) {
       let dataSelect = this.buildDataInputSelect(this.props.allDoctors);
-      this.setState({
-        listDoctors: dataSelect,
-      });
+      this.setState({ listDoctors: dataSelect });
     }
+
     if (prevProps.allScheduleTime !== this.props.allScheduleTime) {
-      this.setState({
-        rangeTime: this.props.allScheduleTime,
+      let data = this.props.allScheduleTime;
+      if (data && data.length > 0) {
+        data = data.map((item) => ({ ...item, isSelected: false }));
+      }
+      this.setState({ rangeTime: data }, async () => {
+        await this.getExistingSchedule(); // Load lịch khi list khung giờ vừa tải xong
       });
     }
+
     let { userInfo, language } = this.props;
     if (userInfo && userInfo.roleId === "R2") {
       if (this.state.selectedDoctor.value !== userInfo.id) {
         let labelVi = `${userInfo.lastName} ${userInfo.firstName}`;
         let labelEn = `${userInfo.firstName} ${userInfo.lastName}`;
 
-        this.setState({
-          selectedDoctor: {
-            label: language === LANGUAGES.VI ? labelVi : labelEn,
-            value: userInfo.id,
+        this.setState(
+          {
+            selectedDoctor: {
+              label: language === LANGUAGES.VI ? labelVi : labelEn,
+              value: userInfo.id,
+            },
           },
-        });
+          async () => {
+            await this.getExistingSchedule();
+          },
+        );
       }
     }
   }
@@ -76,14 +88,69 @@ class ManageSchedule extends Component {
     console.log("handleEditorChange", html, text);
   }
 
+  getExistingSchedule = async () => {
+    let { selectedDoctor, currentDate, rangeTime } = this.state;
+    if (selectedDoctor && !_.isEmpty(selectedDoctor) && currentDate) {
+      let formattedDate = new Date(currentDate).getTime();
+
+      // Gọi API lấy lịch đã lưu của bác sĩ trong ngày này
+      let res = await getScheduleDoctorByDate(
+        selectedDoctor.value,
+        formattedDate,
+      );
+
+      if (res && res.errCode === 0) {
+        let listSavedSchedule = res.data; // Đây là mảng các khung giờ đã lưu trong DB
+        let copyRangeTime = [...rangeTime];
+
+        if (copyRangeTime && copyRangeTime.length > 0) {
+          // Reset tất cả về màu xám trước
+          copyRangeTime = copyRangeTime.map((item) => ({
+            ...item,
+            isSelected: false,
+          }));
+
+          // Nếu có dữ liệu cũ, so khớp theo keyMap (T1, T2...) để tick xanh lại
+          if (listSavedSchedule && listSavedSchedule.length > 0) {
+            copyRangeTime = copyRangeTime.map((item) => {
+              let isMatch = listSavedSchedule.find(
+                (saved) => saved.timeType === item.keyMap,
+              );
+              if (isMatch) item.isSelected = true;
+              return item;
+            });
+          }
+
+          this.setState({
+            rangeTime: copyRangeTime,
+          });
+        }
+      }
+    }
+  };
+
   handleOnChangeDatePicker = (date) => {
-    this.setState({
-      currentDate: date[0],
-    });
+    this.setState(
+      {
+        currentDate: date[0],
+      },
+      async () => {
+        // Sau khi state ngày thay đổi, gọi hàm lấy lịch
+        await this.getExistingSchedule();
+      },
+    );
   };
 
   handleChange = async (selectedOption) => {
-    this.setState({ selectedDoctor: selectedOption });
+    this.setState(
+      {
+        selectedDoctor: selectedOption,
+      },
+      async () => {
+        // Sau khi state bác sĩ thay đổi, gọi hàm lấy lịch
+        await this.getExistingSchedule();
+      },
+    );
   };
 
   handleClickBtnTime = (time) => {

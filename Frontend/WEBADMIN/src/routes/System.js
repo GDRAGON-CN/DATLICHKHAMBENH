@@ -8,6 +8,7 @@ import Header from "../containers/Header/Header";
 import ManageSchedule from "../containers/System/Doctor/ManageSchedule";
 import ManageSpecialty from "../containers/System/Specialty/ManageSpecialty";
 import ManageClinic from "../containers/System/Clinic/ManageClinic";
+import ManageDoneBooking from "../containers/System/Admin/ManageDoneBooking";
 class System extends Component {
   render() {
     const { systemMenuPath, isLoggedIn } = this.props;
@@ -29,6 +30,10 @@ class System extends Component {
               <Route
                 path="/system/manage-specialty"
                 component={ManageSpecialty}
+              />
+              <Route
+                path="/system/manage-done-booking"
+                component={ManageDoneBooking}
               />
             </Switch>
           </div>

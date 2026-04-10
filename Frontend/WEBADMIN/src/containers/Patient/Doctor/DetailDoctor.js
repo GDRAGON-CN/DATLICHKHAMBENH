@@ -7,6 +7,8 @@ import BookingModal from "../Doctor/Modal/BookingModal";
 import DoctorSchedule from "./DoctorSchedule";
 import { getDetailInforDoctor } from "../../../services/userService";
 import { LANGUAGES } from "../../../utils";
+import Header from "../../Header/Header";
+import HomeFooter from "../../HomePage/HomeFooter";
 
 class DetailDoctor extends Component {
   constructor(props) {
@@ -116,7 +118,6 @@ class DetailDoctor extends Component {
           />
 
           {/* DETAIL INFO */}
-          {/* DETAIL INFO */}
           <div className="detail-info">
             <div className="doctor-section">
               {detailDoctor &&
@@ -136,6 +137,7 @@ class DetailDoctor extends Component {
           dataTime={this.state.bookingTime}
           closeBookingClose={() => this.setState({ isOpenModal: false })}
         />
+        <HomeFooter />
       </>
     );
   }

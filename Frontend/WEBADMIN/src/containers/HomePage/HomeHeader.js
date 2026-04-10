@@ -146,6 +146,20 @@ class HomeHeader extends Component {
                   EN
                 </span>
               </div>
+              <div
+                className="child-content"
+                onClick={() =>
+                  this.props.history.push("/patient/manage-booking")
+                }
+              >
+                <div>
+                  <i
+                    className="fas fa-calendar-check"
+                    style={{ marginRight: "5px" }}
+                  ></i>
+                  <b>Lịch Hẹn</b>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -34,6 +34,13 @@ const getTopDoctorHomeService = (limit) => {
 const getSearchSuggestionsService = (keyword) => {
   return axios.get(`/api/get-search-suggestions?keyword=${keyword}`);
 };
+const getAllBookingForAdmin = (date) => {
+  return axios.get(`/api/get-all-booking-for-admin?date=${date}`);
+};
+
+const updateBookingStatus = (data) => {
+  return axios.post("/api/update-booking-status", data);
+};
 const getAllDoctors = () => {
   return axios.get("/api/get-all-doctors");
 };
@@ -62,6 +69,12 @@ const postPatientBookAppointment = (data) => {
 };
 const postVerifyBookAppointment = (data) => {
   return axios.post("/api/verify-book-appointment", data);
+};
+const cancelBookingService = (data) => {
+  return axios.post("/api/patient-cancel-booking", data);
+};
+const getAllBookingByPatient = (email) => {
+  return axios.get(`/api/get-list-booking-by-patient?email=${email}`);
 };
 const createNewSpecialty = (data) => {
   return axios.post("/api/create-new-specialty", data);
@@ -121,9 +134,10 @@ export {
   createNewUserService,
   deleteUserService,
   editUserService,
-  // getDetailInforDoctor,
   getAllCodeService,
   getSearchSuggestionsService,
+  getAllBookingForAdmin,
+  updateBookingStatus,
   getTopDoctorHomeService,
   getAllDoctors,
   saveDetailDoctorService,
@@ -134,6 +148,8 @@ export {
   getProfileInforDoctorById,
   postPatientBookAppointment,
   postVerifyBookAppointment,
+  cancelBookingService,
+  getAllBookingByPatient,
   createNewSpecialty,
   getTopSpecialtyHome,
   getAllSpecialty,

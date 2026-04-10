@@ -30,6 +30,7 @@ import VerifyEmail from "./Patient/VerifyEmail.js";
 import AllSpecialty from "./Patient/All-List/AllSpecialty.js";
 import AllClinic from "./Patient/All-List/AllClinic.js";
 import AllDoctor from "./Patient/All-List/AllDoctor.js";
+import ManageBooking from "./Patient/ManageBooking.js";
 class App extends Component {
   handlePersistorState = () => {
     const { persistor } = this.props;
@@ -74,6 +75,10 @@ class App extends Component {
                   <Route path={path.ALL_SPECIALTY} component={AllSpecialty} />
                   <Route path={path.ALL_CLINIC} component={AllClinic} />
                   <Route path={path.ALL_DOCTOR} component={AllDoctor} />
+                  <Route
+                    path={"/patient/manage-booking"}
+                    component={ManageBooking}
+                  />
                   <Route path={path.DETAIL_DOCTOR} component={DetailDoctor} />
                   <Route path={path.DETAIL_CLINIC} component={DetailClinic} />
                   <Route

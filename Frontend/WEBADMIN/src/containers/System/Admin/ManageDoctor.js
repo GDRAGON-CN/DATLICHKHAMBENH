@@ -37,8 +37,6 @@ class ManageDoctor extends Component {
       selectedProvince: "",
       selectedClinic: "",
       selectedSpecialty: "",
-      nameClinic: "",
-      addressClinic: "",
       note: "",
       clinicId: "",
       specialtyId: "",
@@ -166,8 +164,6 @@ class ManageDoctor extends Component {
       selectedPrice: this.state.selectedPrice.value,
       selectedPayment: this.state.selectedPayment.value,
       selectedProvince: this.state.selectedProvince.value,
-      nameClinic: this.state.nameClinic,
-      addressClinic: this.state.addressClinic,
       note: this.state.note,
       clinicId:
         this.state.selectedClinic && this.state.selectedClinic.value
@@ -352,40 +348,8 @@ class ManageDoctor extends Component {
               />
             </div>
           </div>
-
-          <div className="row mb-3">
-            <div className="col-4 form-group">
-              <label>Tên phòng khám</label>
-              <input
-                className="form-control"
-                onChange={(event) =>
-                  this.handleOnChangeText(event, "nameClinic")
-                }
-                value={this.state.nameClinic}
-              />
-            </div>
-            <div className="col-4 form-group">
-              <label>Địa chỉ phòng khám</label>
-              <input
-                className="form-control"
-                onChange={(event) =>
-                  this.handleOnChangeText(event, "addressClinic")
-                }
-                value={this.state.addressClinic}
-              />
-            </div>
-            <div className="col-4 form-group">
-              <label>Ghi chú (Note)</label>
-              <input
-                className="form-control"
-                onChange={(event) => this.handleOnChangeText(event, "note")}
-                value={this.state.note}
-              />
-            </div>
-          </div>
-
           <div className="row">
-            <div className="col-6 form-group">
+            <div className="col-4 form-group">
               <label>
                 <i className="fas fa-stethoscope"></i> Chọn Chuyên Khoa
               </label>
@@ -397,7 +361,7 @@ class ManageDoctor extends Component {
                 name="selectedSpecialty"
               />
             </div>
-            <div className="col-6 form-group">
+            <div className="col-4 form-group">
               <label>
                 <i className="fas fa-hospital"></i> Chọn phòng khám (Bệnh viện)
               </label>
@@ -407,6 +371,14 @@ class ManageDoctor extends Component {
                 options={this.state.listClinic}
                 placeholder="Chọn phòng khám"
                 name="selectedClinic"
+              />
+            </div>
+            <div className="col-4 form-group">
+              <label>Ghi chú (Note)</label>
+              <input
+                className="form-control"
+                onChange={(event) => this.handleOnChangeText(event, "note")}
+                value={this.state.note}
               />
             </div>
           </div>

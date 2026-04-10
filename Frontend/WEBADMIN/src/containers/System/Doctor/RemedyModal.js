@@ -10,6 +10,7 @@ class RemedyModal extends Component {
     this.state = {
       email: "",
       imgBase64: "",
+      description: "",
     };
   }
 
@@ -21,7 +22,11 @@ class RemedyModal extends Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.dataModal !== this.props.dataModal) {
-      this.setState({ email: this.props.dataModal.email });
+      this.setState({
+        email: this.props.dataModal.email || "",
+        imgBase64: "",
+        description: "",
+      });
     }
   }
 
@@ -33,8 +38,17 @@ class RemedyModal extends Component {
       this.setState({ imgBase64: base64 });
     }
   };
+  handleOnChangeText = (event) => {
+    this.setState({
+      description: event.target.value,
+    });
+  };
 
   handleSendRemedy = () => {
+    if (!this.state.imgBase64 || !this.state.description) {
+      alert("Vui lòng nhập đầy đủ thông tin và chọn ảnh hóa đơn!");
+      return;
+    }
     this.props.sendRemedy(this.state);
   };
 
@@ -68,6 +82,15 @@ class RemedyModal extends Component {
                 type="file"
                 onChange={(e) => this.handleOnChangeImage(e)}
               />
+            </div>
+            <div className="col-12 form-group">
+              <label>Chẩn đoán / Ghi chú bệnh án</label>
+              <textarea
+                className="form-control"
+                rows="3"
+                value={this.state.description}
+                onChange={(e) => this.handleOnChangeText(e)}
+              ></textarea>
             </div>
           </div>
         </ModalBody>

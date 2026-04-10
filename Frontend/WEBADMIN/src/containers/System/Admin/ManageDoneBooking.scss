@@ -1,0 +1,160 @@
+.manage-booking-container {
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  padding: 30px;
+
+  .title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+
+  .custom-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    border: 1px solid #edf2f7;
+    margin-bottom: 25px;
+  }
+
+  .sub-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #45c3d2;
+    border-bottom: 2px solid #45c3d2;
+    display: inline-block;
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+  }
+
+  .booking-filter {
+    label {
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #4a5568;
+      font-size: 14px;
+      display: block;
+    }
+
+    .form-control {
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+
+      &:focus {
+        border-color: #45c3d2;
+        box-shadow: 0 0 0 3px rgba(69, 195, 210, 0.2);
+      }
+    }
+  }
+
+  .table-manage-booking {
+    margin-top: 20px;
+
+    table {
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      border-collapse: separate;
+      border-spacing: 0;
+      border: 1px solid #e2e8f0;
+
+      thead {
+        background-color: #f7fafc;
+
+        th {
+          color: #4a5568;
+          font-weight: 600;
+          text-transform: uppercase;
+          font-size: 13px;
+          padding: 15px;
+          border-bottom: 2px solid #edf2f7;
+          text-align: center;
+        }
+      }
+
+      tbody {
+        tr {
+          transition: all 0.2s;
+          &:hover {
+            background-color: #f1f5f9;
+          }
+
+          td {
+            padding: 15px;
+            vertical-align: middle;
+            text-align: center;
+            color: #2d3748;
+            border-bottom: 1px solid #edf2f7;
+          }
+        }
+      }
+    }
+  }
+
+  // Style cho các Badge trạng thái
+  .status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+
+    &.S1 {
+      background: #feebc8;
+      color: #9c4221;
+    } // Chờ xác nhận (Vàng nhạt)
+    &.S2 {
+      background: #bee3f8;
+      color: #2a4365;
+    } // Đã xác nhận (Xanh biển nhạt)
+    &.S3 {
+      background: #c6f6d5;
+      color: #22543d;
+    } // Hoàn thành (Xanh lá nhạt)
+    &.S4 {
+      background: #fed7d7;
+      color: #822727;
+    } // Đã hủy (Đỏ nhạt)
+  }
+
+  // Style cho các nút bấm Action
+  .btn-action {
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    transition: all 0.2s;
+    border: none;
+    margin: 0 3px;
+
+    &.confirm {
+      background-color: #45c3d2;
+      color: white;
+      &:hover {
+        background-color: #38a5b2;
+      }
+    }
+
+    &.done {
+      background-color: #48bb78;
+      color: white;
+      &:hover {
+        background-color: #38a169;
+      }
+    }
+
+    &.cancel {
+      background-color: #f56565;
+      color: white;
+      &:hover {
+        background-color: #e53e3e;
+      }
+    }
+  }
+}

@@ -83,6 +83,13 @@
         &:active {
           transform: translateY(0);
         }
+        &.full {
+          background: #eeeeee !important; // Màu xám
+          color: #cccccc !important;
+          cursor: not-allowed; // Hiện biểu tượng cấm chuột
+          text-decoration: line-through; // Gạch ngang chữ (tùy chọn)
+          border: 1px solid #ddd !important;
+        }
       }
     }
   }

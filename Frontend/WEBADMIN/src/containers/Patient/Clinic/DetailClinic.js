@@ -13,6 +13,7 @@ import {
 } from "../../../services/userService";
 import _ from "lodash";
 import { Link } from "react-router-dom";
+import HomeFooter from "../../HomePage/HomeFooter";
 
 class DetailClinic extends Component {
   constructor(props) {
@@ -120,6 +121,7 @@ class DetailClinic extends Component {
           dataTime={this.state.bookingTime}
           closeBookingClose={() => this.setState({ isOpenModal: false })}
         />
+        <HomeFooter />
       </>
     );
   }

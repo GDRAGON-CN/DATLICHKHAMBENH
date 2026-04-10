@@ -13,7 +13,7 @@ export const adminMenu = [
         link: "/system/user-redux",
       },
       {
-        name: "menu.admin.manage-doctor",
+        name: "Quản lý thông tin bác sĩ",
         link: "/system/manage-doctor",
         // subMenus: [
         //   {
@@ -37,6 +37,7 @@ export const adminMenu = [
         name: "Quản lý lịch khám bệnh của bác sĩ",
         link: "/doctor/manage-schedule",
       },
+      { name: "Lịch hẹn của bệnh nhân", link: "/system/manage-done-booking" },
     ],
   },
   {

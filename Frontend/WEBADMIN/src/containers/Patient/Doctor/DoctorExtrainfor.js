@@ -49,14 +49,16 @@ class DoctorExtrainfor extends Component {
           <div className="price-title">
             <div>ĐỊA CHỈ PHÒNG KHÁM</div>
             <div>
-              {extraInfor && extraInfor.nameClinic
-                ? extraInfor.nameClinic
-                : "Không có thông tin"}
+              {extraInfor && extraInfor.clinicData && extraInfor.clinicData.name
+                ? extraInfor.clinicData.name
+                : "Không có thông tin tên phòng khám"}
             </div>
             <div>
-              {extraInfor && extraInfor.addressClinic
-                ? extraInfor.addressClinic
-                : "Không có thông tin"}
+              {extraInfor &&
+              extraInfor.clinicData &&
+              extraInfor.clinicData.address
+                ? extraInfor.clinicData.address
+                : "Không có thông tin địa chỉ"}
             </div>
           </div>
           {!this.state.isShowPrice && (
