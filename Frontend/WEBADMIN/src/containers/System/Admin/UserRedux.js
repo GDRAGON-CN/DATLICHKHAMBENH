@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
-import TableManageUser from "./TableManageUser";
 import { LANGUAGES, CRUD_ACTIONS, CommonUtils } from "../../../utils";
 import { getAllCodeService } from "../../../services/userService";
 import * as actions from "../../../store/actions";
 import "./UserRedux.scss";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
+import CommonTable from "../../System/Admin/CommonTable";
 class UserRedux extends Component {
   constructor(props) {
     super(props);
@@ -38,17 +38,7 @@ class UserRedux extends Component {
     this.props.getGenderStart();
     this.props.getPositionStart();
     this.props.getRoleStart();
-    // this.props.dispatch(actions.fetchGenderStart);
-    // try {
-    //   let res = await getAllCodeService("gender");
-    //   if (res.data && res.errCode === 0) {
-    //     this.setState({
-    //       genderArr: res.data,
-    //     });
-    //   }
-    // } catch (e) {
-    //   console.log(e);
-    // }
+    this.props.fetchUserRedux();
   }
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.genderRedux !== this.props.genderRedux) {
@@ -227,6 +217,33 @@ class UserRedux extends Component {
       role,
       avatar,
     } = this.state;
+    let { listUsers } = this.props;
+    const columns = [
+      { label: "Email", key: "email" },
+      { label: "First Name", key: "firstName" },
+      { label: "Last Name", key: "lastName" },
+      { label: "Address", key: "address" },
+      {
+        label: "Actions",
+        className: "text-right",
+        render: (user) => (
+          <div className="d-flex justify-content-end" style={{ gap: "10px" }}>
+            <button
+              className="btn-edit"
+              onClick={() => this.handleEditUserFromParent(user)}
+            >
+              <i className="fas fa-pencil-alt"></i>
+            </button>
+            <button
+              className="btn-delete"
+              onClick={() => this.props.deleteAUserRedux(user.id)} // M cần thêm hàm delete vào mapDispatchToProps nhé
+            >
+              <i className="fas fa-trash"></i>
+            </button>
+          </div>
+        ),
+      },
+    ];
     return (
       <div className="user-redux-container">
         <div className="title text-center mb-4">
@@ -419,10 +436,8 @@ class UserRedux extends Component {
           </div>
 
           <div className="container mt-5 mb-5 p-0">
-            <TableManageUser
-              handleEditUserFromParentKey={this.handleEditUserFromParent}
-              action={this.state.action}
-            />
+            <div className="sub-title mb-3">Danh sách người dùng</div>
+            <CommonTable data={listUsers} columns={columns} itemsPerPage={5} />
           </div>
         </div>
         {/* Lightbox giữ nguyên */}

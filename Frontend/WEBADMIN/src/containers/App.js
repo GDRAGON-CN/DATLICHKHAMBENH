@@ -89,6 +89,10 @@ class App extends Component {
                     path={path.VERIFY_EMAIL_BOOKING}
                     component={VerifyEmail}
                   />
+                  <Route
+                    path="/verify-booking-access"
+                    component={ManageBooking}
+                  />
                 </Switch>
               </CustomScrollbars>
             </div>

@@ -124,26 +124,6 @@ class ManageDoctor extends Component {
         listClinic: dataSelectClinic,
       });
     }
-    // if (prevProps.allDoctors !== this.props.allDoctors) {
-    //   let dataSelect = this.buildDataInputSelect(
-    //     this.props.allDoctors,
-    //     "USERS",
-    //   );
-    //   let { resPrice, resPayment, resProvince } =
-    //     this.props.allRequiredDoctorInfor;
-    //   let dataSelectPrice = this.buildDataInputSelect(resPrice, "PRICE");
-    //   let dataSelectPayment = this.buildDataInputSelect(resPayment, "PAYMENT");
-    //   let dataSelectProvince = this.buildDataInputSelect(
-    //     resProvince,
-    //     "PROVINCE",
-    //   );
-    //   this.setState({
-    //     listDoctors: dataSelect,
-    //     listPrice: dataSelectPrice,
-    //     listPayment: dataSelectPayment,
-    //     listProvince: dataSelectProvince,
-    //   });
-    // }
   }
   handleEditorChange = ({ html, text }) => {
     this.setState({
@@ -157,7 +137,7 @@ class ManageDoctor extends Component {
     this.props.saveDetailDoctor({
       contentHTML: this.state.contentHTML,
       contentMarkdown: this.state.contentMarkdown,
-      descriptions: this.state.description,
+      description: this.state.description,
       doctorId: this.state.selectedOption.value,
       action: hasOldData === true ? CRUD_ACTIONS.EDIT : CRUD_ACTIONS.CREATE,
 
@@ -181,10 +161,10 @@ class ManageDoctor extends Component {
       res &&
       res.errCode === 0 &&
       res.data &&
-      res.data.Markdown &&
-      res.data.Markdown.contentMarkdown
+      res.data.Doctor_Infor &&
+      res.data.Doctor_Infor.contentMarkdown
     ) {
-      let markdown = res.data.Markdown;
+      let doctorInfor = res.data.Doctor_Infor;
       let addressClinic = "",
         nameClinic = "",
         note = "",
@@ -226,9 +206,9 @@ class ManageDoctor extends Component {
       }
 
       this.setState({
-        contentHTML: markdown.contentHTML,
-        contentMarkdown: markdown.contentMarkdown,
-        description: markdown.descriptions,
+        contentHTML: doctorInfor.contentHTML,
+        contentMarkdown: doctorInfor.contentMarkdown,
+        description: doctorInfor.description,
         hasOldData: true,
         addressClinic: addressClinic,
         nameClinic: nameClinic,

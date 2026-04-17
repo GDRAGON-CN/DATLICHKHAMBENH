@@ -12,6 +12,7 @@ import {
   deleteSpecialtyService,
 } from "../../../services/userService";
 import { toast } from "react-toastify";
+import CommonTable from "./CommonTable";
 const mdParser = new MarkdownIt();
 
 class ManageSpecialty extends Component {
@@ -119,6 +120,32 @@ class ManageSpecialty extends Component {
   };
   render() {
     let { listSpecialty, action } = this.state;
+    const columns = [
+      {
+        label: "Tên chuyên khoa",
+        key: "name",
+      },
+      {
+        label: "Hành động",
+        className: "text-center",
+        render: (item) => (
+          <div className="d-flex justify-content-end" style={{ gap: "10px" }}>
+            <button
+              className="btn-edit"
+              onClick={() => this.handleEditSpecialty(item)}
+            >
+              <i className="fas fa-pencil-alt"></i>
+            </button>
+            <button
+              className="btn-delete"
+              onClick={() => this.handleDeleteSpecialty(item)}
+            >
+              <i className="fas fa-trash"></i>
+            </button>
+          </div>
+        ),
+      },
+    ];
     return (
       <div className="manage-specialty-container">
         <div className="ms-title">Quản lý chuyên khoa</div>
@@ -179,47 +206,13 @@ class ManageSpecialty extends Component {
         </div>
 
         {/* Bảng danh sách chuyên khoa */}
-        <div className="table-manage-specialty mt-5">
-          <table className="table table-hover mb-0">
-            <thead>
-              <tr>
-                <th>Tên chuyên khoa</th>
-                <th className="text-right">Hành động</th>
-              </tr>
-            </thead>
-            <tbody>
-              {listSpecialty &&
-                listSpecialty.length > 0 &&
-                listSpecialty.map((item, index) => {
-                  return (
-                    <tr key={index}>
-                      <td>{item.name}</td>
-                      <td
-                        className="text-right"
-                        style={{
-                          display: "flex",
-                          justifyContent: "flex-end",
-                          gap: "10px",
-                        }}
-                      >
-                        <button
-                          className="btn-edit"
-                          onClick={() => this.handleEditSpecialty(item)}
-                        >
-                          <i className="fas fa-pencil-alt"></i>
-                        </button>
-                        <button
-                          className="btn-delete"
-                          onClick={() => this.handleDeleteSpecialty(item)}
-                        >
-                          <i className="fas fa-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
-            </tbody>
-          </table>
+        <div className="mt-5">
+          <div className="sub-title mb-3">Danh sách chuyên khoa</div>
+          <CommonTable
+            data={listSpecialty}
+            columns={columns}
+            itemsPerPage={5} // Mỗi trang hiện 5 chuyên khoa
+          />
         </div>
       </div>
     );

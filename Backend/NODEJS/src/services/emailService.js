@@ -92,8 +92,27 @@ let sendAttachment = async (dataSend) => {
     }
   });
 };
+// thêm
+let sendAccessLinkEmail = async (dataSend) => {
+  let transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false,
+    auth: { user: process.env.EMAIL_APP, pass: process.env.EMAIL_APP_PASSWORD },
+  });
+  await transporter.sendMail({
+    from: `"Booking Care" <${process.env.EMAIL_APP}>`,
+    to: dataSend.receivedEmail,
+    subject: "Xác nhận quyền truy cập lịch khám",
+    html: `<h3>Xin chào!</h3>
+           <p>Vui lòng click vào link dưới đây để xem danh sách lịch khám của bạn:</p>
+           <a href="${dataSend.redirectLink}">Xem danh sách lịch khám</a>`,
+  });
+};
 
 module.exports = {
   sendSimpleEmail: sendSimpleEmail,
   sendAttachment: sendAttachment,
+  // thêm
+  sendAccessLinkEmail: sendAccessLinkEmail,
 };

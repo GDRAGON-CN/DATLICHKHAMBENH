@@ -1,117 +1,179 @@
 .detail-specialty-container {
-  background: #f5f5f5;
+  background: #f0f2f5; // Màu nền xám dịu hơn
   min-height: 100vh;
-  padding: 30px 140px;
-  margin-top: 80px;
+  padding: 40px 10%; // Dùng % để tự co giãn trên các màn hình
+  margin-top: 70px;
 
+  /* PHẦN MÔ TẢ CHUYÊN KHOA */
   .specialty-description {
     background: white;
-    padding: 25px;
-    border-radius: 8px;
-    margin-bottom: 25px;
+    padding: 30px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    border: 1px solid #eef0f2;
 
     h2 {
-      font-size: 26px;
-      font-weight: 600;
-      margin-bottom: 10px;
+      color: #333;
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      border-left: 5px solid #45c3d2;
+      padding-left: 15px;
     }
 
-    p {
-      font-size: 15px;
-      line-height: 1.6;
-      margin-bottom: 8px;
+    div {
+      font-size: 15.5px;
+      line-height: 1.8;
+      color: #555;
+      text-align: justify;
     }
   }
 
+  /* BỘ LỌC TỈNH THÀNH */
   .search-doctor {
-    margin-bottom: 25px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    &::before {
+      content: "Lọc theo khu vực:";
+      font-weight: 600;
+      font-size: 15px;
+      color: #444;
+    }
 
     select {
-      padding: 8px 14px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
+      padding: 10px 20px;
+      border-radius: 8px;
+      border: 1px solid #ced4da;
       font-size: 14px;
+      background-color: white;
+      outline: none;
+      cursor: pointer;
+      min-width: 200px;
+      transition: all 0.3s;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+
+      &:focus {
+        border-color: #45c3d2;
+        box-shadow: 0 0 0 0.2rem rgba(69, 195, 210, 0.25);
+      }
+
+      &:hover {
+        border-color: #45c3d2;
+      }
     }
   }
 
+  /* DANH SÁCH BÁC SĨ */
   .list-doctor {
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 35px;
 
     .each-doctor {
       display: flex;
       background: white;
-      padding: 25px;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-      gap: 30px;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+      gap: 40px;
+      transition: transform 0.3s ease;
+      border: 1px solid transparent;
 
+      &:hover {
+        transform: translateY(-5px);
+        border-color: #e0f4f6;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+      }
+
+      /* CỘT TRÁI: THÔNG TIN CÁ NHÂN */
       .doctor-info {
-        flex: 1.6;
-        display: flex;
-        flex-direction: column; // Ép nội dung xếp theo chiều dọc
-
-        .info-content {
-          display: flex;
-          flex-direction: column; // Đảm bảo ProfileDoctor và nút Xem thêm xếp chồng lên nhau
-
-          // Nếu trong ProfileDoctor bạn dùng display flex cho avatar và text,
-          // thì nút Xem thêm sẽ tự động nhảy xuống dưới cùng.
-        }
+        flex: 1.5;
+        position: relative;
 
         .view-detail-doctor {
-          // Xóa padding-top: 50px cũ đi vì nó làm nút bay quá xa
-          padding-top: 10px;
-          padding-left: 105px; // Căn lề này thường bằng: Chiều rộng Avatar + Gap (90px + 15px)
+          margin-top: 15px;
+          padding-left: 105px; // Thường bằng Width Avatar + Gap
 
           a {
             color: #45c3d2;
             text-decoration: none;
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 600;
+            padding: 6px 15px;
+            border: 1px solid #45c3d2;
+            border-radius: 20px;
+            transition: all 0.3s;
+            display: inline-block;
 
             &:hover {
-              color: #28a745;
-              text-decoration: underline;
+              background: #45c3d2;
+              color: white;
+              box-shadow: 0 4px 12px rgba(69, 195, 210, 0.3);
             }
           }
         }
       }
 
+      /* CỘT PHẢI: LỊCH KHÁM */
       .doctor-schedule {
         flex: 1;
-        padding-left: 25px;
-        border-left: 1px solid #eee;
-
-        /* override DoctorSchedule layout */
+        padding-left: 30px;
+        border-left: 2px dashed #f0f0f0; // Dùng nét đứt cho hiện đại
 
         .schedule-doctor {
           margin-top: 0 !important;
-          display: block !important;
-        }
-
-        .schedule-left {
-          width: 100% !important;
-          padding-left: 0 !important;
-        }
-
-        .schedule-right {
-          width: 100% !important;
-          padding-left: 0 !important;
-          border-left: none !important;
-          margin-top: 15px;
         }
 
         .schedule-time {
           display: flex !important;
           flex-wrap: wrap !important;
-          gap: 10px;
+          gap: 12px;
+          margin-top: 15px;
         }
 
+        // Tùy chỉnh nút thời gian cho đẹp đồng bộ
         .time-btn {
-          min-width: 120px;
+          background: #f8f9fa !important;
+          border: 1px solid #e9ecef !important;
+          color: #333 !important;
+          font-weight: 600 !important;
+          border-radius: 5px !important;
+          transition: all 0.2s !important;
+
+          &:hover {
+            background: #45c3d2 !important;
+            color: white !important;
+            border-color: #45c3d2 !important;
+          }
         }
+      }
+    }
+  }
+}
+
+/* RESPONSIVE CHO MOBILE */
+@media (max-width: 1024px) {
+  .detail-specialty-container {
+    padding: 30px 20px;
+
+    .each-doctor {
+      flex-direction: column;
+      gap: 20px;
+
+      .doctor-schedule {
+        padding-left: 0;
+        border-left: none;
+        border-top: 1px solid #eee;
+        padding-top: 20px;
+      }
+
+      .doctor-info .view-detail-doctor {
+        padding-left: 0;
+        text-align: center;
       }
     }
   }

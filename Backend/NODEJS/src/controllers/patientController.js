@@ -54,9 +54,38 @@ let postCancelBooking = async (req, res) => {
   }
 };
 
+let postRequestMagicLink = async (req, res) => {
+  try {
+    let info = await patientService.postRequestMagicLink(req.body.email);
+    return res.status(200).json(info);
+  } catch (e) {
+    console.log(e);
+    return res.status(200).json({
+      errCode: -1,
+      errMessage: "Error from server",
+    });
+  }
+};
+
+let postVerifyMagicLink = async (req, res) => {
+  try {
+    let info = await patientService.postVerifyMagicLink(req.body);
+    return res.status(200).json(info);
+  } catch (e) {
+    console.log(e);
+    return res.status(200).json({
+      errCode: -1,
+      errMessage: "Error from server",
+    });
+  }
+};
+
 module.exports = {
   postBookAppointment: postBookAppointment,
   postVerifyBookAppointment: postVerifyBookAppointment,
   postCancelBooking: postCancelBooking,
   getListBookingByPatient: getListBookingByPatient,
+  // thêm
+  postRequestMagicLink: postRequestMagicLink,
+  postVerifyMagicLink: postVerifyMagicLink,
 };

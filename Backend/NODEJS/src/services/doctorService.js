@@ -217,10 +217,10 @@ let getDetailDoctorById = (inputId) => {
             exclude: ["password"],
           },
           include: [
-            {
-              model: db.Markdown,
-              attributes: ["descriptions", "contentHTML", "contentMarkdown"],
-            },
+            // {
+            //   model: db.Markdown,
+            //   attributes: ["descriptions", "contentHTML", "contentMarkdown"],
+            // },
             {
               model: db.Allcode,
               as: "positionData",
@@ -433,10 +433,10 @@ let getProfileInforDoctorById = (doctorId) => {
             exclude: ["password"],
           },
           include: [
-            {
-              model: db.Markdown,
-              attributes: ["descriptions", "contentHTML", "contentMarkdown"],
-            },
+            // {
+            //   model: db.Markdown,
+            //   attributes: ["descriptions", "contentHTML", "contentMarkdown"],
+            // },
             {
               model: db.Allcode,
               as: "positionData",

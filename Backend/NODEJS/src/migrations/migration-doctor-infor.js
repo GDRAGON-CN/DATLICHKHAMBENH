@@ -35,14 +35,16 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      addressClinic: {
-        type: Sequelize.STRING,
-        allowNull: false,
+      contentHTML: {
+        type: Sequelize.TEXT("long"),
       },
-      nameClinic: {
-        type: Sequelize.STRING,
-        allowNull: false,
+      contentMarkdown: {
+        type: Sequelize.TEXT("long"),
       },
+      descriptions: {
+        type: Sequelize.TEXT("long"),
+      },
+
       note: {
         type: Sequelize.STRING,
       },

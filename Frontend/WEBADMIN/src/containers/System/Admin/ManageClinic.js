@@ -13,6 +13,7 @@ import {
   deleteClinicService,
   updateClinicData,
 } from "../../../services/userService";
+import CommonTable from "./CommonTable";
 const mdParser = new MarkdownIt();
 
 class ManageClinic extends Component {
@@ -86,21 +87,6 @@ class ManageClinic extends Component {
       });
     }
   };
-  // handleSaveNewClinic = async () => {
-  //   let res = await createClinic(this.state);
-  //   if (res && res.errCode === 0) {
-  //     toast.success("Add a new specialty succeed");
-  //     this.setState({
-  //       name: "",
-  //       imageBase64: "",
-  //       descriptionHTML: "",
-  //       descriptionMarkdown: "",
-  //       address: "",
-  //     });
-  //   } else {
-  //     toast.error("Something wrongs ...");
-  //   }
-  // };
   handleSaveNewClinic = async () => {
     let { action } = this.state;
     let res;
@@ -138,6 +124,30 @@ class ManageClinic extends Component {
   };
   render() {
     let { listClinics } = this.state;
+    const columns = [
+      { label: "Tên phòng khám", key: "name" },
+      { label: "Địa chỉ", key: "address" },
+      {
+        label: "Hành động",
+        className: "text-right",
+        render: (item) => (
+          <div className="d-flex justify-content-end" style={{ gap: "10px" }}>
+            <button
+              className="btn-edit"
+              onClick={() => this.handleEditClinic(item)}
+            >
+              <i className="fas fa-pencil-alt"></i> Sửa
+            </button>
+            <button
+              className="btn-delete"
+              onClick={() => this.handleDeleteClinic(item)}
+            >
+              <i className="fas fa-trash"></i> Xóa
+            </button>
+          </div>
+        ),
+      },
+    ];
     return (
       <div className="manage-specialty-container">
         <div className="ms-title">Quản lý phòng khám</div>
@@ -209,42 +219,8 @@ class ManageClinic extends Component {
         </div>
 
         {/* Bảng danh sách */}
-        <div className="table-manage-clinic mt-5">
-          <table className="table table-hover mb-0">
-            <thead>
-              <tr>
-                <th>Tên phòng khám</th>
-                <th>Địa chỉ</th>
-                <th>Hành động</th>
-              </tr>
-            </thead>
-            <tbody>
-              {listClinics &&
-                listClinics.length > 0 &&
-                listClinics.map((item, index) => {
-                  return (
-                    <tr key={index}>
-                      <td>{item.name}</td>
-                      <td>{item.address}</td>
-                      <td className="d-flex gap-2">
-                        <button
-                          className="btn-edit"
-                          onClick={() => this.handleEditClinic(item)}
-                        >
-                          <i className="fas fa-pencil-alt"></i> Sửa
-                        </button>
-                        <button
-                          className="btn-delete"
-                          onClick={() => this.handleDeleteClinic(item)}
-                        >
-                          <i className="fas fa-trash"></i> Xóa
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
-            </tbody>
-          </table>
+        <div className="mt-5">
+          <CommonTable data={listClinics} columns={columns} itemsPerPage={5} />
         </div>
       </div>
     );

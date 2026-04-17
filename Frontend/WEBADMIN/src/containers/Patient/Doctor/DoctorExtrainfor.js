@@ -6,6 +6,7 @@ import { LANGUAGES } from "../../../utils";
 import { getScheduleDoctorByDate } from "../../../services/userService";
 import { getExtraInforDoctorById } from "../../../services/userService";
 import { NumericFormat } from "react-number-format";
+import { Link } from "react-router-dom/cjs/react-router-dom";
 
 class DoctorExtrainfor extends Component {
   constructor(props) {
@@ -49,9 +50,13 @@ class DoctorExtrainfor extends Component {
           <div className="price-title">
             <div>ĐỊA CHỈ PHÒNG KHÁM</div>
             <div>
-              {extraInfor && extraInfor.clinicData && extraInfor.clinicData.name
-                ? extraInfor.clinicData.name
-                : "Không có thông tin tên phòng khám"}
+              <Link to={`/detail-clinic/${extraInfor.clinicId}`}>
+                {extraInfor &&
+                extraInfor.clinicData &&
+                extraInfor.clinicData.name
+                  ? extraInfor.clinicData.name
+                  : "Không có thông tin tên phòng khám"}
+              </Link>
             </div>
             <div>
               {extraInfor &&

@@ -57,7 +57,6 @@ class MedicalFacility extends Component {
                     );
                   }
                   return (
-                    /* FIX LỖI KEY Ở ĐÂY */
                     <div
                       className="section-customize"
                       key={index}
@@ -67,7 +66,6 @@ class MedicalFacility extends Component {
                         className="bg-image section-medical-facility"
                         style={{ backgroundImage: `url('${imageBase64}')` }}
                       />
-                      {/* Thêm class để dễ styling tên phòng khám */}
                       <div className="clinic-name">{item.name}</div>
                     </div>
                   );

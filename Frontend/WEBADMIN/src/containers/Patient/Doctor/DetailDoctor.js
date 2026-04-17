@@ -7,7 +7,7 @@ import BookingModal from "../Doctor/Modal/BookingModal";
 import DoctorSchedule from "./DoctorSchedule";
 import { getDetailInforDoctor } from "../../../services/userService";
 import { LANGUAGES } from "../../../utils";
-import Header from "../../Header/Header";
+
 import HomeFooter from "../../HomePage/HomeFooter";
 
 class DetailDoctor extends Component {
@@ -73,6 +73,7 @@ class DetailDoctor extends Component {
 
   render() {
     console.log("Hoi dan It", this.state);
+
     let { language } = this.props;
     let { detailDoctor } = this.state;
     let nameVi = "",
@@ -103,9 +104,9 @@ class DetailDoctor extends Component {
 
               <div className="down">
                 {detailDoctor &&
-                  detailDoctor.Markdown &&
-                  detailDoctor.Markdown.descriptions && (
-                    <span>{detailDoctor.Markdown.descriptions}</span>
+                  detailDoctor.Doctor_Infor &&
+                  detailDoctor.Doctor_Infor.description && (
+                    <span>{detailDoctor.Doctor_Infor.description}</span>
                   )}
               </div>
             </div>
@@ -121,11 +122,11 @@ class DetailDoctor extends Component {
           <div className="detail-info">
             <div className="doctor-section">
               {detailDoctor &&
-                detailDoctor.Markdown &&
-                detailDoctor.Markdown.contentHTML && (
+                detailDoctor.Doctor_Infor &&
+                detailDoctor.Doctor_Infor.contentHTML && (
                   <div
                     dangerouslySetInnerHTML={{
-                      __html: detailDoctor.Markdown.contentHTML,
+                      __html: detailDoctor.Doctor_Infor.contentHTML,
                     }}
                   ></div>
                 )}

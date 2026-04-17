@@ -1,71 +1,153 @@
-.intro-doctor {
-  display: flex;
-  width: 70%;
-  margin: 30px auto;
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  margin-top: 80px;
-  .content-left {
-    width: 120px;
-    height: 120px;
-    background-size: cover;
-    background-position: center;
-    border-radius: 50%;
-    margin-right: 20px;
-  }
+.doctor-detail-container {
+  background-color: #f0f2f5; // Nền xám nhạt cho toàn trang
+  min-height: 100vh;
+  padding-bottom: 50px;
 
-  .content-right {
-    flex: 1;
+  /* PHẦN GIỚI THIỆU BÁC SĨ */
+  .intro-doctor {
+    display: flex;
+    width: 75%;
+    margin: 0 auto;
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    margin-top: 100px; // Cách Header
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    gap: 30px;
 
-    .up {
-      font-size: 24px;
-      font-weight: 600;
-      margin-bottom: 10px;
-      color: #222;
+    .content-left {
+      width: 140px;
+      height: 140px;
+      background-size: cover;
+      background-position: center;
+      border-radius: 50%;
+      border: 3px solid #45c3d2; // Viền xanh đặc trưng
+      flex-shrink: 0; // Không cho avatar bị bóp méo
+      box-shadow: 0 4px 15px rgba(69, 195, 210, 0.2);
     }
 
-    .down {
-      font-size: 15px;
-      color: #555;
-      line-height: 1.6;
+    .content-right {
+      flex: 1;
+
+      .up {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 15px;
+        color: #333;
+        letter-spacing: -0.5px;
+      }
+
+      .down {
+        font-size: 16px;
+        color: #666;
+        line-height: 1.8;
+        text-align: justify;
+        font-style: italic; // Làm phần mô tả ngắn trông chuyên nghiệp hơn
+      }
+    }
+  }
+
+  .doctor-schedule-container {
+    width: 60%;
+    margin: 0 auto;
+    padding: 20px 0;
+    display: flex;
+    gap: 30px;
+    border-bottom: 1px solid #f1f1f1;
+    background: #f0f2f5;
+  }
+
+  /* CHI TIẾT THÔNG TIN (MARKDOWN CONTENT) */
+  .detail-info {
+    width: 75%;
+    margin: 30px auto;
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    border: 1px solid #eef0f2;
+
+    .doctor-section {
+      // Style cho nội dung render từ HTML
+      div {
+        line-height: 1.8;
+        color: #444;
+        font-size: 16px;
+
+        h2,
+        h3 {
+          color: #2c3e50;
+          margin-top: 25px;
+          margin-bottom: 15px;
+          font-weight: 700;
+        }
+
+        h3 {
+          font-size: 22px;
+          border-left: 5px solid #45c3d2;
+          padding-left: 15px;
+        }
+
+        p {
+          margin-bottom: 15px;
+        }
+
+        ul,
+        ol {
+          padding-left: 25px;
+          margin-bottom: 20px;
+
+          li {
+            margin-bottom: 8px;
+            &::marker {
+              color: #45c3d2; // Đổi màu dấu chấm đầu dòng
+              font-weight: bold;
+            }
+          }
+        }
+
+        img {
+          max-width: 100%;
+          border-radius: 8px;
+          margin: 20px 0;
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+        }
+      }
     }
   }
 }
 
-.detail-info {
-  width: 70%;
-  margin: 40px auto;
-  background: white;
-  padding: 30px;
-  border-radius: 8px;
-
-  h2 {
-    font-size: 26px;
-    font-weight: 600;
-    margin-bottom: 20px;
-    color: #333;
+/* RESPONSIVE */
+@media (max-width: 1200px) {
+  .doctor-detail-container {
+    .intro-doctor,
+    .detail-info {
+      width: 90%;
+    }
   }
+}
 
-  .doctor-section {
-    margin-bottom: 30px;
+@media (max-width: 768px) {
+  .doctor-detail-container {
+    .intro-doctor {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 30px 20px;
 
-    h3 {
-      font-size: 20px;
-      color: #0071ba;
-      margin-bottom: 10px;
-      border-left: 4px solid #0071ba;
-      padding-left: 10px;
+      .content-left {
+        margin-right: 0;
+      }
+
+      .content-right .down {
+        text-align: center;
+      }
     }
 
-    ul {
-      padding-left: 20px;
-
-      li {
-        line-height: 1.8;
-        color: #444;
-        font-size: 15px;
-      }
+    .detail-info {
+      padding: 25px;
     }
   }
 }

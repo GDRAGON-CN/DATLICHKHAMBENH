@@ -14,28 +14,50 @@
       margin-bottom: 20px;
 
       select {
-        border: none;
-        border-bottom: 2px solid #45c3d2; // Gạch chân xanh thương hiệu
-        font-size: 16px;
+        // 1. Loại bỏ giao diện mặc định của trình duyệt
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+
+        // 2. Tạo hình dáng mềm mại
+        padding: 10px 35px 10px 15px; // Padding phải rộng hơn để chừa chỗ cho icon
+        font-size: 15px;
         font-weight: 600;
-        color: #45c3d2; // Màu chữ xanh đồng bộ với gạch chân
-        padding: 5px 10px 5px 0;
-        outline: none;
+        color: #45c3d2; // Màu xanh thương hiệu
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px; // Bo góc nhẹ nhàng
         cursor: pointer;
-        background: transparent;
-        text-transform: capitalize; // Viết hoa chữ cái đầu cho ngày tháng
+        outline: none;
+
+        // 3. Hiệu ứng nổi khối (Shadow)
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         transition: all 0.3s ease;
 
         &:hover {
-          color: darken(#45c3d2, 15%);
-          border-bottom-color: darken(#45c3d2, 15%);
+          border-color: #45c3d2;
+          box-shadow: 0 6px 15px rgba(69, 195, 210, 0.15);
+          transform: translateY(-2px); // Nhích lên nhẹ khi hover
         }
 
-        option {
-          color: #333; // Màu chữ bên trong menu xổ xuống cho dễ đọc
-          background: #fff;
-          font-weight: normal;
+        &:focus {
+          border-color: #45c3d2;
+          box-shadow: 0 0 0 3px rgba(69, 195, 210, 0.1);
         }
+      }
+
+      /* 4. Tự tạo mũi tên tùy chỉnh thay cho mũi tên xấu xí mặc định */
+      &::after {
+        content: "\f107"; // FontAwesome Chevron Down (nếu m có dùng FontAwesome)
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none; // Không chặn click vào select
+        color: #45c3d2;
+        font-size: 16px;
       }
     }
 

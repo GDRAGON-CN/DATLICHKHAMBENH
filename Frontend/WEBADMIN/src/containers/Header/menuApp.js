@@ -1,78 +1,47 @@
 export const adminMenu = [
   {
-    //quản lý người dùng
-
-    name: "menu.admin.manage-user",
+    // Cụm Quản lý hệ thống (Gộp tất cả vào đây)
+    name: "TRANG QUẢN LÝ CỦA ADMIN",
     menus: [
       {
-        name: "menu.admin.crud",
-        link: "/system/user-manage",
-      },
-      {
-        name: "menu.admin.crud-redux",
+        name: "Quản lí người dùng",
         link: "/system/user-redux",
       },
       {
         name: "Quản lý thông tin bác sĩ",
         link: "/system/manage-doctor",
-        // subMenus: [
-        //   {
-        //     name: "menu.system.system-administrator.user-manage",
-        //     link: "/system/user-manage",
-        //   },
-        //   {
-        //     name: "menu.system.system-administrator.user-redux",
-        //     link: "/system/user-redux",
-        //   },
-        // ],
       },
-      // { name: 'menu.system.system-parameter.header', link: '/system/system-parameter' },
-      // {
-      //   name: "Quản lý admin",
-      //   link: "/system/user-admin",
-      // },
       {
-        //quản lý người dùng
-
         name: "Quản lý lịch khám bệnh của bác sĩ",
         link: "/doctor/manage-schedule",
       },
-      { name: "Lịch hẹn của bệnh nhân", link: "/system/manage-done-booking" },
-    ],
-  },
-  {
-    //Quản lý phòng khám
-
-    name: "menu.admin.clinic",
-    menus: [
       {
-        name: "menu.admin.manage-clinic",
+        name: "Lịch hẹn của bệnh nhân",
+        link: "/system/manage-done-booking",
+      },
+      {
+        name: "Quản lý phòng khám",
         link: "/system/manage-clinic",
       },
-    ],
-  },
-  {
-    //Quản lý chuyên khoa
 
-    name: "menu.admin.specialty",
-    menus: [
       {
-        name: "menu.admin.manage-specialty",
+        name: "Quản lý chuyên khoa",
         link: "/system/manage-specialty",
       },
     ],
   },
 ];
+
 export const doctorMenu = [
   {
-    name: "menu.admin.manage-user",
+    name: "TRANG QUẢN LÝ CỦA BÁC SĨ",
     menus: [
       {
-        name: "menu.doctor.manage-schedule",
+        name: "Quản lý lịch khám chữa bệnh",
         link: "/doctor/manage-schedule",
       },
       {
-        name: "menu.doctor.manage-patient",
+        name: "Quản lý danh sách bệnh nhân",
         link: "/doctor/manage-patient",
       },
     ],

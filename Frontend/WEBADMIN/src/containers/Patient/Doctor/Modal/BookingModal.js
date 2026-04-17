@@ -27,6 +27,7 @@ class BookingModal extends Component {
       genders: "",
       doctorId: "",
       timeType: "",
+      isLoading: false,
     };
   }
 
@@ -82,7 +83,11 @@ class BookingModal extends Component {
   };
 
   handleConfirmBooking = async () => {
-    // !data.email || !data.doctorId || !data.timeType || !data.date
+    if (!this.state.email || !this.state.fullName || !this.state.phoneNumber) {
+      toast.error("Vui lòng điền đầy đủ các thông tin bắt buộc!");
+      return;
+    }
+    this.setState({ isLoading: true });
     let date = new Date(this.state.birthday).getTime();
     let timeString = this.buildTimeBooking(this.props.dataTime);
     let doctorName = this.buildDOctorName(this.props.dataTime);
@@ -101,13 +106,22 @@ class BookingModal extends Component {
       timeString: timeString,
       doctorName: doctorName,
     });
+    this.setState({ isLoading: false });
     if (res && res.errCode === 0) {
-      toast.success("Booking a new appointment success");
+      toast.success(
+        "Đặt lịch thành công! Vui lòng kiểm tra email để xác nhận. Sau 15 phút bạn không xác nhận lịch sẽ bị hủy",
+      );
       this.props.closeBookingClose();
     } else if (res.errCode === 3) {
       toast.error(
         "Xin lỗi, khung giờ này đã đủ số lượng bệnh nhân đăng ký tối đa!",
       );
+    } else if (res.errCode === 4) {
+      toast.error(
+        "Bạn đã có một lịch hẹn đang chờ xác nhận với bác sĩ này. Vui lòng kiểm tra email!",
+      );
+    } else if (res.errCode === 5) {
+      toast.warning(res.errMessage);
     } else {
       toast.error("Đặt lịch thất bại hãy kiểm tra lại");
     }
@@ -241,11 +255,15 @@ class BookingModal extends Component {
             </div>
           </div>
           <div className="booking-modal-footer">
-            <button className="btn-confirm" onClick={this.handleConfirmBooking}>
-              Xác nhận
+            <button
+              className="btn-confirm"
+              disabled={this.state.isLoading}
+              onClick={this.handleConfirmBooking}
+            >
+              {this.state.isLoading ? "Đang xử lý..." : "Xác nhận"}
             </button>
             <button className="btn-cancel" onClick={closeBookingClose}>
-              Cancel
+              Hủy
             </button>
           </div>
         </div>

@@ -1,0 +1,111 @@
+.sidebar-container {
+  width: 250px;
+  height: 100vh;
+  background: #ffffff; // Nền trắng hoàn toàn
+  color: #2c3e50;
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05); // Đổ bóng nhẹ bên phải để tách biệt với content
+  border-right: 1px solid #eef2f7;
+  z-index: 100;
+
+  .sidebar-logo {
+    padding: 25px 20px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 800;
+    color: #45c3d2; // Màu logo cùng tông cyan
+    letter-spacing: 1px;
+    border-bottom: 1px solid #f8f9fa;
+  }
+
+  .sidebar-menu {
+    padding: 15px 0;
+    flex: 1;
+    overflow-y: auto;
+
+    .menu-group {
+      margin-bottom: 10px;
+
+      .group-name {
+        padding: 10px 25px;
+        font-size: 11px;
+        color: #adb5bd; // Màu xám nhạt cho tên nhóm
+        text-transform: uppercase;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+      }
+    }
+
+    .menu-item {
+      padding: 14px 25px;
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 14px;
+      color: #576574;
+      display: flex;
+      align-items: center;
+      transition: all 0.2s ease;
+      border-left: 4px solid transparent; // Tạo vạch màu khi active/hover
+
+      &:hover {
+        background: rgba(69, 195, 210, 0.08); // Màu xanh cực nhạt khi hover
+        color: #45c3d2;
+        border-left: 4px solid #45c3d2;
+        padding-left: 30px;
+      }
+
+      &.active {
+        // Nếu m làm thêm logic active route
+        background: rgba(69, 195, 210, 0.12);
+        color: #45c3d2;
+        border-left: 4px solid #45c3d2;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .sidebar-footer {
+    padding: 20px;
+    border-top: 1px solid #f8f9fa;
+    background: #fdfdfd;
+
+    .btn-logout {
+      color: #ee5253; // Màu đỏ nhạt cho nút logout
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 15px;
+      border-radius: 8px;
+      transition: all 0.3s;
+
+      &:hover {
+        background: #fff5f5;
+        transform: translateX(5px);
+      }
+
+      i {
+        font-size: 18px;
+      }
+
+      .logout-text {
+        font-weight: 600;
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+// Custom thanh cuộn cho Sidebar nếu menu quá dài
+.sidebar-menu::-webkit-scrollbar {
+  width: 4px;
+}
+.sidebar-menu::-webkit-scrollbar-thumb {
+  background: #eef2f7;
+  border-radius: 10px;
+}

@@ -1,70 +1,90 @@
 .patient-booking-container {
-  padding: 40px 0;
-  background-color: #f8f9fa;
-  min-height: 85vh;
-  margin-top: 80px;
+  padding: 60px 0;
+  background-color: #f4f7f6;
+  min-height: 80vh;
+  margin-top: 70px;
+
   .container {
-    max-width: 800px; // Khống chế chiều rộng tổng để card không bị bè ra quá to
+    max-width: 900px;
   }
 
-  // Phần Search Section
-  .search-section {
+  /* GIAO DIỆN NHẬP MAIL (CHƯA XÁC THỰC) */
+  .verify-email-wrapper {
     display: flex;
     justify-content: center;
-    margin-bottom: 40px;
-    gap: 10px;
+    padding-top: 50px;
 
-    input {
-      width: 70%;
-      padding: 12px 20px;
-      border-radius: 25px;
-      border: 1px solid #ced4da;
-      outline: none;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-      transition: all 0.3s;
+    .verify-card {
+      background: white;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 100%;
+      max-width: 500px;
 
-      &:focus {
-        border-color: #45c3d2;
-        box-shadow: 0 0 8px rgba(69, 195, 210, 0.2);
+      .icon-box {
+        font-size: 50px;
+        color: #45c3d2;
+        margin-bottom: 20px;
       }
-    }
 
-    .btn-search {
-      padding: 0 25px;
-      border-radius: 25px;
-      border: none;
-      background-color: #45c3d2;
-      color: white;
-      font-weight: 600;
-      transition: all 0.3s;
+      h3 {
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: #333;
+      }
+      p {
+        color: #777;
+        margin-bottom: 25px;
+        line-height: 1.5;
+      }
 
-      &:hover {
-        background-color: darken(#45c3d2, 5%);
-        transform: translateY(-1px);
+      .input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+
+        input {
+          padding: 12px 20px;
+          border-radius: 8px;
+          border: 1px solid #ddd;
+          outline: none;
+          font-size: 16px;
+          &:focus {
+            border-color: #45c3d2;
+          }
+        }
+
+        .btn-request {
+          padding: 12px;
+          border-radius: 8px;
+          border: none;
+          background: #45c3d2;
+          color: white;
+          font-weight: 600;
+          cursor: pointer;
+          transition: 0.3s;
+          &:hover {
+            background: darken(#45c3d2, 10%);
+          }
+        }
       }
     }
   }
 
-  .title-page {
-    font-size: 24px;
-    font-weight: 700;
-    color: #333;
-    margin-bottom: 25px;
+  /* GIAO DIỆN DANH SÁCH (ĐÃ XÁC THỰC) */
+  .patient-info-summary {
     text-align: center;
-    text-transform: uppercase;
+    margin-bottom: 30px;
+    color: #555;
+    background: #e0f2f1;
+    display: inline-block;
+    padding: 8px 20px;
+    border-radius: 20px;
+    left: 50%;
     position: relative;
-    padding-bottom: 10px;
-
-    &::after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 60px;
-      height: 3px;
-      background-color: #45c3d2;
-    }
+    transform: translateX(-50%);
   }
 
   .booking-list {
@@ -73,171 +93,95 @@
     gap: 20px;
 
     .booking-card {
-      display: flex;
+      display: flex; /* CHIA 2 CỘT */
       background: white;
       border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-      border: 1px solid #eee;
-      transition: transform 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 
-      &:hover {
-        transform: scale(1.01);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-      }
-
-      // Bên trái: Thời gian & Ngày tháng
       .card-left {
-        width: 160px;
-        background-color: #f0fbfc; // Màu xanh nhạt rất nhẹ
+        width: 180px;
+        background-color: #f8f9fa;
+        padding: 20px;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding: 20px;
-        border-right: 2px dashed #e0e0e0;
+        border-right: 1px dashed #ddd;
 
-        .doctor-img {
-          width: 50px;
-          height: 50px;
-          border-radius: 50%;
-          background: #fff;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          margin-bottom: 10px;
-          border: 1px solid #45c3d2;
-          i {
-            font-size: 24px;
-            color: #45c3d2;
-          }
-        }
-
-        .status-label {
-          font-size: 11px;
+        .status-badge {
+          font-size: 10px;
           font-weight: 800;
           color: #45c3d2;
-          letter-spacing: 1px;
-          margin-bottom: 8px;
+          margin-bottom: 10px;
         }
-
-        .time,
-        .date {
-          font-size: 14px;
-          color: #efb140; // Màu vàng cam sang trọng giống ảnh mẫu
+        .time {
+          color: #f39c12;
           font-weight: 700;
-          margin-top: 4px;
-          display: flex;
-          align-items: center;
-          gap: 5px;
+          font-size: 16px;
+          margin-bottom: 5px;
+        }
+        .date {
+          color: #777;
+          font-size: 14px;
         }
       }
 
-      // Bên phải: Thông tin bác sĩ & Nút bấm
       .card-right {
         flex: 1;
-        padding: 20px 25px;
+        padding: 20px 30px;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        gap: 10px;
 
-        .info-item {
-          margin-bottom: 10px;
-          font-size: 15px;
-
-          .label {
-            color: #777;
-            width: 90px;
-            display: inline-block;
-          }
-
+        .doctor-info {
           .dr-name {
             color: #45c3d2;
             font-weight: 700;
-            font-size: 16px;
+            font-size: 18px;
+            margin-left: 10px;
           }
+        }
 
-          .status {
-            font-weight: 600;
-            padding: 2px 10px;
-            border-radius: 15px;
-            font-size: 13px;
-
-            &.st-S1 {
-              background: #fff4e5;
-              color: #ff9800;
-            } // Chờ xác nhận
-            &.st-S2 {
-              background: #e8f5e9;
-              color: #4caf50;
-            } // Đã xác nhận
+        .status {
+          margin-left: 10px;
+          font-weight: 600;
+          padding: 3px 12px;
+          border-radius: 12px;
+          font-size: 12px;
+          &.st-S1 {
+            background: #fff4e5;
+            color: #ff9800;
+          }
+          &.st-S2 {
+            background: #e8f5e9;
+            color: #4caf50;
+          }
+          &.st-S4 {
+            background: #ffebee;
+            color: #f44336;
           }
         }
 
         .btn-container {
+          margin-top: auto;
           display: flex;
           justify-content: flex-end;
-          gap: 12px;
-          margin-top: 15px;
-
-          button {
-            padding: 8px 20px;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            border: none;
-            transition: all 0.2s;
-          }
-
-          .btn-status {
-            background-color: #fdb924;
-            color: white;
-            cursor: default;
-            &:hover {
-              opacity: 0.9;
-            }
-          }
 
           .btn-cancel {
-            background-color: #fff;
-            color: #ff4d4f;
+            background: white;
             border: 1px solid #ff4d4f;
+            color: #ff4d4f;
+            padding: 6px 15px;
+            border-radius: 5px;
+            cursor: pointer;
             &:hover {
-              background-color: #ff4d4f;
+              background: #ff4d4f;
               color: white;
             }
           }
         }
       }
-    }
-  }
-
-  .no-data {
-    text-align: center;
-    padding: 50px;
-    background: white;
-    border-radius: 12px;
-    color: #999;
-    font-style: italic;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  }
-}
-
-// Responsive cho di động
-@media (max-width: 576px) {
-  .booking-card {
-    flex-direction: column;
-    .card-left {
-      width: 100% !important;
-      border-right: none !important;
-      border-bottom: 2px dashed #eee;
-    }
-  }
-  .search-section {
-    flex-direction: column;
-    input {
-      width: 100% !important;
     }
   }
 }

@@ -66,6 +66,15 @@ let initWebRoute = (app) => {
     "/api/verify-book-appointment",
     patientController.postVerifyBookAppointment,
   );
+  // thêm
+  router.post(
+    "/api/request-magic-link",
+    patientController.postRequestMagicLink,
+  );
+
+  // 2. Xác thực link khi user click từ mail và trả về danh sách lịch
+  router.post("/api/verify-magic-link", patientController.postVerifyMagicLink);
+  // thêm
   router.post(
     "/api/patient-cancel-booking",
     patientController.postCancelBooking,

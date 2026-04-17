@@ -70,6 +70,14 @@ const postPatientBookAppointment = (data) => {
 const postVerifyBookAppointment = (data) => {
   return axios.post("/api/verify-book-appointment", data);
 };
+// thêm
+const requestMagicLink = (email) => {
+  return axios.post("/api/request-magic-link", { email });
+};
+const verifyMagicLink = (data) => {
+  return axios.post("/api/verify-magic-link", data);
+};
+// thêm
 const cancelBookingService = (data) => {
   return axios.post("/api/patient-cancel-booking", data);
 };
@@ -148,6 +156,9 @@ export {
   getProfileInforDoctorById,
   postPatientBookAppointment,
   postVerifyBookAppointment,
+  // thêm
+  requestMagicLink,
+  verifyMagicLink,
   cancelBookingService,
   getAllBookingByPatient,
   createNewSpecialty,

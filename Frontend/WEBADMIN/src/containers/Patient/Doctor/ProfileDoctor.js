@@ -118,10 +118,10 @@ class ProfileDoctor extends Component {
               {isShowDescriptionDoctor === true ? (
                 <>
                   {dataProfile &&
-                    dataProfile.Markdown &&
-                    dataProfile.Markdown.descriptions && (
+                    dataProfile.Doctor_Infor &&
+                    dataProfile.Doctor_Infor.description && (
                       <div>
-                        <span>{dataProfile.Markdown.descriptions}</span>
+                        <span>{dataProfile.Doctor_Infor.description}</span>
                         <Link to={`/detail-doctor/${dataProfile.id}`}>
                           Xem thêm
                         </Link>
