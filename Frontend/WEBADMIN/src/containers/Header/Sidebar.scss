@@ -1,7 +1,7 @@
 .sidebar-container {
   width: 250px;
   height: 100vh;
-  background: #ffffff; // Nền trắng hoàn toàn
+  background: #ffffff;
   color: #2c3e50;
   position: fixed;
   left: 0;
@@ -9,7 +9,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05); // Đổ bóng nhẹ bên phải để tách biệt với content
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05); 
   border-right: 1px solid #eef2f7;
   z-index: 100;
 
@@ -18,7 +18,7 @@
     text-align: center;
     font-size: 18px;
     font-weight: 800;
-    color: #45c3d2; // Màu logo cùng tông cyan
+    color: #45c3d2; 
     letter-spacing: 1px;
     border-bottom: 1px solid #f8f9fa;
   }
@@ -34,7 +34,7 @@
       .group-name {
         padding: 10px 25px;
         font-size: 11px;
-        color: #adb5bd; // Màu xám nhạt cho tên nhóm
+        color: #adb5bd;
         text-transform: uppercase;
         font-weight: 700;
         letter-spacing: 0.5px;
@@ -50,17 +50,17 @@
       display: flex;
       align-items: center;
       transition: all 0.2s ease;
-      border-left: 4px solid transparent; // Tạo vạch màu khi active/hover
+      border-left: 4px solid transparent;
 
       &:hover {
-        background: rgba(69, 195, 210, 0.08); // Màu xanh cực nhạt khi hover
+        background: rgba(69, 195, 210, 0.08); 
         color: #45c3d2;
         border-left: 4px solid #45c3d2;
         padding-left: 30px;
       }
 
       &.active {
-        // Nếu m làm thêm logic active route
+
         background: rgba(69, 195, 210, 0.12);
         color: #45c3d2;
         border-left: 4px solid #45c3d2;
@@ -75,7 +75,7 @@
     background: #fdfdfd;
 
     .btn-logout {
-      color: #ee5253; // Màu đỏ nhạt cho nút logout
+      color: #ee5253; 
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -101,7 +101,6 @@
   }
 }
 
-// Custom thanh cuộn cho Sidebar nếu menu quá dài
 .sidebar-menu::-webkit-scrollbar {
   width: 4px;
 }

@@ -1,10 +1,8 @@
 .detail-specialty-container {
-  background: #f0f2f5; // Màu nền xám dịu hơn
+  background: #f0f2f5; 
   min-height: 100vh;
-  padding: 40px 10%; // Dùng % để tự co giãn trên các màn hình
+  padding: 40px 10%;
   margin-top: 70px;
-
-  /* PHẦN MÔ TẢ CHUYÊN KHOA */
   .specialty-description {
     background: white;
     padding: 30px;
@@ -30,7 +28,6 @@
     }
   }
 
-  /* BỘ LỌC TỈNH THÀNH */
   .search-doctor {
     margin-bottom: 30px;
     display: flex;
@@ -66,8 +63,6 @@
       }
     }
   }
-
-  /* DANH SÁCH BÁC SĨ */
   .list-doctor {
     display: flex;
     flex-direction: column;
@@ -88,15 +83,13 @@
         border-color: #e0f4f6;
         box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
       }
-
-      /* CỘT TRÁI: THÔNG TIN CÁ NHÂN */
       .doctor-info {
         flex: 1.5;
         position: relative;
 
         .view-detail-doctor {
           margin-top: 15px;
-          padding-left: 105px; // Thường bằng Width Avatar + Gap
+          padding-left: 105px;
 
           a {
             color: #45c3d2;
@@ -117,12 +110,10 @@
           }
         }
       }
-
-      /* CỘT PHẢI: LỊCH KHÁM */
       .doctor-schedule {
         flex: 1;
         padding-left: 30px;
-        border-left: 2px dashed #f0f0f0; // Dùng nét đứt cho hiện đại
+        border-left: 2px dashed #f0f0f0; 
 
         .schedule-doctor {
           margin-top: 0 !important;
@@ -134,8 +125,6 @@
           gap: 12px;
           margin-top: 15px;
         }
-
-        // Tùy chỉnh nút thời gian cho đẹp đồng bộ
         .time-btn {
           background: #f8f9fa !important;
           border: 1px solid #e9ecef !important;
@@ -155,7 +144,6 @@
   }
 }
 
-/* RESPONSIVE CHO MOBILE */
 @media (max-width: 1024px) {
   .detail-specialty-container {
     padding: 30px 20px;

@@ -1,0 +1,63 @@
+.section-outstanding-doctor {
+  .section-customize {
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    margin: 10px;
+    padding: 20px 15px;
+    transition: all 0.3s ease;
+    border: 1px solid #f0f0f0;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(69, 195, 210, 0.2);
+      border-color: #45c3d2;
+    }
+
+    .outer-bg {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 15px;
+      
+      .bg-image {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        margin: auto;
+        background-position: center;
+        background-size: cover;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+        border: 3px solid #f0fbfc;
+      }
+    }
+
+    &:hover .outer-bg .bg-image {
+      transform: scale(1.05);
+      border-color: #45c3d2;
+      box-shadow: 0 8px 20px rgba(69, 195, 210, 0.3);
+    }
+
+    .position {
+      text-align: center;
+      
+      .doctor-name {
+        font-size: 16px;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 5px;
+        transition: color 0.3s;
+      }
+      
+      .doctor-specialty {
+        font-size: 13px;
+        color: #777;
+        font-weight: 500;
+      }
+    }
+
+    &:hover .position .doctor-name {
+      color: #45c3d2;
+    }
+  }
+}

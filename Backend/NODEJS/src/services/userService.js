@@ -32,15 +32,9 @@ let handleUserLogin = (email, password) => {
           ],
           where: { email: email },
           raw: true,
-          // attributes: {
-          //   include: ["email", "roleId"],
-          //   // exclude: ["password"],
-          // },
         });
         if (user) {
-          // compare password
           let check = await bcrypt.compareSync(password, user.password);
-          // let check = true;
           if (check) {
             userData.errCode = 0;
             userData.errMessage = "ok";
@@ -107,7 +101,6 @@ let getAllUsers = (userId) => {
 let createNewUser = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
-      // check email is exist ???
       let check = await checkUserEmail(data.email);
       if (check === true) {
         resolve({
@@ -150,9 +143,6 @@ let deleteUser = (userId) => {
         errMessage: "the user isn't exist",
       });
     }
-    // if (foundUser) {
-    //   await foundUser.destroy();
-    // }
     await db.User.destroy({
       where: { id: userId },
     });
@@ -188,11 +178,6 @@ let updateUserData = (data) => {
           user.image = data.avatar;
         }
         await user.save();
-        // await db.User.save({
-        //   firstName: data.firstName,
-        //   lastName: data.lastName,
-        //   address: data.address,
-        // }));
         resolve({
           errCode: 0,
           message: "Update the user succeed",
@@ -313,7 +298,7 @@ let getAllBookingForAdmin = (date) => {
               model: db.User,
               as: "doctorData",
               attributes: ["firstName", "lastName"],
-            }, // Xem lịch của bác sĩ nào
+            },
           ],
           raw: false,
           nest: true,

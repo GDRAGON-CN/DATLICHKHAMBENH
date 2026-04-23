@@ -46,7 +46,7 @@
     .list-time {
       display: flex;
       flex-wrap: wrap;
-      gap: 15px; // Khoảng cách giữa các nút
+      gap: 15px; 
 
       .btn-time {
         width: 120px;
@@ -64,7 +64,7 @@
         }
 
         &.active {
-          background-color: #f7d919; // Màu vàng đặc trưng bookingcare
+          background-color: #f7d919; 
           border-color: #f7d919;
           color: #333;
           box-shadow: 0 4px 10px rgba(247, 217, 25, 0.3);
@@ -97,7 +97,7 @@
     .list-time {
       justify-content: space-between;
       .btn-time {
-        width: 30%; // 3 nút 1 hàng trên mobile
+        width: 30%; 
       }
     }
   }

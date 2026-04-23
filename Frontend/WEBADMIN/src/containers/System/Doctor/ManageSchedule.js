@@ -43,7 +43,7 @@ class ManageSchedule extends Component {
         data = data.map((item) => ({ ...item, isSelected: false }));
       }
       this.setState({ rangeTime: data }, async () => {
-        await this.getExistingSchedule(); // Load lịch khi list khung giờ vừa tải xong
+        await this.getExistingSchedule(); 
       });
     }
 
@@ -93,24 +93,22 @@ class ManageSchedule extends Component {
     if (selectedDoctor && !_.isEmpty(selectedDoctor) && currentDate) {
       let formattedDate = new Date(currentDate).getTime();
 
-      // Gọi API lấy lịch đã lưu của bác sĩ trong ngày này
       let res = await getScheduleDoctorByDate(
         selectedDoctor.value,
         formattedDate,
       );
 
       if (res && res.errCode === 0) {
-        let listSavedSchedule = res.data; // Đây là mảng các khung giờ đã lưu trong DB
+        let listSavedSchedule = res.data; 
         let copyRangeTime = [...rangeTime];
 
         if (copyRangeTime && copyRangeTime.length > 0) {
-          // Reset tất cả về màu xám trước
+
           copyRangeTime = copyRangeTime.map((item) => ({
             ...item,
             isSelected: false,
           }));
 
-          // Nếu có dữ liệu cũ, so khớp theo keyMap (T1, T2...) để tick xanh lại
           if (listSavedSchedule && listSavedSchedule.length > 0) {
             copyRangeTime = copyRangeTime.map((item) => {
               let isMatch = listSavedSchedule.find(
@@ -135,7 +133,6 @@ class ManageSchedule extends Component {
         currentDate: date[0],
       },
       async () => {
-        // Sau khi state ngày thay đổi, gọi hàm lấy lịch
         await this.getExistingSchedule();
       },
     );
@@ -147,7 +144,6 @@ class ManageSchedule extends Component {
         selectedDoctor: selectedOption,
       },
       async () => {
-        // Sau khi state bác sĩ thay đổi, gọi hàm lấy lịch
         await this.getExistingSchedule();
       },
     );
@@ -178,7 +174,6 @@ class ManageSchedule extends Component {
       toast.error("Invalid selected doctor!");
     }
     let formattedDate = new Date(currentDate).getTime();
-    // let formattedDate = moment(currentDate).format(dateFormat.SEND_TO_SERVER);
     if (rangeTime && rangeTime.length > 0) {
       let selectedTime = rangeTime.filter((item) => item.isSelected === true);
       if (selectedTime && selectedTime.length > 0) {
@@ -227,7 +222,7 @@ class ManageSchedule extends Component {
                 onChange={this.handleChange}
                 options={this.state.listDoctors}
                 isDisabled={isDoctor}
-                placeholder="chọn bác sĩ" // NẾU LÀ BÁC SĨ THÌ KHÔNG CHO CHỌN NGƯỜI KHÁC
+                placeholder="chọn bác sĩ" 
               />
             </div>
             <div className="col-6 form-group">

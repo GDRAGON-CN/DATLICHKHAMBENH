@@ -97,7 +97,6 @@
     }
   }
 
-  // Style cho các Badge trạng thái
   .status-badge {
     padding: 6px 12px;
     border-radius: 20px;
@@ -108,22 +107,22 @@
     &.S1 {
       background: #feebc8;
       color: #9c4221;
-    } // Chờ xác nhận (Vàng nhạt)
+    }
     &.S2 {
       background: #bee3f8;
       color: #2a4365;
-    } // Đã xác nhận (Xanh biển nhạt)
+    }
     &.S3 {
       background: #c6f6d5;
       color: #22543d;
-    } // Hoàn thành (Xanh lá nhạt)
+    }
     &.S4 {
       background: #fed7d7;
       color: #822727;
-    } // Đã hủy (Đỏ nhạt)
+    }
   }
 
-  // Style cho các nút bấm Action
+
   .btn-action {
     padding: 6px 10px;
     border-radius: 6px;

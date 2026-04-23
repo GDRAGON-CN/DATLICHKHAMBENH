@@ -102,7 +102,6 @@ class AllDoctor extends Component {
                 let nameVi = `${pos || ""}, ${item.lastName} ${item.firstName}`;
                 let nameEn = `${pos || ""}, ${item.firstName} ${item.lastName}`;
 
-                // Render ảnh
                 let imageBase64 = "";
                 if (item.image) {
                   imageBase64 = new Buffer(item.image, "base64").toString(
@@ -131,7 +130,6 @@ class AllDoctor extends Component {
                           "Chuyên khoa hệ thống"}
                       </div>
 
-                      {/* Thêm địa chỉ phòng khám nếu có để tăng độ tin cậy */}
                       {item.Doctor_Infor?.addressClinic && (
                         <div className="doctor-address">
                           <i className="fas fa-map-marker-alt"></i>{" "}

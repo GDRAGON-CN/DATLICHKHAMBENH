@@ -6,7 +6,7 @@
   margin-top: 50px;
 
   .all-specialty-content {
-    padding: 20px 10%; // Tạo khoảng trống 2 bên
+    padding: 20px 10%;
     margin-top: 20px;
 
     .title {
@@ -20,10 +20,10 @@
     .list-specialty {
       display: flex;
       flex-wrap: wrap;
-      gap: 20px; // Khoảng cách giữa các item
+      gap: 20px; 
 
       .specialty-child {
-        width: calc(25% - 15px); // Chia 4 cột trên desktop
+        width: calc(25% - 15px);
         background-color: white;
         border-radius: 8px;
         overflow: hidden;
@@ -36,7 +36,7 @@
           transform: translateY(-3px);
 
           .specialty-name {
-            color: #45c3d2; // Màu chủ đạo của BookingCare
+            color: #45c3d2; 
           }
         }
 
@@ -55,7 +55,7 @@
           font-weight: 500;
           color: #333;
           text-align: center;
-          // Giới hạn 2 dòng nếu tên quá dài
+
           display: -webkit-box;
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
@@ -67,14 +67,14 @@
   }
 }
 
-// Responsive cho Mobile và Tablet
+
 @media (max-width: 1024px) {
   .all-specialty-container {
     .all-specialty-content {
       padding: 20px 5%;
       .list-specialty {
         .specialty-child {
-          width: calc(33.33% - 14px); // Chia 3 cột
+          width: calc(33.33% - 14px);
         }
       }
     }
@@ -98,7 +98,7 @@
     .all-specialty-content {
       .list-specialty {
         .specialty-child {
-          width: 100%; // 1 cột duy nhất
+          width: 100%; 
         }
       }
     }

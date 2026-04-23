@@ -15,7 +15,7 @@ class DoctorSchedule extends Component {
     this.state = {
       arrSchedule: [],
       allDays: [],
-      selectedDate: "", // Thêm khởi tạo này
+      selectedDate: "", 
     };
   }
 
@@ -55,7 +55,7 @@ class DoctorSchedule extends Component {
   handleOnChangeSelect = async (event) => {
     if (this.props.doctorIdFromParent && this.props.doctorIdFromParent !== -1) {
       let doctorId = this.props.doctorIdFromParent;
-      let date = event.target.value; // Đây là string
+      let date = event.target.value; 
 
       this.setState({
         selectedDate: Number(date),

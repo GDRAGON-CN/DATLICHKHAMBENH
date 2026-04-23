@@ -2,11 +2,11 @@
   display: flex;
   margin-top: 20px;
   padding: 0 10%;
-  gap: 30px; // Tạo khoảng cách an toàn giữa cột trái và phải
+  gap: 30px; 
 
   .schedule-left {
     width: 60%;
-    padding-left: 100px; // Căn chỉnh để khớp với nội dung bác sĩ phía trên
+    padding-left: 100px; 
 
     .schedule-date {
       position: relative;
@@ -14,30 +14,27 @@
       margin-bottom: 20px;
 
       select {
-        // 1. Loại bỏ giao diện mặc định của trình duyệt
         appearance: none;
         -webkit-appearance: none;
         -moz-appearance: none;
 
-        // 2. Tạo hình dáng mềm mại
-        padding: 10px 35px 10px 15px; // Padding phải rộng hơn để chừa chỗ cho icon
+        padding: 10px 35px 10px 15px; 
         font-size: 15px;
         font-weight: 600;
-        color: #45c3d2; // Màu xanh thương hiệu
+        color: #45c3d2; 
         background-color: #fff;
         border: 1px solid #ddd;
-        border-radius: 8px; // Bo góc nhẹ nhàng
+        border-radius: 8px;
         cursor: pointer;
         outline: none;
 
-        // 3. Hiệu ứng nổi khối (Shadow)
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         transition: all 0.3s ease;
 
         &:hover {
           border-color: #45c3d2;
           box-shadow: 0 6px 15px rgba(69, 195, 210, 0.15);
-          transform: translateY(-2px); // Nhích lên nhẹ khi hover
+          transform: translateY(-2px); 
         }
 
         &:focus {
@@ -46,16 +43,16 @@
         }
       }
 
-      /* 4. Tự tạo mũi tên tùy chỉnh thay cho mũi tên xấu xí mặc định */
+
       &::after {
-        content: "\f107"; // FontAwesome Chevron Down (nếu m có dùng FontAwesome)
+        content: "\f107"; 
         font-family: "Font Awesome 5 Free";
         font-weight: 900;
         position: absolute;
         right: 15px;
         top: 50%;
         transform: translateY(-50%);
-        pointer-events: none; // Không chặn click vào select
+        pointer-events: none; 
         color: #45c3d2;
         font-size: 16px;
       }
@@ -72,7 +69,7 @@
 
       i {
         margin-right: 8px;
-        color: #45c3d2; // Icon lịch màu xanh cho nổi bật
+        color: #45c3d2; 
         font-size: 16px;
       }
     }
@@ -83,7 +80,7 @@
       gap: 10px;
 
       .time-btn {
-        background: #fff04b; // Màu vàng đặc trưng
+        background: #fff04b; 
         border: 1px solid #ffde00;
         padding: 10px 20px;
         font-size: 15px;
@@ -98,7 +95,7 @@
 
         &:hover {
           background: #078e9a;
-          transform: translateY(-2px); // Hiệu ứng nổi nhẹ khi di chuột
+          transform: translateY(-2px); 
           box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
@@ -106,10 +103,10 @@
           transform: translateY(0);
         }
         &.full {
-          background: #eeeeee !important; // Màu xám
+          background: #eeeeee !important; 
           color: #cccccc !important;
-          cursor: not-allowed; // Hiện biểu tượng cấm chuột
-          text-decoration: line-through; // Gạch ngang chữ (tùy chọn)
+          cursor: not-allowed;
+          text-decoration: line-through; 
           border: 1px solid #ddd !important;
         }
       }
@@ -118,7 +115,7 @@
 
   .schedule-right {
     width: 40%;
-    border-left: 2px solid #f1f1f1; // Làm đường kẻ ngăn cách rõ ràng hơn
+    border-left: 2px solid #f1f1f1; 
     padding-left: 30px;
 
     .doctor-address,
@@ -147,7 +144,7 @@
       font-size: 14px;
       font-weight: 600;
       text-decoration: none;
-      border-bottom: 1px dashed #45c3d2; // Gạch chân nét đứt cho tinh tế
+      border-bottom: 1px dashed #45c3d2; 
 
       &:hover {
         color: darken(#45c3d2, 15%);

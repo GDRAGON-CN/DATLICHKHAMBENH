@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { postVerifyBookAppointment } from "../../services/userService";
 import HomeHeader from "../HomePage/HomeHeader";
-import "./VerifyEmail.scss"; // Nhớ import file scss này
+import "./VerifyEmail.scss";
 
 class VerifyEmail extends Component {
   constructor(props) {

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import "./HomeHeader.scss";
 import { FormattedMessage } from "react-intl";
 import { LANGUAGES } from "../../utils";
-import { changeLanguageApp } from "../../store/actions";
+import { changeLanguageApp, processLogout } from "../../store/actions";
 import { withRouter } from "react-router-dom";
 import { getSearchSuggestionsService } from "../../services/userService";
 class HomeHeader extends Component {
@@ -14,7 +14,6 @@ class HomeHeader extends Component {
       listSuggest: [],
       showSuggest: false,
     };
-    // Tạo ref để đóng dropdown khi click ra ngoài
     this.searchRef = React.createRef();
   }
   componentDidMount() {
@@ -62,8 +61,12 @@ class HomeHeader extends Component {
   changeLanguage = (language) => {
     this.props.changeLanguageAppRedux(language);
   };
+  handleLogout = () => {
+    this.props.processLogout();
+  };
   render() {
     let language = this.props.language;
+    let { isLoggedIn, userInfo } = this.props;
     let { keyword, listSuggest, showSuggest } = this.state;
     return (
       <React.Fragment>
@@ -94,19 +97,6 @@ class HomeHeader extends Component {
               </div>
               <div
                 className="child-content"
-                onClick={() => this.props.history.push("/all-clinic")}
-              >
-                <div>
-                  <b>
-                    <FormattedMessage id="homeheader.health-facility" />
-                  </b>
-                </div>
-                <div className="subs-title">
-                  <FormattedMessage id="homeheader.select-room" />
-                </div>
-              </div>
-              <div
-                className="child-content"
                 onClick={() => this.props.history.push("/all-doctor")}
               >
                 <div>
@@ -116,6 +106,19 @@ class HomeHeader extends Component {
                 </div>
                 <div className="subs-title">
                   <FormattedMessage id="homeheader.select-doctor" />
+                </div>
+              </div>
+              <div
+                className="child-content"
+                onClick={() => this.props.history.push("/all-clinic")}
+              >
+                <div>
+                  <b>
+                    <FormattedMessage id="homeheader.health-facility" />
+                  </b>
+                </div>
+                <div className="subs-title">
+                  <FormattedMessage id="homeheader.select-room" />
                 </div>
               </div>
             </div>
@@ -146,20 +149,37 @@ class HomeHeader extends Component {
                   EN
                 </span>
               </div>
-              <div
-                className="child-content"
-                onClick={() =>
-                  this.props.history.push("/patient/manage-booking")
-                }
-              >
-                <div>
-                  <i
-                    className="fas fa-calendar-check"
-                    style={{ marginRight: "5px" }}
-                  ></i>
-                  <b>Lịch Hẹn</b>
+              
+              {isLoggedIn && userInfo ? (
+                <div className="user-info-dropdown">
+                  <div
+                    className="child-content booking-btn"
+                    onClick={() =>
+                      this.props.history.push("/patient/manage-booking")
+                    }
+                  >
+                    <i className="fas fa-calendar-check"></i>
+                    <b>Lịch Hẹn</b>
+                  </div>
+                  <div
+                    className="child-content logout-btn"
+                    onClick={this.handleLogout}
+                  >
+                    <i className="fas fa-sign-out-alt"></i>
+                    <b>Đăng xuất</b>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div
+                  className="child-content login-btn"
+                  onClick={() =>
+                    this.props.history.push("/patient-login")
+                  }
+                >
+                  <i className="fas fa-sign-in-alt"></i>
+                  <b>Đăng nhập</b>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -214,52 +234,37 @@ class HomeHeader extends Component {
             </div>
             <div className="content-down">
               <div className="options">
-                <div className="option-child">
+                <div
+                  className="option-child"
+                  onClick={() => this.props.history.push("/all-specialty")}
+                >
                   <div className="icon-child">
-                    <i className="far fa-hospital"></i>
+                    <i className="fas fa-flask"></i>
                   </div>
                   <div className="text-child">
                     <FormattedMessage id="banner.child1" />
                   </div>
                 </div>
-                <div className="option-child">
+                <div
+                  className="option-child"
+                  onClick={() => this.props.history.push("/all-doctor")}
+                >
                   <div className="icon-child">
-                    <i className="fas fa-mobile-alt"></i>
+                    <i className="fas fa-user-md"></i>
                   </div>
                   <div className="text-child">
                     <FormattedMessage id="banner.child2" />
                   </div>
                 </div>
-                <div className="option-child">
+                <div
+                  className="option-child"
+                  onClick={() => this.props.history.push("/all-clinic")}
+                >
                   <div className="icon-child">
-                    <i className="fas fa-procedures"></i>
+                    <i className="far fa-hospital"></i>
                   </div>
                   <div className="text-child">
                     <FormattedMessage id="banner.child3" />
-                  </div>
-                </div>
-                <div className="option-child">
-                  <div className="icon-child">
-                    <i class="fas fa-procedures"></i>
-                  </div>
-                  <div className="text-child">
-                    <FormattedMessage id="banner.child4" />
-                  </div>
-                </div>
-                <div className="option-child">
-                  <div className="icon-child">
-                    <i className="fas fa-user-md"></i>
-                  </div>
-                  <div className="text-child">
-                    <FormattedMessage id="banner.child5" />
-                  </div>
-                </div>
-                <div className="option-child">
-                  <div className="icon-child">
-                    <i className="fas fa-briefcase-medical"></i>
-                  </div>
-                  <div className="text-child">
-                    <FormattedMessage id="banner.child6" />
                   </div>
                 </div>
               </div>
@@ -274,6 +279,7 @@ class HomeHeader extends Component {
 const mapStateToProps = (state) => {
   return {
     isLoggedIn: state.user.isLoggedIn,
+    userInfo: state.user.userInfo,
     language: state.app.language,
   };
 };
@@ -281,6 +287,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     changeLanguageAppRedux: (language) => dispatch(changeLanguageApp(language)),
+    processLogout: () => dispatch(processLogout()),
   };
 };
 

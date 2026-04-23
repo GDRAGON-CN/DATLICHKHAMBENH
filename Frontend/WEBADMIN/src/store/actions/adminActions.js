@@ -14,9 +14,6 @@ import {
 import { toast } from "react-toastify";
 import { get } from "lodash";
 
-// export const fetchGenderStart = () => ({
-//   type: actionTypes.FETCH_GENDER_START,
-// });
 
 export const fetchGenderStart = () => {
   return async (dispatch, getState) => {
@@ -194,7 +191,6 @@ export const editUserFailed = () => ({
   type: actionTypes.EDIT_USER_FAILED,
 });
 
-//  let res1 = await getTopDoctorHomeService(``);
 export const fetchTopDoctor = () => {
   return async (dispatch, getState) => {
     try {

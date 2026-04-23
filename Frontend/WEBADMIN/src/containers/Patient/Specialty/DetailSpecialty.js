@@ -110,7 +110,6 @@ class DetailSpecialty extends Component {
         <HomeHeader isShowBanner={false} />
 
         <div className="detail-specialty-container">
-          {/* DESCRIPTION */}
           <div className="specialty-description">
             {dataDetailSpecialty && !_.isEmpty(dataDetailSpecialty) && (
               <div
@@ -120,8 +119,6 @@ class DetailSpecialty extends Component {
               ></div>
             )}
           </div>
-
-          {/* FILTER LOCATION */}
           <div className="search-doctor">
             <select onChange={(event) => this.handleOnChangeSelect(event)}>
               <option value="ALL">Toàn quốc</option>
@@ -136,23 +133,18 @@ class DetailSpecialty extends Component {
                 })}
             </select>
           </div>
-
-          {/* DOCTOR LIST */}
           <div className="list-doctor">
             {arrDoctor &&
               arrDoctor.length > 0 &&
               arrDoctor.map((item, index) => {
                 return (
                   <div className="each-doctor" key={item.id}>
-                    {/* LEFT INFO */}
                     <div className="doctor-info">
                       <ProfileDoctor
                         doctorId={item}
                         isShowDescriptionDoctor={true}
                       />
                     </div>
-
-                    {/* RIGHT SCHEDULE */}
                     <div className="doctor-schedule">
                       <DoctorSchedule
                         doctorIdFromParent={item}

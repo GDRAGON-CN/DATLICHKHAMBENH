@@ -1,6 +1,5 @@
 export const adminMenu = [
   {
-    // Cụm Quản lý hệ thống (Gộp tất cả vào đây)
     name: "TRANG QUẢN LÝ CỦA ADMIN",
     menus: [
       {
@@ -20,7 +19,7 @@ export const adminMenu = [
         link: "/system/manage-done-booking",
       },
       {
-        name: "Quản lý phòng khám",
+        name: "Quản lý khoa",
         link: "/system/manage-clinic",
       },
 

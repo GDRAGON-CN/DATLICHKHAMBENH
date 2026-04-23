@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 import Slider from "react-slick";
 import { withRouter } from "react-router";
+import "./Specialty.scss";
 
 import { getTopSpecialtyHome } from "../../../services/userService";
 import { isTemplateMiddle } from "typescript";
@@ -47,14 +48,16 @@ class Specialty extends Component {
                 dataSpecialty.map((item, index) => {
                   return (
                     <div className="section-customize" key={index}>
-                      <div
-                        className="bg-image section-specialty"
-                        style={{
-                          backgroundImage: `url(${item.image})`,
-                        }}
-                        onClick={() => this.handleViewDetailSpecialty(item)}
-                      />
-                      <div>{item.name}</div>
+                      <div className="image-wrapper">
+                        <div
+                          className="bg-image section-specialty"
+                          style={{
+                            backgroundImage: `url(${item.image})`,
+                          }}
+                          onClick={() => this.handleViewDetailSpecialty(item)}
+                        />
+                      </div>
+                      <div className="specialty-name">{item.name}</div>
                     </div>
                   );
                 })}

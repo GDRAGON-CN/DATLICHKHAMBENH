@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { Redirect, Route, Switch } from "react-router-dom";
 import ManageSchedule from "../containers/System/Doctor/ManageSchedule";
 import ManagePatient from "../containers/System/Doctor/ManagePatient";
-// Import Sidebar thay vì Header
 import Sidebar from "../containers/Header/Sidebar";
 
 class Doctor extends Component {
@@ -15,7 +14,6 @@ class Doctor extends Component {
           className="system-main-container"
           style={{ display: "flex", minHeight: "100vh" }}
         >
-          {/* SIDEBAR CHO BÁC SĨ */}
           {isLoggedIn && <Sidebar />}
 
           <div

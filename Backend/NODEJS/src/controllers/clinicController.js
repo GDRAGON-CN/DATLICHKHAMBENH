@@ -50,7 +50,6 @@ let handleEditClinic = async (req, res) => {
 
 let handleDeleteClinic = async (req, res) => {
   try {
-    // Thường xóa ta truyền id qua query hoặc body
     if (!req.body.id) {
       return res.status(200).json({
         errCode: 1,

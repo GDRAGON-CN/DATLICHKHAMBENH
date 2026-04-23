@@ -7,8 +7,6 @@
   .container {
     max-width: 900px;
   }
-
-  /* GIAO DIỆN NHẬP MAIL (CHƯA XÁC THỰC) */
   .verify-email-wrapper {
     display: flex;
     justify-content: center;
@@ -73,7 +71,6 @@
     }
   }
 
-  /* GIAO DIỆN DANH SÁCH (ĐÃ XÁC THỰC) */
   .patient-info-summary {
     text-align: center;
     margin-bottom: 30px;
@@ -93,7 +90,7 @@
     gap: 20px;
 
     .booking-card {
-      display: flex; /* CHIA 2 CỘT */
+      display: flex; 
       background: white;
       border-radius: 12px;
       overflow: hidden;
@@ -175,13 +172,102 @@
             padding: 6px 15px;
             border-radius: 5px;
             cursor: pointer;
+            transition: all 0.3s;
             &:hover {
               background: #ff4d4f;
               color: white;
+              box-shadow: 0 4px 8px rgba(255, 77, 79, 0.3);
             }
           }
         }
       }
     }
+  }
+
+  .booking-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #ddd;
+
+    .tab-item {
+      padding: 10px 20px;
+      font-weight: 600;
+      color: #777;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all 0.3s;
+      margin-bottom: -1px;
+
+      &:hover {
+        color: #45c3d2;
+      }
+
+      &.active {
+        color: #45c3d2;
+        border-bottom: 3px solid #45c3d2;
+      }
+    }
+  }
+
+  .skeleton-card {
+    display: flex;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    height: 140px;
+
+    .sk-left {
+      width: 180px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      border-right: 1px dashed #ddd;
+
+      .sk-badge { width: 60px; height: 15px; border-radius: 8px; }
+      .sk-time { width: 80px; height: 20px; border-radius: 8px; }
+      .sk-date { width: 100px; height: 15px; border-radius: 8px; }
+    }
+
+    .sk-right {
+      flex: 1;
+      padding: 20px 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+
+      .sk-line { height: 20px; border-radius: 8px; }
+      .sk-line-1 { width: 60%; }
+      .sk-line-2 { width: 40%; }
+      .sk-btn { width: 120px; height: 35px; border-radius: 5px; margin-top: auto; align-self: flex-end; }
+    }
+
+    .sk-anim {
+      background: #eee;
+      background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+      background-size: 200% 100%;
+      animation: 1.5s shine linear infinite;
+    }
+  }
+
+  @keyframes shine {
+    to {
+      background-position-x: -200%;
+    }
+  }
+
+  .no-data {
+    text-align: center;
+    padding: 40px;
+    background: white;
+    border-radius: 12px;
+    color: #888;
+    font-size: 16px;
+    font-weight: 500;
   }
 }

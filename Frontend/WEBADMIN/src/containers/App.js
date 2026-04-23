@@ -31,6 +31,9 @@ import AllSpecialty from "./Patient/All-List/AllSpecialty.js";
 import AllClinic from "./Patient/All-List/AllClinic.js";
 import AllDoctor from "./Patient/All-List/AllDoctor.js";
 import ManageBooking from "./Patient/ManageBooking.js";
+import PatientLogin from "./Patient/Auth/PatientLogin.js";
+import PatientRegister from "./Patient/Auth/PatientRegister.js";
+
 class App extends Component {
   handlePersistorState = () => {
     const { persistor } = this.props;
@@ -93,22 +96,18 @@ class App extends Component {
                     path="/verify-booking-access"
                     component={ManageBooking}
                   />
+                  <Route
+                    path="/patient-login"
+                    component={userIsNotAuthenticated(PatientLogin)}
+                  />
+                  <Route
+                    path="/patient-register"
+                    component={userIsNotAuthenticated(PatientRegister)}
+                  />
                 </Switch>
               </CustomScrollbars>
             </div>
 
-            {/* <ToastContainer
-              className="toast-container"
-              toastClassName="toast-item"
-              bodyClassName="toast-item-body"
-              autoClose={false}
-              hideProgressBar={true}
-              pauseOnHover={false}
-              pauseOnFocusLoss={true}
-              closeOnClick={false}
-              draggable={false}
-              closeButton={<CustomToastCloseButton />}
-            /> */}
             <ToastContainer
               position="bottom-right"
               autoClose={5000}

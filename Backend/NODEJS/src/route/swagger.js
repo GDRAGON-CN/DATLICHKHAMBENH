@@ -218,8 +218,7 @@
  *   get:
  *     summary: Lấy danh sách lịch đặt khám theo ngày (Admin)
  *     description: API dùng cho admin để lấy toàn bộ danh sách booking theo ngày, bao gồm thông tin bệnh nhân, bác sĩ, khung giờ và trạng thái lịch hẹn.
- *     tags:
- *       - Booking Management
+ *     tags: [User]
  *     parameters:
  *       - in: query
  *         name: date
@@ -263,8 +262,7 @@
  *   post:
  *     summary: Cập nhật trạng thái lịch hẹn (Admin / Doctor)
  *     description: "Cho phép admin hoặc bác sĩ cập nhật trạng thái của một booking (ví dụ: S1, S2, S3,...)"
- *     tags:
- *       - Booking Management
+ *     tags: [User]
  *     requestBody:
  *       required: true
  *       content:
@@ -665,52 +663,7 @@
  *       200:
  *         description: Kết quả xác nhận lịch
  */
-/**
- * @swagger
- * /api/request-magic-link:
- *   post:
- *     summary: Gửi link truy cập nhanh (Magic Link) qua email
- *     tags: [Patient]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - email
- *             properties:
- *               email:
- *                 type: string
- *                 example: "patient@example.com"
- *     responses:
- *       200:
- *         description: Trạng thái gửi email thành công hoặc thất bại
- */
-/**
- * @swagger
- * /api/verify-magic-link:
- *   post:
- *     summary: Xác thực token từ email và trả về danh sách lịch khám
- *     tags: [Patient]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - token
- *               - email
- *             properties:
- *               token:
- *                 type: string
- *               email:
- *                 type: string
- *     responses:
- *       200:
- *         description: Trả về danh sách các booking của bệnh nhân nếu token hợp lệ
- */
+
 /**
  * @swagger
  * /api/patient-cancel-booking:

@@ -5,8 +5,7 @@ import HomeHeader from "../HomePage/HomeHeader";
 import HomeFooter from "../HomePage/HomeFooter";
 import {
   cancelBookingService,
-  requestMagicLink, // Thêm mới
-  verifyMagicLink, // Thêm mới
+  getAllBookingByPatient,
 } from "../../services/userService";
 import { toast } from "react-toastify";
 import moment from "moment";
@@ -17,55 +16,37 @@ class ManageBooking extends Component {
     this.state = {
       bookings: [],
       emailSearch: "",
-      isVerified: false, // Flag kiểm tra đã click link từ mail chưa
-      loading: false,
+      isVerified: false,
+      loading: true,
+      activeTab: "upcoming", 
     };
   }
 
   async componentDidMount() {
-    // 1. Kiểm tra xem trên URL có token và email không (trường hợp click từ mail)
-    const urlParams = new URLSearchParams(window.location.search);
-    const token = urlParams.get("token");
-    const email = urlParams.get("email");
-
-    if (token && email) {
-      this.handleVerifyAccess(token, email);
+    if (this.props.isLoggedIn && this.props.userInfo) {
+      this.fetchBookings(this.props.userInfo.email);
     }
   }
 
-  // Hàm xử lý xác thực khi click từ link email
-  handleVerifyAccess = async (token, email) => {
+  async componentDidUpdate(prevProps) {
+    if (this.props.isLoggedIn !== prevProps.isLoggedIn && this.props.isLoggedIn) {
+      this.fetchBookings(this.props.userInfo.email);
+    }
+  }
+
+  fetchBookings = async (email) => {
     this.setState({ loading: true });
-    let res = await verifyMagicLink({ token, email });
+    let res = await getAllBookingByPatient(email);
     if (res && res.errCode === 0) {
       this.setState({
         bookings: res.data,
-        isVerified: true,
         emailSearch: email,
+        isVerified: true,
         loading: false,
       });
-      toast.success("Xác thực thành công!");
     } else {
       this.setState({ loading: false });
-      toast.error(res.errMessage || "Link xác thực không hợp lệ hoặc hết hạn!");
-    }
-  };
-
-  // Hàm xử lý khi nhấn "Gửi link truy cập"
-  handleRequestLink = async () => {
-    let { emailSearch } = this.state;
-    if (!emailSearch) {
-      toast.error("Vui lòng nhập email!");
-      return;
-    }
-
-    let res = await requestMagicLink(emailSearch);
-    if (res && res.errCode === 0) {
-      toast.success(
-        "Link truy cập đã được gửi vào email của bạn. Vui lòng kiểm tra!",
-      );
-    } else {
-      toast.error(res.errMessage || "Có lỗi xảy ra!");
+      toast.error(res.errMessage || "Không thể lấy danh sách lịch hẹn!");
     }
   };
 
@@ -82,59 +63,70 @@ class ManageBooking extends Component {
       let res = await cancelBookingService(data);
       if (res && res.errCode === 0) {
         toast.success("Hủy lịch thành công!");
-        // Refresh lại danh sách (Dùng lại hàm verify để lấy data mới nhất)
-        const urlParams = new URLSearchParams(window.location.search);
-        this.handleVerifyAccess(urlParams.get("token"), urlParams.get("email"));
+        // Refresh lại danh sách
+        this.fetchBookings(this.props.userInfo.email);
       } else {
         toast.error("Hủy lịch thất bại!");
       }
     }
   };
 
+  handleTabClick = (tabId) => {
+    this.setState({ activeTab: tabId });
+  };
+
+  renderSkeleton = () => {
+    let skeletons = [1, 2, 3];
+    return skeletons.map((item) => (
+      <div className="skeleton-card" key={item}>
+        <div className="sk-left">
+          <div className="sk-anim sk-badge"></div>
+          <div className="sk-anim sk-time"></div>
+          <div className="sk-anim sk-date"></div>
+        </div>
+        <div className="sk-right">
+          <div className="sk-anim sk-line sk-line-1"></div>
+          <div className="sk-anim sk-line sk-line-2"></div>
+          <div className="sk-anim sk-btn"></div>
+        </div>
+      </div>
+    ));
+  };
+
   render() {
-    let { bookings, emailSearch, isVerified, loading } = this.state;
+    let { bookings, emailSearch, isVerified, loading, activeTab } = this.state;
+
+    let filteredBookings = bookings.filter((item) => {
+      if (activeTab === "upcoming")
+        return item.statusId === "S1" || item.statusId === "S2";
+      if (activeTab === "completed") return item.statusId === "S3";
+      if (activeTab === "cancelled") return item.statusId === "S4";
+      return false;
+    });
+
     return (
       <React.Fragment>
         <HomeHeader isShowBanner={false} />
         <div className="patient-booking-container">
           <div className="container">
-            {!isVerified ? (
-              /* GIAO DIỆN KHI CHƯA XÁC THỰC - ĐƯA RA GIỮA */
+            {!this.props.isLoggedIn ? (
               <div className="verify-email-wrapper">
-                <div className="verify-card">
+                <div className="verify-card" style={{ padding: "40px", textAlign: "center" }}>
                   <div className="icon-box">
-                    <i className="fas fa-envelope-open-text"></i>
+                    <i className="fas fa-user-lock"></i>
                   </div>
                   <h3>Quản lý lịch hẹn</h3>
-                  <p>
-                    Vui lòng nhập email để nhận link xác thực truy cập danh sách
-                    lịch hẹn của bạn.
-                  </p>
-                  <div className="input-group">
-                    <input
-                      type="email"
-                      value={emailSearch}
-                      placeholder="example@gmail.com"
-                      onChange={(e) =>
-                        this.setState({ emailSearch: e.target.value })
-                      }
-                    />
-                    <button
-                      className="btn-request"
-                      disabled={loading}
-                      onClick={() => this.handleRequestLink()}
-                    >
-                      {loading ? (
-                        <i className="fas fa-spinner fa-spin"></i>
-                      ) : (
-                        "Gửi link xác thực"
-                      )}
-                    </button>
-                  </div>
+                  <p>Vui lòng đăng nhập để xem danh sách lịch hẹn của bạn.</p>
+                  <button
+                    className="btn-request"
+                    style={{ marginTop: "20px", width: "100%", height: "40px", borderRadius: "5px", border: "none", backgroundColor: "#45c3d2", color: "white", fontWeight: "600" }}
+                    onClick={() => this.props.history.push('/patient-login')}
+                  >
+                    Đăng nhập / Đăng ký
+                  </button>
                 </div>
               </div>
             ) : (
-              /* GIAO DIỆN KHI ĐÃ XÁC THỰC THÀNH CÔNG */
               <div className="booking-list-wrapper">
                 <div className="title-page">Danh sách lịch hẹn của bạn</div>
                 <div className="patient-info-summary">
@@ -142,9 +134,32 @@ class ManageBooking extends Component {
                   <strong>{emailSearch}</strong>
                 </div>
 
+                <div className="booking-tabs">
+                  <div
+                    className={`tab-item ${activeTab === "upcoming" ? "active" : ""}`}
+                    onClick={() => this.handleTabClick("upcoming")}
+                  >
+                    Sắp tới
+                  </div>
+                  <div
+                    className={`tab-item ${activeTab === "completed" ? "active" : ""}`}
+                    onClick={() => this.handleTabClick("completed")}
+                  >
+                    Đã hoàn thành
+                  </div>
+                  <div
+                    className={`tab-item ${activeTab === "cancelled" ? "active" : ""}`}
+                    onClick={() => this.handleTabClick("cancelled")}
+                  >
+                    Đã hủy
+                  </div>
+                </div>
+
                 <div className="booking-list">
-                  {bookings && bookings.length > 0 ? (
-                    bookings.map((item, index) => (
+                  {loading ? (
+                    this.renderSkeleton()
+                  ) : filteredBookings && filteredBookings.length > 0 ? (
+                    filteredBookings.map((item, index) => (
                       <div className="booking-card" key={index}>
                         <div className="card-left">
                           <div className="status-badge">LỊCH HẸN</div>
@@ -193,7 +208,9 @@ class ManageBooking extends Component {
                     ))
                   ) : (
                     <div className="no-data">
-                      Bạn hiện không có lịch hẹn nào.
+                      {activeTab === "upcoming" && "Bạn hiện không có lịch hẹn sắp tới nào."}
+                      {activeTab === "completed" && "Bạn chưa có lịch hẹn nào đã hoàn thành."}
+                      {activeTab === "cancelled" && "Không có lịch hẹn nào đã hủy."}
                     </div>
                   )}
                 </div>
@@ -207,5 +224,9 @@ class ManageBooking extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({ language: state.app.language });
+const mapStateToProps = (state) => ({ 
+  language: state.app.language,
+  isLoggedIn: state.user.isLoggedIn,
+  userInfo: state.user.userInfo
+});
 export default connect(mapStateToProps)(ManageBooking);

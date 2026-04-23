@@ -73,7 +73,6 @@ class DetailClinic extends Component {
         <HomeHeader isShowBanner={false} />
 
         <div className="detail-specialty-container">
-          {/* DESCRIPTION */}
           <div className="specialty-description">
             {dataDetailClinic && !_.isEmpty(dataDetailClinic) && (
               <>
@@ -88,15 +87,13 @@ class DetailClinic extends Component {
               </>
             )}
           </div>
-
-          {/* DOCTOR LIST */}
           <div className="list-doctor">
             {arrDoctor &&
               arrDoctor.length > 0 &&
               arrDoctor.map((item, index) => {
                 return (
                   <div className="each-doctor" key={item.id}>
-                    {/* LEFT INFO */}
+                    
                     <div className="doctor-info">
                       <ProfileDoctor
                         doctorId={item}
@@ -104,7 +101,6 @@ class DetailClinic extends Component {
                       />
                     </div>
 
-                    {/* RIGHT SCHEDULE */}
                     <div className="doctor-schedule">
                       <DoctorSchedule
                         doctorIdFromParent={item}

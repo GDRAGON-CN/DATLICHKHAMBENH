@@ -1,7 +1,7 @@
 .doctor-extra-infor-container {
   padding: 10px;
-  border-top: 1px solid #eee; // Tạo đường kẻ mờ ngăn cách phía trên
-  max-width: 450px; // Ép độ rộng tối đa để nó nhỏ lại
+  border-top: 1px solid #eee;
+  max-width: 450px; 
 
   .price-title {
     font-size: 14px;
@@ -26,11 +26,11 @@
     border: 1px solid #ddd;
     padding: 10px;
     margin-top: 8px;
-    border-radius: 4px; // Bo góc cho đẹp
+    border-radius: 4px; 
 
     .price-row {
       display: flex;
-      justify-content: space-between; // Đẩy nội dung ra 2 đầu
+      justify-content: space-between; 
       margin-bottom: 8px;
       font-size: 14px;
 
@@ -48,7 +48,7 @@
       color: #777;
       margin-top: 5px;
       padding-top: 5px;
-      border-top: 1px dashed #ccc; // Đường kẻ đứt ngăn cách ghi chú
+      border-top: 1px dashed #ccc; 
     }
 
     .hide-detail {

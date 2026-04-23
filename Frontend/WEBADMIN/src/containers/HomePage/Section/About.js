@@ -16,7 +16,6 @@ class About extends Component {
           </div>
 
           <div className="section-about-content">
-            {/* LEFT VIDEO */}
             <div className="content-left">
               <iframe
                 src="https://www.youtube.com/embed/OASGscJQXp0"
@@ -25,8 +24,6 @@ class About extends Component {
                 allowFullScreen
               ></iframe>
             </div>
-
-            {/* RIGHT MEDIA */}
             <div className="content-right">
               <div className="media-item">
                 <img src={vtv} alt="vtv" />

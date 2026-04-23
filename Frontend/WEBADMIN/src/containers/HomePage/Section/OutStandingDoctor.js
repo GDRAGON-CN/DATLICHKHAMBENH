@@ -6,6 +6,7 @@ import { withRouter } from "react-router";
 import * as actions from "../../../store/actions";
 import { LANGUAGES } from "../../../utils";
 import { FormattedMessage } from "react-intl";
+import "./OutStandingDoctor.scss";
 
 class OutStandingDoctor extends Component {
   constructor(props) {
@@ -77,8 +78,12 @@ class OutStandingDoctor extends Component {
                         />
                       </div>
                       <div className="position text-center">
-                        <div>{language === LANGUAGES.VI ? nameVi : nameEn}</div>
-                        <div>Cơ xương khớp</div>
+                        <div className="doctor-name">
+                          {language === LANGUAGES.VI ? nameVi : nameEn}
+                        </div>
+                        <div className="doctor-specialty">
+                          {item.Doctor_Infor.specialtyData.name}
+                        </div>
                       </div>
                     </div>
                   );

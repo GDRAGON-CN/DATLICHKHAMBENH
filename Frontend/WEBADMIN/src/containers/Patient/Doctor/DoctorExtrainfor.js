@@ -18,7 +18,6 @@ class DoctorExtrainfor extends Component {
   }
 
   async componentDidMount() {
-    // Lấy data ngay khi vừa mount nếu đã có id
     if (this.props.doctorIdFromParent) {
       let res = await getExtraInforDoctorById(this.props.doctorIdFromParent);
       if (res && res.errCode === 0) {

@@ -63,7 +63,6 @@ let getDetailSpecialtyById = (inputId, location) => {
           attributes: ["descriptionHTML", "descriptionMarkdown"],
         });
         if (data) {
-          // do soething
           let doctorSpecialty = [];
           if (location === "ALL") {
             doctorSpecialty = await db.Doctor_Infor.findAll({
@@ -179,7 +178,7 @@ let getTopSpecialtyHome = (limitInput) => {
         },
         order: [
           [db.sequelize.literal("doctorCount"), "DESC"],
-          ["createdAt", "DESC"], // fallback
+          ["createdAt", "DESC"], 
         ],
         raw: true,
       });

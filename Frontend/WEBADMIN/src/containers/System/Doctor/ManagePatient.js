@@ -9,7 +9,7 @@ import {
 import moment from "moment";
 import RemedyModal from "./RemedyModal";
 import { toast } from "react-toastify";
-import LoadingOverlay from "react-loading-overlay-ts"; // Dùng bản ts để tránh lỗi peer-deps
+import LoadingOverlay from "react-loading-overlay-ts"; 
 
 class ManagePatient extends Component {
   constructor(props) {
@@ -50,7 +50,6 @@ class ManagePatient extends Component {
     });
   };
 
-  // Mở modal xác nhận và gửi hóa đơn
   handleBtnConfirm = (item) => {
     let data = {
       doctorId: item.doctorId,
@@ -72,7 +71,6 @@ class ManagePatient extends Component {
     });
   };
 
-  // Hàm gửi Remedy (Hóa đơn)
   sendRemedy = async (dataChild) => {
     let { dataModal } = this.state;
     this.setState({ isShowLoading: true });

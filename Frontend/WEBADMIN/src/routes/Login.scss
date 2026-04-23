@@ -28,7 +28,6 @@
         padding: auto;
         width: 100%;
     }
-    //huy.quang: disable default eye icon on ie < 10
     input::-ms-reveal,
     input::-ms-clear
     {
@@ -137,12 +136,6 @@
         }
     }
     
-    /*=============END FOOTER==========*/
-    
-    /*=============MENU MOBILE==========*/
-    /*=============END MENU MOBILE==========*/
-    
-    /*RESPONSIVE*/
     @media screen and (min-device-width: 1280px) and (max-device-width: 2400px) {
         .login-container {
             padding: 30px 0 0 0;

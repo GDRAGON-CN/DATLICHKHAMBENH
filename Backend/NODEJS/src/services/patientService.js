@@ -27,8 +27,6 @@ let postBookAppointment = (data) => {
           errMessage: "Missing required parameter",
         });
       }
-
-      // 1. Tìm hoặc Tạo người dùng (để lấy patientId)
       let [user, created] = await db.User.findOrCreate({
         where: { email: data.email },
         defaults: {
@@ -42,12 +40,11 @@ let postBookAppointment = (data) => {
 
       let patientId = user.id;
 
-      // 2. KIỂM TRA CHỐNG SPAM: Check xem bệnh nhân này đã có lịch S1 nào với bác sĩ này chưa
       let existingBooking = await db.Booking.findOne({
         where: {
           patientId: patientId,
           doctorId: data.doctorId,
-          statusId: "S1", // Đang chờ xác nhận
+          statusId: "S1", 
         },
       });
 
@@ -59,7 +56,6 @@ let postBookAppointment = (data) => {
         });
       }
 
-      // 3. KIỂM TRA SỐ LƯỢNG TỐI ĐA (Nên đếm cả S1 và S2 để tránh spam giữ chỗ)
       let schedule = await db.Schedule.findOne({
         where: {
           doctorId: data.doctorId,
@@ -76,7 +72,7 @@ let postBookAppointment = (data) => {
             doctorId: data.doctorId,
             date: data.date,
             timeType: data.timeType,
-            statusId: ["S1", "S2"], // Đếm cả lịch đang chờ xác nhận
+            statusId: ["S1", "S2"],
           },
         });
 
@@ -89,7 +85,6 @@ let postBookAppointment = (data) => {
         }
       }
 
-      // 4. NẾU MỌI THỨ OK -> GỬI EMAIL VÀ LƯU BOOKING
       let token = uuidv4();
       await emailService.sendSimpleEmail({
         receivedEmail: data.email,
@@ -100,7 +95,6 @@ let postBookAppointment = (data) => {
         redirectLink: buildUrlEmail(data.doctorId, token),
       });
 
-      // Tạo booking mới
       await db.Booking.create({
         statusId: "S1",
         doctorId: data.doctorId,
@@ -237,88 +231,9 @@ let postVerifyBookAppointment = (data) => {
     }
   });
 };
-// thêm
-let postRequestMagicLink = (email) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      if (!email) return resolve({ errCode: 1, errMessage: "Missing email" });
-
-      // Tìm lịch hẹn mới nhất của email này để lấy cái token có sẵn
-      let lastBooking = await db.Booking.findOne({
-        include: [
-          { model: db.User, as: "patientData", where: { email: email } },
-        ],
-        order: [["createdAt", "DESC"]],
-        raw: true,
-      });
-
-      if (!lastBooking)
-        return resolve({
-          errCode: 2,
-          errMessage: "Email chưa có lịch hẹn nào!",
-        });
-
-      // Gửi mail dùng chính cái token cũ của họ
-      await emailService.sendAccessLinkEmail({
-        receivedEmail: email,
-        redirectLink: `${process.env.URL_REACT}/verify-booking-access?token=${lastBooking.token}&email=${email}`,
-      });
-
-      resolve({
-        errCode: 0,
-        errMessage: "Link đã được gửi vào Email của bạn!",
-      });
-    } catch (e) {
-      reject(e);
-    }
-  });
-};
-let postVerifyMagicLink = (data) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      if (!data.token || !data.email) {
-        resolve({ errCode: 1, errMessage: "Missing parameter!" });
-      } else {
-        // Logic xác thực: Tìm booking có token và email khớp nhau
-        let appointment = await db.Booking.findOne({
-          where: {
-            token: data.token,
-            statusId: ["S1", "S2"], // Chỉ cho phép xem lịch đang chờ hoặc đã xác nhận
-          },
-          include: [
-            {
-              model: db.User,
-              as: "patientData",
-              where: { email: data.email },
-              attributes: [],
-            },
-          ],
-          raw: false,
-        });
-
-        if (appointment) {
-          // Nếu khớp, lấy toàn bộ danh sách lịch của bệnh nhân đó
-          let bookings = await getListBookingByPatient(data.email);
-          resolve(bookings);
-        } else {
-          resolve({
-            errCode: 2,
-            errMessage: "Link truy cập không hợp lệ hoặc đã hết hạn!",
-          });
-        }
-      }
-    } catch (e) {
-      reject(e);
-    }
-  });
-};
-
 module.exports = {
   postBookAppointment: postBookAppointment,
   postVerifyBookAppointment: postVerifyBookAppointment,
   cancelBooking: cancelBooking,
   getListBookingByPatient: getListBookingByPatient,
-  // thêm
-  postRequestMagicLink: postRequestMagicLink,
-  postVerifyMagicLink: postVerifyMagicLink,
 };

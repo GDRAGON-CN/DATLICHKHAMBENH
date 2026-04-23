@@ -1,10 +1,10 @@
 .booking-modal-container {
   z-index: 10001 !important;
   .modal-content {
-    border-radius: 12px; // Bo góc mềm mại
+    border-radius: 12px; 
     overflow: hidden;
     border: none;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); // Đổ bóng hiện đại
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); 
   }
 
   .booking-modal-content {
@@ -36,15 +36,13 @@
     .booking-modal-body {
       padding: 20px;
       background-color: #fff;
-
-      // Khối tóm tắt thông tin bác sĩ và giá
       .doctor-infor-summary {
-        background: #f8f9fa; // Màu nền nhạt để tách biệt khối
+        background: #f8f9fa;
         padding: 15px;
         border-radius: 8px;
         margin-top: 10px;
         margin-bottom: 20px;
-        border-left: 4px solid #45c3d2; // Tạo điểm nhấn
+        border-left: 4px solid #45c3d2;
 
         .price-ticket {
           font-size: 16px;

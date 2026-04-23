@@ -13,8 +13,6 @@ class CommonTable extends Component {
   handlePageChange = (pageNumber) => {
     this.setState({ activePage: pageNumber });
   };
-
-  // Reset trang về 1 nếu dữ liệu đầu vào thay đổi (ví dụ đổi ngày khám)
   componentDidUpdate(prevProps) {
     if (prevProps.data !== this.props.data) {
       this.setState({ activePage: 1 });
@@ -25,7 +23,6 @@ class CommonTable extends Component {
     let { data, columns, itemsPerPage = 10 } = this.props;
     let { activePage } = this.state;
 
-    // Logic phân trang
     const indexOfLastItem = activePage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentData = data.slice(indexOfFirstItem, indexOfLastItem);
@@ -48,7 +45,6 @@ class CommonTable extends Component {
                   <td>{indexOfFirstItem + index + 1}</td>
                   {columns.map((col, colIndex) => (
                     <td key={colIndex}>
-                      {/* Nếu có hàm render tùy chỉnh (như nút bấm, badge) thì dùng, không thì hiện text */}
                       {col.render ? col.render(item) : item[col.key]}
                     </td>
                   ))}

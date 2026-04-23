@@ -12,6 +12,7 @@ import Select from "react-select";
 import { postPatientBookAppointment } from "../../../../services/userService";
 import { toast } from "react-toastify";
 import moment from "moment";
+import { push } from "connected-react-router";
 
 class BookingModal extends Component {
   constructor(props) {
@@ -68,6 +69,31 @@ class BookingModal extends Component {
         this.setState({
           doctorId: doctorId,
           timeType: timeType,
+        });
+      }
+    }
+    
+    if (this.props.isOpenModal !== prevProps.isOpenModal && this.props.isOpenModal) {
+      if (this.props.isLoggedIn && this.props.userInfo) {
+        let { userInfo } = this.props;
+        let fullName = userInfo.lastName ? `${userInfo.lastName} ${userInfo.firstName}` : userInfo.firstName;
+        
+        let selectedGender = null;
+        if (this.state.genders && this.state.genders.length > 0) {
+        }
+        
+        this.setState({
+          email: userInfo.email || "",
+          fullName: fullName || "",
+          phoneNumber: userInfo.phonenumber || "",
+          address: userInfo.address || "",
+        });
+      } else {
+        this.setState({
+          email: "",
+          fullName: "",
+          phoneNumber: "",
+          address: "",
         });
       }
     }
@@ -172,8 +198,6 @@ class BookingModal extends Component {
       doctorId = dataTime.doctorId;
     }
 
-    // let doctorId = dataTime && !_.isEmpty(dataTime) ? dataTime.doctorId : "";
-
     return (
       <Modal
         isOpen={isOpenModal}
@@ -195,73 +219,92 @@ class BookingModal extends Component {
               dataTime={dataTime}
             />
 
-            <div className="row">
-              <div className="col-6 form-group">
-                <label>Họ tên</label>
-                <input
-                  className="form-control"
-                  value={this.state.fullName}
-                  onChange={(e) => this.handleOnChangeInput(e, "fullName")}
-                />
+            {this.props.isLoggedIn ? (
+              <div className="row">
+                <div className="col-6 form-group">
+                  <label>Họ tên</label>
+                  <input
+                    className="form-control"
+                    value={this.state.fullName}
+                    onChange={(e) => this.handleOnChangeInput(e, "fullName")}
+                  />
+                </div>
+                <div className="col-6 form-group">
+                  <label>Số điện thoại</label>
+                  <input
+                    className="form-control"
+                    value={this.state.phoneNumber}
+                    onChange={(e) => this.handleOnChangeInput(e, "phoneNumber")}
+                  />
+                </div>
+                <div className="col-6 form-group">
+                  <label>Địa chỉ Email</label>
+                  <input
+                    className="form-control"
+                    value={this.state.email}
+                    disabled={true} 
+                    onChange={(e) => this.handleOnChangeInput(e, "email")}
+                  />
+                </div>
+                <div className="col-6 form-group">
+                  <label>Địa chỉ liên hệ</label>
+                  <input
+                    className="form-control"
+                    value={this.state.address}
+                    onChange={(e) => this.handleOnChangeInput(e, "address")}
+                  />
+                </div>
+                <div className="col-12 form-group">
+                  <label>Lý do khám</label>
+                  <input
+                    className="form-control"
+                    value={this.state.reason}
+                    onChange={(e) => this.handleOnChangeInput(e, "reason")}
+                  />
+                </div>
+                <div className="col-6 form-group">
+                  <label>Ngày sinh</label>
+                  <DatePicker
+                    onChange={this.handleOnChangeDatePicker}
+                    className="form-control"
+                    value={this.state.birthday}
+                  />
+                </div>
+                <div className="col-6 form-group">
+                  <label>Giới tính</label>
+                  <Select
+                    value={this.state.selectedGender}
+                    onChange={this.handleChange}
+                    options={this.state.genders}
+                  />
+                </div>
               </div>
-              <div className="col-6 form-group">
-                <label>Số điện thoại</label>
-                <input
-                  className="form-control"
-                  value={this.state.phoneNumber}
-                  onChange={(e) => this.handleOnChangeInput(e, "phoneNumber")}
-                />
+            ) : (
+              <div className="text-center" style={{ margin: "30px 0" }}>
+                <h5>Vui lòng đăng nhập để tiếp tục đặt lịch</h5>
+                <button 
+                  className="btn btn-primary mt-2" 
+                  onClick={() => {
+                    this.props.closeBookingClose();
+                    this.props.navigate('/patient-login');
+                  }}
+                  style={{ backgroundColor: "#45c3d2", border: "none" }}
+                >
+                  Đăng nhập / Đăng ký
+                </button>
               </div>
-              <div className="col-6 form-group">
-                <label>Địa chỉ Email</label>
-                <input
-                  className="form-control"
-                  value={this.state.email}
-                  onChange={(e) => this.handleOnChangeInput(e, "email")}
-                />
-              </div>
-              <div className="col-6 form-group">
-                <label>Địa chỉ liên hệ</label>
-                <input
-                  className="form-control"
-                  value={this.state.address}
-                  onChange={(e) => this.handleOnChangeInput(e, "address")}
-                />
-              </div>
-              <div className="col-12 form-group">
-                <label>Lý do khám</label>
-                <input
-                  className="form-control"
-                  value={this.state.reason}
-                  onChange={(e) => this.handleOnChangeInput(e, "reason")}
-                />
-              </div>
-              <div className="col-6 form-group">
-                <label>Ngày sinh</label>
-                <DatePicker
-                  onChange={this.handleOnChangeDatePicker}
-                  className="form-control"
-                  value={this.state.birthday}
-                />
-              </div>
-              <div className="col-6 form-group">
-                <label>Giới tính</label>
-                <Select
-                  value={this.state.selectedGender}
-                  onChange={this.handleChange}
-                  options={this.state.genders}
-                />
-              </div>
-            </div>
+            )}
           </div>
           <div className="booking-modal-footer">
-            <button
-              className="btn-confirm"
-              disabled={this.state.isLoading}
-              onClick={this.handleConfirmBooking}
-            >
-              {this.state.isLoading ? "Đang xử lý..." : "Xác nhận"}
-            </button>
+            {this.props.isLoggedIn && (
+              <button
+                className="btn-confirm"
+                disabled={this.state.isLoading}
+                onClick={this.handleConfirmBooking}
+              >
+                {this.state.isLoading ? "Đang xử lý..." : "Xác nhận"}
+              </button>
+            )}
             <button className="btn-cancel" onClick={closeBookingClose}>
               Hủy
             </button>
@@ -276,11 +319,14 @@ const mapStateToProps = (state) => {
   return {
     language: state.app.language,
     genders: state.admin.genders,
+    isLoggedIn: state.user.isLoggedIn,
+    userInfo: state.user.userInfo,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     getGenders: () => dispatch(actions.fetchGenderStart()),
+    navigate: (path) => dispatch(push(path)),
   };
 };
 

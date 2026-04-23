@@ -2,18 +2,18 @@
   padding: 10px 15px;
 
   .intro-doctor {
-    display: flex; // Chia đôi theo hàng ngang
+    display: flex; 
     width: 100%;
-    gap: 20px; // Khoảng cách giữa ảnh và chữ
+    gap: 20px; 
 
     .content-left {
-      flex: 0 0 25%; // Giảm xuống 25% cho ảnh gọn hơn nữa
+      flex: 0 0 25%; 
       display: flex;
-      justify-content: center; // Căn giữa cái ảnh trong khối 25%
+      justify-content: center;
       align-items: flex-start;
 
       .avatar-img {
-        width: 100px; // Thu nhỏ ảnh lại cho gọn
+        width: 100px;
         height: 100px;
         border-radius: 50%;
         background-size: cover;
@@ -24,7 +24,7 @@
     }
 
     .content-right {
-      flex: 0 0 75%; // Phần thông tin chiếm 75% còn lại
+      flex: 0 0 75%; 
       display: flex;
       flex-direction: column;
 
@@ -42,7 +42,6 @@
         line-height: 1.5;
         text-align: justify;
 
-        // Cắt bớt nếu mô tả quá dài để form không bị đẩy xuống quá sâu
         display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;

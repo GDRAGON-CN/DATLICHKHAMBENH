@@ -56,7 +56,6 @@ class Login extends Component {
             username: 'admin',
             password: '123456'
         }
-        //sucess
         let adminInfo = {
             "tlid": "0",
             "tlfullname": "Administrator",
@@ -90,7 +89,6 @@ class Login extends Component {
 
     componentWillUnmount() {
         document.removeEventListener('keydown', this.handlerKeyDown);
-        // fix Warning: Can't perform a React state update on an unmounted component
         this.setState = (state, callback) => {
             return;
         };

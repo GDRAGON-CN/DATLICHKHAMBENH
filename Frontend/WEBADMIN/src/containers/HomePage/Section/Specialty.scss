@@ -1,0 +1,51 @@
+.section-specialty {
+  .section-customize {
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    margin: 10px;
+    padding: 15px;
+    transition: all 0.3s ease;
+    border: 1px solid #f0f0f0;
+    overflow: hidden;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(69, 195, 210, 0.2);
+      border-color: #45c3d2;
+    }
+
+    .bg-image {
+      border-radius: 12px;
+      margin-bottom: 15px;
+      transition: transform 0.5s ease;
+      height: 160px;
+      width: 100%;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
+    .image-wrapper {
+      overflow: hidden;
+      border-radius: 12px;
+    }
+
+    &:hover .bg-image {
+      transform: scale(1.08);
+    }
+
+    .specialty-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: #333;
+      text-align: center;
+      margin-top: 5px;
+      transition: color 0.3s;
+    }
+
+    &:hover .specialty-name {
+      color: #45c3d2;
+    }
+  }
+}

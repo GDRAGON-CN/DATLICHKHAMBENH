@@ -18,15 +18,12 @@ class ManageDoctor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // save to markdown table
       contentMarkdown: "",
       contentHTML: "",
       selectedOption: "",
       description: "",
       listDoctors: [],
       hasOldData: false,
-
-      // save to doctor-infor
       listPrice: [],
       listPayment: [],
       listProvince: [],
@@ -261,7 +258,6 @@ class ManageDoctor extends Component {
           Tạo thêm thông tin cho bác sĩ
         </div>
 
-        {/* Khối 1: Chọn bác sĩ & Mô tả ngắn */}
         <div className="doctor-info-card">
           <div className="more-infor">
             <div className="content-left form-group">
@@ -288,7 +284,7 @@ class ManageDoctor extends Component {
           </div>
         </div>
 
-        {/* Khối 2: Thông tin phòng khám & Phí */}
+
         <div className="doctor-info-card">
           <div className="row mb-3">
             <div className="col-4 form-group">
@@ -364,7 +360,6 @@ class ManageDoctor extends Component {
           </div>
         </div>
 
-        {/* Khối 3: Soạn thảo văn bản chi tiết */}
         <div className="doctor-info-card">
           <label>Chi tiết nội dung bài viết (Markdown)</label>
           <div className="manage-doctor-editor">

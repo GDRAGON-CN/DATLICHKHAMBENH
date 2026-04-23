@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { Redirect, Route, Switch } from "react-router-dom";
 import UserRedux from "../containers/System/Admin/UserRedux";
 import ManageDoctor from "../containers/System/Admin/ManageDoctor";
-// Thay Header bằng Sidebar (Giả sử bạn đã tạo Sidebar.js ở thư mục Header)
 import Sidebar from "../containers/Header/Sidebar";
 import ManageSchedule from "../containers/System/Doctor/ManageSchedule";
 import ManageSpecialty from "../containers/System/Admin/ManageSpecialty";
@@ -13,12 +12,9 @@ import ManageDoneBooking from "../containers/System/Admin/ManageDoneBooking";
 class System extends Component {
   render() {
     const { isLoggedIn, userInfo } = this.props;
-
-    // Nếu là bác sĩ, tự động chuyển hướng sang trang quản lý lịch của bác sĩ
     if (userInfo && userInfo.roleId === "R2") {
       return <Redirect to="/doctor/manage-schedule" />;
     }
-
     return (
       <React.Fragment>
         <div

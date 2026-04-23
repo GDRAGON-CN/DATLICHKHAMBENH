@@ -1,0 +1,98 @@
+.patient-auth-background {
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f1f1f1;
+
+  .patient-auth-container {
+    background: white;
+    width: 400px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+
+    .patient-auth-content {
+      padding: 30px;
+
+      .text-login {
+        font-size: 24px;
+        font-weight: 600;
+        text-align: center;
+        margin-bottom: 20px;
+        color: #45c3d2;
+      }
+
+      .auth-input {
+        margin-bottom: 15px;
+        
+        label {
+          font-weight: 500;
+        }
+
+        .input-group {
+          position: relative;
+          
+          .input-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+            z-index: 10;
+          }
+
+          .form-control {
+            padding-left: 35px;
+            height: 40px;
+          }
+
+          .show-hide-pass {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            z-index: 10;
+          }
+        }
+      }
+
+      .err-message {
+        color: red;
+        font-size: 13px;
+        margin-bottom: 10px;
+      }
+
+      .btn-login {
+        width: 100%;
+        border: none;
+        outline: none;
+        background-color: #45c3d2;
+        color: white;
+        height: 40px;
+        border-radius: 5px;
+        font-weight: 600;
+        margin-bottom: 15px;
+        
+        &:hover {
+          opacity: 0.9;
+        }
+      }
+
+      .register-redirect {
+        text-align: center;
+        font-size: 14px;
+        
+        .text-register {
+          color: #45c3d2;
+          cursor: pointer;
+          font-weight: 600;
+          
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+}

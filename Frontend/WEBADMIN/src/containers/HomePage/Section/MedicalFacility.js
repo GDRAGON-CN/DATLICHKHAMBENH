@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import Slider from "react-slick";
 import { withRouter } from "react-router";
 import { getTopClinicHome } from "../../../services/userService";
+import "./MedicalFacility.scss";
 
 class MedicalFacility extends Component {
   constructor(props) {
@@ -62,10 +63,12 @@ class MedicalFacility extends Component {
                       key={index}
                       onClick={() => this.handleViewDetailClinic(item)}
                     >
-                      <div
-                        className="bg-image section-medical-facility"
-                        style={{ backgroundImage: `url('${imageBase64}')` }}
-                      />
+                      <div className="image-wrapper">
+                        <div
+                          className="bg-image section-medical-facility"
+                          style={{ backgroundImage: `url('${imageBase64}')` }}
+                        />
+                      </div>
                       <div className="clinic-name">{item.name}</div>
                     </div>
                   );

@@ -217,10 +217,6 @@ let getDetailDoctorById = (inputId) => {
             exclude: ["password"],
           },
           include: [
-            // {
-            //   model: db.Markdown,
-            //   attributes: ["descriptions", "contentHTML", "contentMarkdown"],
-            // },
             {
               model: db.Allcode,
               as: "positionData",
@@ -280,7 +276,6 @@ let bulkCreateSchedule = (data) => {
         if (schedule && schedule.length > 0) {
           schedule = schedule.map((item) => {
             item.maxNumber = parseInt(process.env.MAX_NUMBER_SCHEDULE);
-            // Đảm bảo kiểu dữ liệu date đồng nhất (String hoặc Number)
             item.date = String(item.date);
             return item;
           });
@@ -433,10 +428,6 @@ let getProfileInforDoctorById = (doctorId) => {
             exclude: ["password"],
           },
           include: [
-            // {
-            //   model: db.Markdown,
-            //   attributes: ["descriptions", "contentHTML", "contentMarkdown"],
-            // },
             {
               model: db.Allcode,
               as: "positionData",

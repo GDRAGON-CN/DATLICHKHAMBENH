@@ -25,7 +25,6 @@ class AllClinic extends Component {
 
   async componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.props.language !== prevProps.language) {
-      // Có thể xử lý load lại data nếu cần đa ngôn ngữ cho tên phòng khám
     }
   }
 
@@ -42,7 +41,7 @@ class AllClinic extends Component {
         <HomeHeader isShowBanner={false} />
         <div className="all-clinic-body">
           <div className="all-clinic-header">
-            <div className="header-title">Danh Sách Các Cơ Sỏ Y Tế</div>
+            <div className="header-title">Danh Sách Các Khoa</div>
           </div>
           <div className="list-clinic">
             {dataClinic &&

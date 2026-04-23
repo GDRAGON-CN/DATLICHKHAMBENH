@@ -1,5 +1,5 @@
 .manage-specialty-container {
-  // Lưu ý: Bạn có thể đổi tên class cha nếu muốn đồng bộ hơn
+
   padding: 20px;
   background-color: #f5f7f9;
   min-height: 100vh;
@@ -13,7 +13,7 @@
     text-align: center;
   }
 
-  // Khối bọc chung các dòng thông tin (Giống Doctor Card)
+
   .clinic-info-card {
     background: white;
     padding: 25px;
@@ -45,7 +45,6 @@
     margin-top: 5px;
   }
 
-  // Tinh chỉnh Editor
   .manage-clinic-editor {
     margin-top: 20px;
     margin-bottom: 30px;
@@ -56,7 +55,7 @@
     }
   }
 
-  // Nút bấm đồng bộ màu sắc
+
   .btn-save-specialty {
     padding: 12px 30px;
     border: none;
@@ -67,7 +66,7 @@
     display: block;
     margin: 20px auto;
     min-width: 180px;
-    background-color: #45c3d2; // Màu xanh đặc trưng
+    background-color: #45c3d2; 
     color: white;
 
     &:hover {
@@ -76,7 +75,7 @@
     }
 
     &.btn-edit-mode {
-      background-color: #ffc107; // Màu vàng khi Edit
+      background-color: #ffc107; 
       color: #212529;
       &:hover {
         background-color: #e0a800;
@@ -84,7 +83,6 @@
     }
   }
 
-  // Tùy chỉnh Table cho chuyên nghiệp hơn
   .table-manage-clinic {
     background: white;
     border-radius: 12px;

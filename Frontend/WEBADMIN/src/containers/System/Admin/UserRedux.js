@@ -92,7 +92,6 @@ class UserRedux extends Component {
     let { action } = this.state;
 
     if (action === CRUD_ACTIONS.CREATE) {
-      // fire redux create user
       this.props.createNewUser({
         email: this.state.email,
         password: this.state.password,
@@ -107,7 +106,6 @@ class UserRedux extends Component {
       });
     }
     if (action === CRUD_ACTIONS.EDIT) {
-      //fire redux edit user
       this.props.editAUserRedux({
         id: this.state.userEditId,
         email: this.state.email,
@@ -236,7 +234,7 @@ class UserRedux extends Component {
             </button>
             <button
               className="btn-delete"
-              onClick={() => this.props.deleteAUserRedux(user.id)} // M cần thêm hàm delete vào mapDispatchToProps nhé
+              onClick={() => this.props.deleteAUserRedux(user.id)} 
             >
               <i className="fas fa-trash"></i>
             </button>
@@ -440,7 +438,6 @@ class UserRedux extends Component {
             <CommonTable data={listUsers} columns={columns} itemsPerPage={5} />
           </div>
         </div>
-        {/* Lightbox giữ nguyên */}
       </div>
     );
   }
@@ -465,9 +462,6 @@ const mapDispatchToProps = (dispatch) => {
     createNewUser: (data) => dispatch(actions.createNewUser(data)),
     fetchUserRedux: () => dispatch(actions.fetchAllUsersStart()),
     editAUserRedux: (data) => dispatch(actions.editAUser(data)),
-    // processLogout: () => dispatch(actions.processLogout()),
-    //     changeLanguageAppRedux: (language) =>
-    //       dispatch(actions.changeLanguageApp(language)),
   };
 };
 

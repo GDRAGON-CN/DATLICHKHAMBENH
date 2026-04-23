@@ -94,7 +94,7 @@ class ManageSpecialty extends Component {
         action: "CREATE",
         specialtyId: "",
       });
-      await this.fetchListSpecialty(); // Load lại bảng
+      await this.fetchListSpecialty(); 
     } else {
       toast.error("Something wrongs ...");
     }
@@ -149,8 +149,6 @@ class ManageSpecialty extends Component {
     return (
       <div className="manage-specialty-container">
         <div className="ms-title">Quản lý chuyên khoa</div>
-
-        {/* Khối nhập liệu bọc trong Card giống Clinic */}
         <div className="specialty-info-card">
           <div className="row">
             <div className="col-6 form-group">
@@ -205,13 +203,12 @@ class ManageSpecialty extends Component {
           </button>
         </div>
 
-        {/* Bảng danh sách chuyên khoa */}
         <div className="mt-5">
           <div className="sub-title mb-3">Danh sách chuyên khoa</div>
           <CommonTable
             data={listSpecialty}
             columns={columns}
-            itemsPerPage={5} // Mỗi trang hiện 5 chuyên khoa
+            itemsPerPage={5} 
           />
         </div>
       </div>

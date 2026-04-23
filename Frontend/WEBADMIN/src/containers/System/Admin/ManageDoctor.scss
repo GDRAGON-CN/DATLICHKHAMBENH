@@ -12,7 +12,6 @@
     text-align: center;
   }
 
-  // Khối bọc chung các dòng thông tin
   .doctor-info-card {
     background: white;
     padding: 25px;
@@ -39,9 +38,7 @@
     }
   }
 
-  // Tinh chỉnh Select (react-select)
   .css-b62m3t-container {
-    // Class mặc định của react-select
     border-radius: 6px;
   }
 
@@ -67,7 +64,6 @@
     }
   }
 
-  // Nút bấm
   button {
     padding: 12px 30px;
     border: none;

@@ -21,7 +21,7 @@ class ManageClinic extends Component {
     super(props);
     this.state = {
       name: "",
-      address: "", // Thêm dòng này
+      address: "", 
       imageBase64: "",
       descriptionHTML: "",
       descriptionMarkdown: "",
@@ -47,19 +47,19 @@ class ManageClinic extends Component {
       address: item.address,
       descriptionHTML: item.descriptionHTML,
       descriptionMarkdown: item.descriptionMarkdown,
-      imageBase64: item.image, // Lưu ý: Backend cần trả về ảnh dạng base64
+      imageBase64: item.image, 
       action: "EDIT",
       clinicId: item.id,
     });
   };
   handleDeleteClinic = async (item) => {
-    if (window.confirm("Bạn có chắc chắn muốn xóa phòng khám này?")) {
+    if (window.confirm("Bạn có chắc chắn muốn xóa khoa này?")) {
       let res = await deleteClinicService(item.id);
       if (res && res.errCode === 0) {
-        toast.success("Xóa phòng khám thành công!");
+        toast.success("Xóa khoa thành công!");
         await this.fetchClinics();
       } else {
-        toast.error("Lỗi khi xóa phòng khám");
+        toast.error("Lỗi khi xóa khoa");
       }
     }
   };
@@ -125,7 +125,7 @@ class ManageClinic extends Component {
   render() {
     let { listClinics } = this.state;
     const columns = [
-      { label: "Tên phòng khám", key: "name" },
+      { label: "Tên khoa", key: "name" },
       { label: "Địa chỉ", key: "address" },
       {
         label: "Hành động",
@@ -150,13 +150,12 @@ class ManageClinic extends Component {
     ];
     return (
       <div className="manage-specialty-container">
-        <div className="ms-title">Quản lý phòng khám</div>
+        <div className="ms-title">Quản lý khoa</div>
 
-        {/* Khối nhập liệu bọc trong Card */}
         <div className="clinic-info-card">
           <div className="row">
             <div className="col-6 form-group">
-              <label>Tên Phòng Khám</label>
+              <label>Tên khoa</label>
               <input
                 className="form-control"
                 value={this.state.name}
@@ -164,7 +163,7 @@ class ManageClinic extends Component {
               />
             </div>
             <div className="col-6 form-group">
-              <label>Ảnh Phòng Khám</label>
+              <label>Ảnh khoa</label>
               <input
                 className="form-control-file"
                 type="file"
@@ -183,7 +182,7 @@ class ManageClinic extends Component {
               ></div>
             </div>
             <div className="col-12 form-group mt-3">
-              <label>Địa Chỉ Phòng Khám</label>
+              <label>Địa chỉ khoa</label>
               <input
                 className="form-control"
                 value={this.state.address}
@@ -192,9 +191,8 @@ class ManageClinic extends Component {
             </div>
           </div>
 
-          {/* Editor */}
           <div className="manage-clinic-editor">
-            <label>Mô tả phòng khám</label>
+            <label>Mô tả khoa</label>
             <MdEditor
               style={{ height: "400px" }}
               renderHTML={(text) => mdParser.render(text)}
@@ -202,8 +200,6 @@ class ManageClinic extends Component {
               value={this.state.descriptionMarkdown}
             />
           </div>
-
-          {/* Nút Save */}
           <button
             className={
               this.state.action === "EDIT"
@@ -213,12 +209,11 @@ class ManageClinic extends Component {
             onClick={() => this.handleSaveNewClinic()}
           >
             {this.state.action === "EDIT"
-              ? "Cập nhật phòng khám"
-              : "Lưu phòng khám"}
+              ? "Cập nhật khoa"
+              : "Lưu khoa"}
           </button>
         </div>
 
-        {/* Bảng danh sách */}
         <div className="mt-5">
           <CommonTable data={listClinics} columns={columns} itemsPerPage={5} />
         </div>

@@ -9,14 +9,14 @@
     margin-bottom: 0;
 
     thead {
-      background-color: #45c3d2; // Màu xanh đặc trưng của m
+      background-color: #45c3d2; 
       color: white;
 
       tr th {
         border: none;
         padding: 15px;
         font-weight: 600;
-        text-transform: none; // Giữ nguyên chữ bình thường như code cũ của m
+        text-transform: none; 
         vertical-align: middle;
       }
     }
@@ -34,8 +34,6 @@
           padding: 12px 15px;
           border-top: 1px solid #eee;
           color: #444;
-
-          // Style cho các nút hành động dựa trên code m gửi
           .btn-edit {
             background: transparent;
             color: #ffc107;
@@ -71,7 +69,6 @@
     }
   }
 
-  // Bộ phân trang đồng bộ màu Cyan
   .common-pagination {
     padding: 20px;
     display: flex;
@@ -118,7 +115,7 @@
   }
 }
 
-// Mobile responsive
+
 @media (max-width: 768px) {
   .common-table-container {
     overflow-x: auto;

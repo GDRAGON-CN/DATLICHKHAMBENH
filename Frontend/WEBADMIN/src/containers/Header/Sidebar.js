@@ -30,7 +30,6 @@ class Sidebar extends Component {
   }
 
   render() {
-    // Lấy menu từ state thay vì lấy trực tiếp từ file import
     const { menuApp } = this.state;
 
     return (
@@ -72,7 +71,7 @@ class Sidebar extends Component {
 const mapStateToProps = (state) => {
   return {
     isLoggedIn: state.user.isLoggedIn,
-    userInfo: state.user.userInfo, // Quan trọng: lấy roleId từ đây
+    userInfo: state.user.userInfo, 
   };
 };
 

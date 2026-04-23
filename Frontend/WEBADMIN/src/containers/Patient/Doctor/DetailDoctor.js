@@ -53,7 +53,6 @@ class DetailDoctor extends Component {
           detailDoctor: res.data,
         });
       }
-      //  imageBase64 = new Buffer(user.image, "base64").toString("binary");
     }
   }
   componentDidUpdate(prevProps, prevState, snapshot) {}
@@ -87,7 +86,6 @@ class DetailDoctor extends Component {
         <HomeHeader isShowBanner={false} />
 
         <div className="doctor-detail-container">
-          {/* INTRO DOCTOR */}
           <div className="intro-doctor">
             <div
               className="content-left"
@@ -98,7 +96,6 @@ class DetailDoctor extends Component {
 
             <div className="content-right">
               <div className="up">
-                {/* {language === LANGUAGES.VI ? nameVi : nameEn} */}
                 {nameVi}
               </div>
 
@@ -112,13 +109,10 @@ class DetailDoctor extends Component {
             </div>
           </div>
 
-          {/* SCHEDULE */}
           <DoctorSchedule
             doctorIdFromParent={this.state.currentDoctorId}
             handleBooking={this.handleBooking}
           />
-
-          {/* DETAIL INFO */}
           <div className="detail-info">
             <div className="doctor-section">
               {detailDoctor &&
