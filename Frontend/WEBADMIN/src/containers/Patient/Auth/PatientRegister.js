@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
-import { createNewUserService } from "../../../services/userService";
+import { createNewUserService, getAllCodeService } from "../../../services/userService";
 import HomeHeader from "../../HomePage/HomeHeader";
 import HomeFooter from "../../HomePage/HomeFooter";
 import { toast } from "react-toastify";
@@ -17,10 +17,21 @@ class PatientRegister extends Component {
       lastName: "",
       phonenumber: "",
       address: "",
-      gender: "1",
+      gender: "",
+      genderArr: [],
       isShowPassword: false,
       errMessage: "",
     };
+  }
+
+  async componentDidMount() {
+    let res = await getAllCodeService("GENDER");
+    if (res && res.errCode === 0) {
+      this.setState({
+        genderArr: res.data,
+        gender: res.data && res.data.length > 0 ? res.data[0].keyMap : "",
+      });
+    }
   }
 
   handleOnChangeInput = (event, id) => {
@@ -58,7 +69,8 @@ class PatientRegister extends Component {
         phonenumber: this.state.phonenumber,
         address: this.state.address,
         gender: this.state.gender,
-        roleId: "R3", 
+        roleId: "R3",
+        positionId: "P5",
       };
 
       let response = await createNewUserService(data);
@@ -80,6 +92,8 @@ class PatientRegister extends Component {
   };
 
   render() {
+    let { genderArr } = this.state;
+    let { language } = this.props;
     return (
       <>
         <HomeHeader isShowBanner={false} />
@@ -155,8 +169,15 @@ class PatientRegister extends Component {
                   value={this.state.gender}
                   onChange={(event) => this.handleOnChangeInput(event, "gender")}
                 >
-                  <option value="1">Nam</option>
-                  <option value="0">Nữ</option>
+                  {genderArr &&
+                    genderArr.length > 0 &&
+                    genderArr.map((item, index) => {
+                      return (
+                        <option key={index} value={item.keyMap}>
+                          {language === "vi" ? item.valueVi : item.valueEn}
+                        </option>
+                      );
+                    })}
                 </select>
               </div>
 

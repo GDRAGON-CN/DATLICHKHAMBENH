@@ -3,7 +3,9 @@ import userController from "../controllers/userController";
 import doctorController from "../controllers/doctorController";
 import patientController from "../controllers/patientController";
 import specialtyController from "../controllers/specialtyController";
-import clinicController from "../controllers/clinicController";
+import dashboardController from "../controllers/dashboardController";
+import handbookController from "../controllers/handbookController";
+import reviewController from "../controllers/reviewController";
 let router = express.Router();
 let initWebRoute = (app) => {
   router.post("/api/login", userController.handleLogin);
@@ -21,6 +23,7 @@ let initWebRoute = (app) => {
     userController.handleGetAllBookingForAdmin,
   );
   router.post("/api/update-booking-status", userController.handleUpdateStatus);
+  router.post("/api/change-password", userController.handleChangePassword);
 
   router.get("/api/top-doctor-home", doctorController.getTopDoctorHome);
   router.get("/api/get-all-doctors", doctorController.getAllDoctors);
@@ -65,6 +68,8 @@ let initWebRoute = (app) => {
     "/api/get-list-booking-by-patient",
     patientController.getListBookingByPatient,
   );
+  router.post("/api/update-patient-profile", patientController.updatePatientProfile);
+  router.get("/api/get-medical-history-by-patient", patientController.getMedicalHistoryByPatient);
 
   router.post("/api/create-new-specialty", specialtyController.createSpecialty);
   router.get("/api/get-specialty", specialtyController.getAllSpecialty);
@@ -82,15 +87,25 @@ let initWebRoute = (app) => {
     specialtyController.getTopSpecialtyHome,
   );
 
-  router.post("/api/create-new-clinic", clinicController.createClinic);
-  router.get("/api/get-clinic", clinicController.getAllClinic);
+  router.post("/api/create-new-handbook", handbookController.createHandbook);
+  router.get("/api/get-all-handbook", handbookController.getAllHandbook);
+  router.get("/api/get-detail-handbook-by-id", handbookController.getDetailHandbookById);
+  router.get("/api/get-top-handbook-home", handbookController.getTopHandbookHome);
+  router.delete("/api/delete-handbook", handbookController.handleDeleteHandbook);
+  router.put("/api/edit-handbook", handbookController.handleEditHandbook);
+  router.post("/api/post-comment-handbook", handbookController.postCommentHandbook);
+  router.get("/api/get-comment-handbook", handbookController.getCommentHandbook);
+
+  // Dashboard admin
+  router.get("/api/get-dashboard-stats", dashboardController.getDashboardStats);
+
+  // Reviews
+  router.post("/api/create-new-review", reviewController.handleCreateNewReview);
   router.get(
-    "/api/get-detail-clinic-by-id",
-    clinicController.getDetailClinicById,
+    "/api/get-reviews-by-doctor-id",
+    reviewController.handleGetReviewsByDoctorId,
   );
-  router.put("/api/edit-clinic", clinicController.handleEditClinic);
-  router.delete("/api/delete-clinic", clinicController.handleDeleteClinic);
-  router.get("/api/get-top-clinic-home", clinicController.getTopClinicHome);
+  router.delete("/api/delete-review", reviewController.handleDeleteReview);
 
   // restAPI
   return app.use("/", router);

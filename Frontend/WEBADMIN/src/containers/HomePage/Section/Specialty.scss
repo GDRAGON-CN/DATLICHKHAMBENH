@@ -21,31 +21,40 @@
       transition: transform 0.5s ease;
       height: 160px;
       width: 100%;
-      background-position: center;
-      background-size: cover;
-      background-repeat: no-repeat;
-    }
-
+    padding: 10px;
+    
     .image-wrapper {
+      border-radius: 15px;
       overflow: hidden;
-      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      background: #fff;
+      
+      .bg-image {
+        height: 160px;
+        background-size: cover;
+        background-position: center;
+        transition: transform 0.4s ease;
+        cursor: pointer;
+      }
     }
 
-    &:hover .bg-image {
-      transform: scale(1.08);
+    &:hover {
+      .bg-image {
+        transform: scale(1.1);
+      }
+      .specialty-name {
+        color: #45c3d2;
+      }
     }
 
     .specialty-name {
-      font-size: 16px;
+      text-align: center;
+      padding-top: 15px;
+      font-size: 15px;
       font-weight: 600;
       color: #333;
-      text-align: center;
-      margin-top: 5px;
       transition: color 0.3s;
     }
-
-    &:hover .specialty-name {
-      color: #45c3d2;
     }
   }
 }

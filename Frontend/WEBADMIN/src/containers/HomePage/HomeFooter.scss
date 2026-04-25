@@ -1,51 +1,67 @@
 .home-footer-container {
-  background-color: #f9f9f9;
+  background: #f8f9fa;
   border-top: 1px solid #eee;
-  padding: 40px 10% 20px 10%;
-  font-size: 14px;
-  color: #333;
+  padding: 50px 0 20px;
+  color: #555;
 
   .home-footer-content {
+    max-width: 1100px;
+    margin: 0 auto;
     display: flex;
     justify-content: space-between;
-    gap: 30px;
+    padding: 0 20px;
+    gap: 40px;
+
+    b {
+      display: block;
+      margin-bottom: 20px;
+      color: #333;
+      font-size: 16px;
+      text-transform: uppercase;
+    }
 
     .footer-left {
-      width: 40%;
-      .company-info p {
-        margin-bottom: 8px;
-        line-height: 1.5;
-        i {
-          width: 20px;
-          color: #666;
+      flex: 1.5;
+      .company-info {
+        .hospital-logo {
+          width: 200px;
+          height: 50px;
+          background: url('../../assets/logo.svg') no-repeat center;
+          background-size: contain;
+          margin-bottom: 15px;
         }
-      }
-      .vnpay-logos {
-        display: flex;
-        gap: 10px;
-        margin-top: 20px;
-        .logo-item.red {
-          border: 2px solid #ee4d2d;
-          color: #ee4d2d;
-          padding: 5px 10px;
-          font-weight: bold;
-          border-radius: 4px;
+        
+        p {
+          margin-bottom: 12px;
+          font-size: 14px;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+
+          i {
+            color: #45c3d2;
+            width: 16px;
+          }
         }
       }
     }
 
     .footer-center {
-      width: 25%;
+      flex: 1;
       ul {
         list-style: none;
         padding: 0;
+        margin: 0;
         li {
           margin-bottom: 10px;
           a {
-            color: #45c3d2;
+            color: #666;
             text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s;
             &:hover {
-              text-decoration: underline;
+              color: #45c3d2;
+              padding-left: 5px;
             }
           }
         }
@@ -53,54 +69,76 @@
     }
 
     .footer-right {
-      width: 35%;
-      .partner-item {
+      flex: 1;
+      .social-links {
         display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-top: 15px;
-        .partner-icon {
-          width: 50px;
-          height: 50px;
-          background-color: #ddd;
-          border-radius: 4px;
-          &.hello-doctor {
-            background: url("../../assets/doitac1.png") no-repeat center;
-            background-size: cover;
+        flex-direction: column;
+        gap: 12px;
+        a {
+          color: #666;
+          text-decoration: none;
+          font-size: 14px;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          transition: color 0.2s;
+          &:hover {
+            color: #45c3d2;
           }
-          &.bernard {
-            background: url("../../assets/doitac2.png") no-repeat center;
-            background-size: cover;
+          i {
+            font-size: 18px;
           }
         }
-        .partner-text {
-          b {
-            display: block;
-          }
-          span {
+      }
+
+      .app-download {
+        margin-top: 25px;
+        .btn-app {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          .btn-store {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
             font-size: 12px;
-            color: #666;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 150px;
+            transition: background 0.2s;
+            &:hover {
+              background: #000;
+            }
           }
         }
       }
     }
   }
 
-  hr {
-    border: none;
-    border-top: 1px solid #ddd;
-    margin: 30px 0 15px 0;
-  }
-
   .home-footer-bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: #666;
+    border-top: 1px solid #eee;
+    margin-top: 40px;
+    padding: 20px 0;
+    text-align: center;
     font-size: 13px;
-    a {
-      color: #45c3d2;
-      text-decoration: none;
+    color: #888;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .home-footer-container {
+    .home-footer-content {
+      flex-direction: column;
+      gap: 30px;
+      .footer-left, .footer-center, .footer-right {
+        flex: unset;
+      }
     }
   }
 }

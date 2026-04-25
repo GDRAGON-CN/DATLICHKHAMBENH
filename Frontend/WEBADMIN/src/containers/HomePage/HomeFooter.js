@@ -1,88 +1,58 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import "./HomeFooter.scss"; // Nhớ tạo file SCSS này
+import "./HomeFooter.scss";
 
 class HomeFooter extends Component {
   render() {
     return (
       <div className="home-footer-container">
         <div className="home-footer-content">
-          {/* Cột 1: Thông tin công ty */}
           <div className="footer-left">
             <div className="company-info">
-              <b>Công ty Cổ phần Công nghệ BookingCare</b>
+              <div className="hospital-logo"></div>
+              <b>HỆ THỐNG QUẢN LÝ BỆNH VIỆN THÔNG MINH</b>
               <p>
-                <i className="fas fa-map-marker-alt"></i> Lô B4/D21, Khu đô thị
-                mới Cầu Giấy, Phường Cầu Giấy, Thành phố Hà Nội
+                <i className="fas fa-map-marker-alt"></i> 123 Đường ABC, Phường 1, Quận 1, TP. Hồ Chí Minh
               </p>
               <p>
-                <i className="fas fa-check-circle"></i> ĐKKD số: 0106790291. Sở
-                KHĐT Hà Nội cấp ngày 16/03/2015
+                <i className="fas fa-phone"></i> Hotline đặt lịch: 1900-xxxx (8h00 - 20h00)
               </p>
               <p>
-                <i className="fas fa-phone"></i> 024-7301-2468 (7h30 - 18h)
+                <i className="fas fa-envelope"></i> contact@hospital.vn
               </p>
-              <p>
-                <i className="fas fa-envelope"></i> support@bookingcare.vn
-              </p>
-            </div>
-            <div className="vnpay-logos">
-              <div className="logo-item red">ĐÃ ĐĂNG KÝ</div>
-              <div className="logo-item red">ĐÃ ĐĂNG KÝ</div>
             </div>
           </div>
 
-          {/* Cột 2: Các liên kết nhanh */}
           <div className="footer-center">
-            <div className="footer-logo"></div>
+            <b>DỊCH VỤ Y TẾ</b>
             <ul>
-              <li>
-                <a href="#">Liên hệ hợp tác</a>
-              </li>
-              <li>
-                <a href="#">Danh sách gói khám</a>
-              </li>
-              <li>
-                <a href="#">Tuyển dụng</a>
-              </li>
-              <li>
-                <a href="#">Câu hỏi thường gặp</a>
-              </li>
-              <li>
-                <a href="#">Điều khoản sử dụng</a>
-              </li>
+              <li><a href="#">Khám Chuyên khoa</a></li>
+              <li><a href="#">Khám Bác sĩ giỏi</a></li>
+              <li><a href="#">Cẩm nang sức khỏe</a></li>
+              <li><a href="#">Quy trình đi khám</a></li>
+              <li><a href="#">Điều khoản sử dụng</a></li>
             </ul>
           </div>
 
-          {/* Cột 3: Đối tác bảo trợ */}
           <div className="footer-right">
-            <b>Đối tác bảo trợ nội dung</b>
-            <div className="partner-item">
-              <div className="partner-icon hello-doctor"></div>
-              <div className="partner-text">
-                <b>Hello Doctor</b>
-                <span>Bảo trợ chuyên mục nội dung "sức khỏe tinh thần"</span>
-              </div>
+            <b>KẾT NỐI VỚI CHÚNG TÔI</b>
+            <div className="social-links">
+              <a href="#"><i className="fab fa-facebook-square"></i> Facebook</a>
+              <a href="#"><i className="fab fa-youtube"></i> Youtube</a>
+              <a href="#"><i className="fab fa-twitter"></i> Twitter</a>
             </div>
-            <div className="partner-item">
-              <div className="partner-icon bernard"></div>
-              <div className="partner-text">
-                <b>Hệ thống y khoa Bernard</b>
-                <span>Bảo trợ chuyên mục nội dung "y khoa chuyên sâu"</span>
+            <div className="app-download mt-3">
+              <b>TẢI ỨNG DỤNG</b>
+              <div className="btn-app mt-2">
+                <button className="btn-store"><i className="fab fa-apple"></i> App Store</button>
+                <button className="btn-store"><i className="fab fa-google-play"></i> Google Play</button>
               </div>
             </div>
           </div>
         </div>
 
-        <hr />
         <div className="home-footer-bottom">
-          <p>
-            &copy; 2026 BookingCare.{" "}
-            <a href="#">More information, please call us</a>
-          </p>
-          <div className="app-download">
-            Tải ứng dụng: <a href="#">Android</a> - <a href="#">iPhone/iPad</a>
-          </div>
+          <p>&copy; 2026 Smart Hospital Management System. All rights reserved.</p>
         </div>
       </div>
     );

@@ -43,35 +43,35 @@ class DoctorExtrainfor extends Component {
     console.log("checl state", this.state);
     return (
       <div className="doctor-extra-infor-container">
-        <div className="price-title">
-          GIÁ TƯ VẤN QUA VIDEO:
-          <span className="price"> 200.000đ - 1.000.000đ</span>
-          <div className="price-title">
-            <div>ĐỊA CHỈ PHÒNG KHÁM</div>
-            <div>
-              <Link to={`/detail-clinic/${extraInfor.clinicId}`}>
-                {extraInfor &&
-                extraInfor.clinicData &&
-                extraInfor.clinicData.name
-                  ? extraInfor.clinicData.name
-                  : "Không có thông tin tên phòng khám"}
-              </Link>
-            </div>
-            <div>
-              {extraInfor &&
-              extraInfor.clinicData &&
-              extraInfor.clinicData.address
-                ? extraInfor.clinicData.address
-                : "Không có thông tin địa chỉ"}
-            </div>
+        <div className="payment-info-section">
+          <div className="payment-title">LOẠI HÌNH DỊCH VỤ:</div>
+          <div className="service-name">Khám bệnh tại bệnh viện</div>
+          <div className="payment-method">
+            Hỗ trợ thanh toán:{" "}
+            {extraInfor && extraInfor.paymentTypeData
+              ? extraInfor.paymentTypeData.valueVi
+              : "Tiền mặt / Chuyển khoản"}
           </div>
+
           {!this.state.isShowPrice && (
-            <span
-              className="see-detail"
-              onClick={() => this.setState({ isShowPrice: true })}
-            >
-              Xem chi tiết
-            </span>
+            <div className="price-short">
+              GIÁ KHÁM:{" "}
+              <NumericFormat
+                value={
+                  extraInfor.priceTypeData ? extraInfor.priceTypeData.valueVi : 0
+                }
+                displayType={"text"}
+                thousandSeparator={true}
+                suffix={"VND"}
+              />
+              <span
+                className="see-detail ml-2"
+                style={{ color: "#45c3d2", cursor: "pointer" }}
+                onClick={() => this.setState({ isShowPrice: true })}
+              >
+                Xem chi tiết
+              </span>
+            </div>
           )}
         </div>
 

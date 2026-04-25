@@ -2,8 +2,8 @@
   "homeheader": {
     "specialty": "Specialties",
     "searchdoctor": "Find a doctor by specialty",
-    "health-facility": "Department",
-    "select-room": "Choose department",
+    "health-facility": "Handbook",
+    "select-room": "Useful health articles",
     "doctor": "Top Doctors",
     "select-doctor": "Find the best doctor",
     "fee": "Checkup package",
@@ -15,7 +15,7 @@
     "title2": "COMPREHENSIVE HEALTH CARE",
     "child1": "Specialty Examination",
     "child2": "Top Doctors",
-    "child3": "By Department",
+    "child3": "Health Handbook",
     "child4": "Medical test",
     "child5": "Medical health",
     "child6": "Dental examination"
@@ -27,8 +27,8 @@
       "manage-admin": "Manage admin",
       "crud": "CRUD user",
       "crud-redux": "CRUD Redux",
-      "clinic": "Department",
-      "manage-clinic": "Manage Department",
+      "clinic": "Handbook",
+      "manage-clinic": "Manage Handbook",
       "specialty": "Specialty",
       "manage-specialty": "Manage specialty"
     },

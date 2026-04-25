@@ -4,35 +4,29 @@ import { Route, Switch } from "react-router-dom";
 import { ConnectedRouter as Router } from "connected-react-router";
 import { history } from "../redux";
 import { ToastContainer } from "react-toastify";
-
 import {
   userIsAuthenticated,
   userIsNotAuthenticated,
 } from "../hoc/authentication";
-
 import { path } from "../utils";
-
 import Home from "../routes/Home";
-// import Login from '../routes/Login';
 import Login from "./Auth/Login";
-
 import System from "../routes/System";
-
 import { CustomToastCloseButton } from "../components/CustomToast";
 import HomePage from "./HomePage/HomePage.js";
 import DetailDoctor from "../containers/Patient/Doctor/DetailDoctor.js";
-
 import CustomScrollbars from "../components/CustomScrollbars.js";
 import Doctor from "../routes/Doctor.js";
 import DetailSpecialty from "./Patient/Specialty/DetailSpecialty.js";
-import DetailClinic from "./Patient/Clinic/DetailClinic.js";
+import DetailHandbook from "./Patient/Handbook/DetailHandbook";
 import VerifyEmail from "./Patient/VerifyEmail.js";
 import AllSpecialty from "./Patient/All-List/AllSpecialty.js";
-import AllClinic from "./Patient/All-List/AllClinic.js";
+import AllHandbook from "./Patient/All-List/AllHandbook.js";
 import AllDoctor from "./Patient/All-List/AllDoctor.js";
-import ManageBooking from "./Patient/ManageBooking.js";
+
 import PatientLogin from "./Patient/Auth/PatientLogin.js";
 import PatientRegister from "./Patient/Auth/PatientRegister.js";
+import PatientProfile from "./Patient/PatientProfile.js";
 
 class App extends Component {
   handlePersistorState = () => {
@@ -61,7 +55,7 @@ class App extends Component {
             <div className="content-container">
               <CustomScrollbars style={{ height: "100vh", width: "100%" }}>
                 <Switch>
-                  <Route path={path.HOME} exact component={Home} />
+                  <Route path={path.HOME} exact component={HomePage} />
                   <Route
                     path={path.LOGIN}
                     component={userIsNotAuthenticated(Login)}
@@ -71,39 +65,30 @@ class App extends Component {
                     component={userIsAuthenticated(System)}
                   />
                   <Route
-                    path={"/doctor"}
+                    path={"/doctor/"}
                     component={userIsAuthenticated(Doctor)}
                   />
                   <Route path={path.HOMEPAGE} component={HomePage} />
-                  <Route path={path.ALL_SPECIALTY} component={AllSpecialty} />
-                  <Route path={path.ALL_CLINIC} component={AllClinic} />
-                  <Route path={path.ALL_DOCTOR} component={AllDoctor} />
                   <Route
-                    path={"/patient/manage-booking"}
-                    component={ManageBooking}
+                    path={path.DETAIL_DOCTOR}
+                    component={DetailDoctor}
                   />
-                  <Route path={path.DETAIL_DOCTOR} component={DetailDoctor} />
-                  <Route path={path.DETAIL_CLINIC} component={DetailClinic} />
                   <Route
                     path={path.DETAIL_SPECIALTY}
                     component={DetailSpecialty}
                   />
+                  <Route path={path.DETAIL_HANDBOOK} component={DetailHandbook} />
+                  <Route path={path.ALL_SPECIALTY} component={AllSpecialty} />
+                  <Route path={path.ALL_DOCTOR} component={AllDoctor} />
+                  <Route path={path.ALL_HANDBOOK} component={AllHandbook} />
                   <Route
                     path={path.VERIFY_EMAIL_BOOKING}
                     component={VerifyEmail}
                   />
-                  <Route
-                    path="/verify-booking-access"
-                    component={ManageBooking}
-                  />
-                  <Route
-                    path="/patient-login"
-                    component={userIsNotAuthenticated(PatientLogin)}
-                  />
-                  <Route
-                    path="/patient-register"
-                    component={userIsNotAuthenticated(PatientRegister)}
-                  />
+                  <Route path={"/patient-login"} component={PatientLogin} />
+                  <Route path={"/patient-register"} component={PatientRegister} />
+
+                  <Route path={"/patient/profile"} component={PatientProfile} />
                 </Switch>
               </CustomScrollbars>
             </div>

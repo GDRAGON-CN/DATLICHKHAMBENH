@@ -29,6 +29,10 @@ module.exports = (sequelize, DataTypes) => {
         targetKey: "keyMap",
         as: "statusData",
       });
+      Booking.hasOne(models.Comment, {
+        foreignKey: "bookingId",
+        as: "commentData",
+      });
     }
   }
   Booking.init(
@@ -39,6 +43,9 @@ module.exports = (sequelize, DataTypes) => {
       date: DataTypes.STRING,
       timeType: DataTypes.STRING,
       token: DataTypes.STRING,
+      reason: DataTypes.STRING,
+      paymentStatus: DataTypes.STRING,
+      paymentAmount: DataTypes.INTEGER,
     },
     {
       sequelize,

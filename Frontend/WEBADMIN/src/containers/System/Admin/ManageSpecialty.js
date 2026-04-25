@@ -94,7 +94,7 @@ class ManageSpecialty extends Component {
         action: "CREATE",
         specialtyId: "",
       });
-      await this.fetchListSpecialty(); 
+      await this.fetchListSpecialty();
     } else {
       toast.error("Something wrongs ...");
     }
@@ -208,7 +208,7 @@ class ManageSpecialty extends Component {
           <CommonTable
             data={listSpecialty}
             columns={columns}
-            itemsPerPage={5} 
+            itemsPerPage={5}
           />
         </div>
       </div>

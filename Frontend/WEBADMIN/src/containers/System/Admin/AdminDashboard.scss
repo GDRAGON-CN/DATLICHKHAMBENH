@@ -1,0 +1,184 @@
+.admin-dashboard-container {
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  padding: 30px;
+
+  .title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #edf2f7;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+
+    &.border-left-primary {
+      border-left: 5px solid #4e73df !important;
+    }
+    &.border-left-success {
+      border-left: 5px solid #1cc88a !important;
+    }
+    &.border-left-warning {
+      border-left: 5px solid #f6c23e !important;
+    }
+    &.border-left-danger {
+      border-left: 5px solid #e74a3b !important;
+    }
+
+    .card-body {
+      padding: 20px;
+    }
+  }
+
+  .text-xs {
+    font-size: 0.75rem;
+    color: #718096;
+    letter-spacing: 0.5px;
+  }
+
+  .font-weight-bold {
+    font-weight: 700 !important;
+    color: #2d3748;
+  }
+
+  .status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: inline-block;
+
+    &.S1 {
+      background: #feebc8;
+      color: #9c4221;
+    }
+    &.S2 {
+      background: #bee3f8;
+      color: #2a4365;
+    }
+    &.S3 {
+      background: #c6f6d5;
+      color: #22543d;
+    }
+    &.S4 {
+      background: #fed7d7;
+      color: #822727;
+    }
+  }
+
+  .btn-action {
+    padding: 5px 8px;
+    border-radius: 6px;
+    font-size: 13px;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+    cursor: pointer;
+
+    &.confirm {
+      border-color: #4e73df;
+      color: #4e73df;
+      background: #fff;
+      &:hover {
+        background: #4e73df;
+        color: #fff;
+      }
+    }
+
+    &.done {
+      border-color: #1cc88a;
+      color: #1cc88a;
+      background: #fff;
+      &:hover {
+        background: #1cc88a;
+        color: #fff;
+      }
+    }
+
+    &.cancel {
+      border-color: #e74a3b;
+      color: #e74a3b;
+      background: #fff;
+      &:hover {
+        background: #e74a3b;
+        color: #fff;
+      }
+    }
+  }
+
+  .card-header {
+    background-color: #fff;
+    border-bottom: 1px solid #edf2f7;
+    padding: 15px 20px;
+
+    h6 {
+      color: #45c3d2 !important;
+      font-size: 16px;
+      margin: 0;
+    }
+  }
+
+  .table {
+    thead th {
+      background-color: #f7fafc;
+      color: #4a5568;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 2px solid #edf2f7;
+    }
+    tbody td {
+      vertical-align: middle;
+      padding: 12px;
+      color: #4a5568;
+      border-bottom: 1px solid #edf2f7;
+    }
+  }
+
+  // ─── Bộ lọc nâng cao ───────────────────────────
+  .filter-panel {
+    background: #f8fafc;
+    border: 1px solid #e8edf3;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-top: 12px;
+  }
+
+  .filter-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+  }
+
+  .filter-item {
+    flex: 1;
+    min-width: 180px;
+  }
+
+  .filter-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #718096;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .gap-2 {
+    gap: 8px;
+  }
+}

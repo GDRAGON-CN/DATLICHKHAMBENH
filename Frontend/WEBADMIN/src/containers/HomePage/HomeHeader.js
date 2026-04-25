@@ -110,7 +110,7 @@ class HomeHeader extends Component {
               </div>
               <div
                 className="child-content"
-                onClick={() => this.props.history.push("/all-clinic")}
+                onClick={() => this.props.history.push("/all-handbook")}
               >
                 <div>
                   <b>
@@ -127,46 +127,47 @@ class HomeHeader extends Component {
                 <i className="fas fa-question-circle"></i>
                 <FormattedMessage id="homeheader.support" />
               </div>
-              <div
-                className={
-                  language === LANGUAGES.VI
-                    ? "language-vi active"
-                    : "language-en"
-                }
-              >
-                <span onClick={() => this.changeLanguage(LANGUAGES.VI)}>
-                  VN
-                </span>
+              <div className="languages">
+                <div
+                  className={
+                    language === LANGUAGES.VI
+                      ? "language-vi active"
+                      : "language-vi"
+                  }
+                >
+                  <span onClick={() => this.changeLanguage(LANGUAGES.VI)}>
+                    VN
+                  </span>
+                </div>
+                <div
+                  className={
+                    language === LANGUAGES.EN
+                      ? "language-en active"
+                      : "language-en"
+                  }
+                >
+                  <span onClick={() => this.changeLanguage(LANGUAGES.EN)}>
+                    EN
+                  </span>
+                </div>
               </div>
-              <div
-                className={
-                  language === LANGUAGES.VI
-                    ? "language-vi active"
-                    : "language-en"
-                }
-              >
-                <span onClick={() => this.changeLanguage(LANGUAGES.EN)}>
-                  EN
-                </span>
-              </div>
-              
+
               {isLoggedIn && userInfo ? (
-                <div className="user-info-dropdown">
+                <div className="user-actions">
                   <div
-                    className="child-content booking-btn"
+                    className="child-content profile-btn"
                     onClick={() =>
-                      this.props.history.push("/patient/manage-booking")
+                      this.props.history.push("/patient/profile")
                     }
                   >
-                    <i className="fas fa-calendar-check"></i>
-                    <b>Lịch Hẹn</b>
+                    <i className="fas fa-user-circle"></i>
+                    <b>Hồ sơ</b>
                   </div>
                   <div
                     className="child-content logout-btn"
                     onClick={this.handleLogout}
                   >
                     <i className="fas fa-sign-out-alt"></i>
-                    <b>Đăng xuất</b>
                   </div>
                 </div>
               ) : (
@@ -258,7 +259,7 @@ class HomeHeader extends Component {
                 </div>
                 <div
                   className="option-child"
-                  onClick={() => this.props.history.push("/all-clinic")}
+                  onClick={() => this.props.history.push("/all-handbook")}
                 >
                   <div className="icon-child">
                     <i className="far fa-hospital"></i>

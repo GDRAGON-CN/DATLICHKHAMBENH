@@ -61,8 +61,12 @@ class OutStandingDoctor extends Component {
                       "binary",
                     );
                   }
-                  let nameVi = `${item.positionData.valueVi},${item.lastName} ${item.firstName}`;
-                  let nameEn = `${item.positionData.valueEn},${item.lastName} ${item.firstName}`;
+                  let nameVi = "",
+                    nameEn = "";
+                  if (item.Doctor_Infor && item.Doctor_Infor.positionData) {
+                    nameVi = `${item.Doctor_Infor.positionData.valueVi}, ${item.lastName} ${item.firstName}`;
+                    nameEn = `${item.Doctor_Infor.positionData.valueEn}, ${item.lastName} ${item.firstName}`;
+                  }
                   return (
                     <div
                       className="section-customize"

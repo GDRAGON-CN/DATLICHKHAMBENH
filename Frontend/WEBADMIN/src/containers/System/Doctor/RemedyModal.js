@@ -10,7 +10,8 @@ class RemedyModal extends Component {
     this.state = {
       email: "",
       imgBase64: "",
-      description: "",
+      diagnosis: "",
+      prescription: "",
     };
   }
 
@@ -25,7 +26,8 @@ class RemedyModal extends Component {
       this.setState({
         email: this.props.dataModal.email || "",
         imgBase64: "",
-        description: "",
+        diagnosis: "",
+        prescription: "",
       });
     }
   }
@@ -38,15 +40,10 @@ class RemedyModal extends Component {
       this.setState({ imgBase64: base64 });
     }
   };
-  handleOnChangeText = (event) => {
-    this.setState({
-      description: event.target.value,
-    });
-  };
 
   handleSendRemedy = () => {
-    if (!this.state.imgBase64 || !this.state.description) {
-      alert("Vui lòng nhập đầy đủ thông tin và chọn ảnh hóa đơn!");
+    if (!this.state.imgBase64 || !this.state.diagnosis) {
+      alert("Vui lòng nhập chẩn đoán và chọn ảnh hóa đơn!");
       return;
     }
     this.props.sendRemedy(this.state);
@@ -57,12 +54,12 @@ class RemedyModal extends Component {
     return (
       <Modal
         isOpen={isOpenModal}
-        size="md"
+        size="lg"
         centered
         className={"remedy-modal-container"}
       >
         <ModalHeader toggle={closeRemedyModal}>
-          Gửi hóa đơn khám bệnh
+          Gửi hóa đơn & Kết quả khám bệnh
         </ModalHeader>
         <ModalBody>
           <div className="row">
@@ -84,12 +81,23 @@ class RemedyModal extends Component {
               />
             </div>
             <div className="col-12 form-group">
-              <label>Chẩn đoán / Ghi chú bệnh án</label>
+              <label>Chẩn đoán bệnh</label>
               <textarea
                 className="form-control"
                 rows="3"
-                value={this.state.description}
-                onChange={(e) => this.handleOnChangeText(e)}
+                value={this.state.diagnosis}
+                onChange={(e) => this.setState({ diagnosis: e.target.value })}
+                placeholder="Nhập chẩn đoán bệnh..."
+              ></textarea>
+            </div>
+            <div className="col-12 form-group">
+              <label>Đơn thuốc (Nếu có)</label>
+              <textarea
+                className="form-control"
+                rows="3"
+                value={this.state.prescription}
+                onChange={(e) => this.setState({ prescription: e.target.value })}
+                placeholder="Nhập thông tin đơn thuốc..."
               ></textarea>
             </div>
           </div>

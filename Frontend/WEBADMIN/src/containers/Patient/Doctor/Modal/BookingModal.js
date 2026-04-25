@@ -42,7 +42,7 @@ class BookingModal extends Component {
     if (data && data.length > 0) {
       data.map((item) => {
         let object = {};
-        object.label = language === LANGUAGES.VI ? item.valueVI : item.valueEN;
+        object.label = language === LANGUAGES.VI ? item.valueVi : item.valueEn;
         object.value = item.keyMap;
         result.push(object);
       });

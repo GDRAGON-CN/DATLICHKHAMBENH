@@ -128,6 +128,70 @@ const postSendRemedy = (data) => {
   return axios.post("/api/send-remedy", data);
 };
 
+const getDashboardStats = () => {
+  return axios.get("/api/get-dashboard-stats");
+};
+
+const updatePatientProfileService = (data) => {
+  return axios.post("/api/update-patient-profile", data);
+};
+
+const changePasswordService = (data) => {
+  return axios.post("/api/change-password", data);
+};
+
+const getMedicalHistoryByPatient = (patientId) => {
+  return axios.get(`/api/get-medical-history-by-patient?patientId=${patientId}`);
+};
+
+const createNewHandbook = (data) => {
+  return axios.post("/api/create-new-handbook", data);
+};
+
+const getAllHandbook = () => {
+  return axios.get("/api/get-all-handbook");
+};
+
+const getDetailHandbookById = (data) => {
+  return axios.get(`/api/get-detail-handbook-by-id?id=${data.id}`);
+};
+
+const getTopHandbookHome = (limit) => {
+  return axios.get(`/api/get-top-handbook-home?limit=${limit}`);
+};
+
+const deleteHandbookService = (handbookId) => {
+  return axios.delete("/api/delete-handbook", {
+    data: { id: handbookId },
+  });
+};
+
+const updateHandbookData = (data) => {
+  return axios.put("/api/edit-handbook", data);
+};
+
+const postCommentHandbookService = (data) => {
+  return axios.post("/api/post-comment-handbook", data);
+};
+
+const getCommentHandbookService = (handbookId) => {
+  return axios.get(`/api/get-comment-handbook?handbookId=${handbookId}`);
+};
+
+const createNewReview = (data) => {
+  return axios.post("/api/create-new-review", data);
+};
+
+const getReviewsByDoctorId = (doctorId) => {
+  return axios.get(`/api/get-reviews-by-doctor-id?doctorId=${doctorId}`);
+};
+
+const deleteReviewService = (reviewId) => {
+  return axios.delete("/api/delete-review", {
+    data: { id: reviewId },
+  });
+};
+
 export {
   handleLoginApi,
   getAllUsers,
@@ -164,4 +228,19 @@ export {
   updateSpecialtyData,
   deleteSpecialtyService,
   postSendRemedy,
+  getDashboardStats,
+  updatePatientProfileService,
+  changePasswordService,
+  getMedicalHistoryByPatient,
+  createNewHandbook,
+  getAllHandbook,
+  getDetailHandbookById,
+  getTopHandbookHome,
+  deleteHandbookService,
+  updateHandbookData,
+  createNewReview,
+  getReviewsByDoctorId,
+  deleteReviewService,
+  postCommentHandbookService,
+  getCommentHandbookService,
 };

@@ -97,6 +97,16 @@ let handleUpdateStatus = async (req, res) => {
       .json({ errCode: -1, errMessage: "Error from server" });
   }
 };
+let handleChangePassword = async (req, res) => {
+  try {
+    let info = await userService.handleChangePassword(req.body);
+    return res.status(200).json(info);
+  } catch (e) {
+    return res
+      .status(200)
+      .json({ errCode: -1, errMessage: "Error from server" });
+  }
+};
 module.exports = {
   handleLogin: handleLogin,
   handleGetAllUsers: handleGetAllUsers,
@@ -107,4 +117,5 @@ module.exports = {
   getSearchSuggestions: getSearchSuggestions,
   handleGetAllBookingForAdmin: handleGetAllBookingForAdmin,
   handleUpdateStatus: handleUpdateStatus,
+  handleChangePassword: handleChangePassword,
 };

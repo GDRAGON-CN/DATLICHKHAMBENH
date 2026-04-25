@@ -6,8 +6,8 @@ import ManageDoctor from "../containers/System/Admin/ManageDoctor";
 import Sidebar from "../containers/Header/Sidebar";
 import ManageSchedule from "../containers/System/Doctor/ManageSchedule";
 import ManageSpecialty from "../containers/System/Admin/ManageSpecialty";
-import ManageClinic from "../containers/System/Admin/ManageClinic";
-import ManageDoneBooking from "../containers/System/Admin/ManageDoneBooking";
+import ManageHandbook from "../containers/System/Admin/ManageHandbook";
+import AdminDashboard from "../containers/System/Admin/AdminDashboard";
 
 class System extends Component {
   render() {
@@ -35,14 +35,17 @@ class System extends Component {
               <Switch>
                 <Route path="/system/user-redux" component={UserRedux} />
                 <Route path="/system/manage-doctor" component={ManageDoctor} />
-                <Route path="/system/manage-clinic" component={ManageClinic} />
                 <Route
                   path="/system/manage-specialty"
                   component={ManageSpecialty}
                 />
                 <Route
-                  path="/system/manage-done-booking"
-                  component={ManageDoneBooking}
+                  path="/system/manage-handbook"
+                  component={ManageHandbook}
+                />
+                <Route
+                  path="/system/admin-dashboard"
+                  component={AdminDashboard}
                 />
               </Switch>
             </div>

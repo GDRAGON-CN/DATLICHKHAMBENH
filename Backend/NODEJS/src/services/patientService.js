@@ -231,9 +231,84 @@ let postVerifyBookAppointment = (data) => {
     }
   });
 };
+
+let updatePatientProfile = (data) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!data.id || !data.email) {
+        resolve({
+          errCode: 1,
+          errMessage: "Missing required parameter",
+        });
+      } else {
+        let user = await db.User.findOne({
+          where: { id: data.id, email: data.email },
+          raw: false,
+        });
+        if (user) {
+          user.firstName = data.firstName;
+          user.lastName = data.lastName;
+          user.address = data.address;
+          user.phonenumber = data.phonenumber;
+          user.gender = data.gender;
+          if (data.avatar) {
+            user.image = data.avatar;
+          }
+          await user.save();
+          resolve({
+            errCode: 0,
+            errMessage: "Update patient profile succeed",
+          });
+        } else {
+          resolve({
+            errCode: 2,
+            errMessage: "User not found",
+          });
+        }
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
+let getMedicalHistoryByPatient = (patientId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!patientId) {
+        resolve({
+          errCode: 1,
+          errMessage: "Missing required parameter",
+        });
+      } else {
+        let data = await db.History.findAll({
+          where: { patientId: patientId },
+          include: [
+            {
+              model: db.User,
+              as: "doctorDataHistory",
+              attributes: ["firstName", "lastName", "image"],
+            },
+          ],
+          raw: true,
+          nest: true,
+        });
+        resolve({
+          errCode: 0,
+          data: data,
+        });
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
 module.exports = {
   postBookAppointment: postBookAppointment,
   postVerifyBookAppointment: postVerifyBookAppointment,
   cancelBooking: cancelBooking,
   getListBookingByPatient: getListBookingByPatient,
+  updatePatientProfile: updatePatientProfile,
+  getMedicalHistoryByPatient: getMedicalHistoryByPatient,
 };

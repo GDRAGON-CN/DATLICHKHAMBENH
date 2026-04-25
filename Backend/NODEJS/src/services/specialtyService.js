@@ -60,7 +60,7 @@ let getDetailSpecialtyById = (inputId, location) => {
       } else {
         let data = await db.Specialty.findOne({
           where: { id: inputId },
-          attributes: ["descriptionHTML", "descriptionMarkdown"],
+          attributes: ["name", "descriptionHTML", "descriptionMarkdown"],
         });
         if (data) {
           let doctorSpecialty = [];
@@ -105,6 +105,7 @@ let updateSpecialtyData = (data) => {
           errMessage: "Missing required parameters!",
         });
       } else {
+        console.log(">>> check data update: ", data);
         let specialty = await db.Specialty.findOne({
           where: { id: data.id },
           raw: false,

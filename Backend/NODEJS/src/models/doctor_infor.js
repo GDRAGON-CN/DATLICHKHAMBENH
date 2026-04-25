@@ -30,10 +30,10 @@ module.exports = (sequelize, DataTypes) => {
         targetKey: "id",
         as: "specialtyData",
       });
-      Doctor_Infor.belongsTo(models.Clinic, {
-        foreignKey: "clinicId",
-        targetKey: "id",
-        as: "clinicData",
+      Doctor_Infor.belongsTo(models.Allcode, {
+        foreignKey: "positionId",
+        targetKey: "keyMap",
+        as: "positionData",
       });
     }
   }
@@ -45,7 +45,6 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
       },
       specialtyId: DataTypes.INTEGER,
-      clinicId: DataTypes.INTEGER,
       priceId: DataTypes.STRING,
       provinceId: DataTypes.STRING,
       paymentId: DataTypes.STRING,
@@ -54,6 +53,7 @@ module.exports = (sequelize, DataTypes) => {
       contentHTML: DataTypes.TEXT("long"),
       contentMarkdown: DataTypes.TEXT("long"),
       description: DataTypes.TEXT("long"),
+      positionId: DataTypes.STRING,
     },
     {
       sequelize,

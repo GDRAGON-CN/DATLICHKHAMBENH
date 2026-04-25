@@ -14,6 +14,7 @@ import {
 import _ from "lodash";
 import { Link } from "react-router-dom";
 import HomeFooter from "../../HomePage/HomeFooter";
+import { LANGUAGES } from "../../../utils";
 
 class DetailSpecialty extends Component {
   constructor(props) {
@@ -24,6 +25,7 @@ class DetailSpecialty extends Component {
       bookingTime: "",
       dataDetailSpecialty: {},
       listProvince: [],
+      isShowMore: false,
     };
   }
 
@@ -104,35 +106,49 @@ class DetailSpecialty extends Component {
   };
   render() {
     let { arrDoctor, dataDetailSpecialty, listProvince } = this.state;
+    let { language } = this.props;
     console.log("STATE", this.state);
     return (
       <>
         <HomeHeader isShowBanner={false} />
 
         <div className="detail-specialty-container">
+          <div className="breadcrumb-specialty">
+            <Link to="/home">Trang chủ</Link>
+            <i className="fas fa-chevron-right"></i>
+            {dataDetailSpecialty && dataDetailSpecialty.clinicData && (
+              <>
+                <Link
+                  to={`/detail-clinic/${dataDetailSpecialty.clinicData.id}`}
+                >
+                  {dataDetailSpecialty.clinicData.name}
+                </Link>
+                <i className="fas fa-chevron-right"></i>
+              </>
+            )}
+            <span>{dataDetailSpecialty.name}</span>
+          </div>
+
           <div className="specialty-description">
             {dataDetailSpecialty && !_.isEmpty(dataDetailSpecialty) && (
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: dataDetailSpecialty.descriptionHTML,
-                }}
-              ></div>
+              <div className={this.state.isShowMore ? "desc-content-full" : "desc-content-hide"}>
+                <div className="specialty-name-title">
+                  Chuyên khoa {dataDetailSpecialty.name}
+                </div>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: dataDetailSpecialty.descriptionHTML,
+                  }}
+                ></div>
+              </div>
             )}
+            <div className="show-more-container">
+              <span onClick={() => this.setState({ isShowMore: !this.state.isShowMore })}>
+                {this.state.isShowMore ? "Ẩn bớt" : "Xem thêm"}
+              </span>
+            </div>
           </div>
-          <div className="search-doctor">
-            <select onChange={(event) => this.handleOnChangeSelect(event)}>
-              <option value="ALL">Toàn quốc</option>
-              {listProvince &&
-                listProvince.length > 0 &&
-                listProvince.map((item, index) => {
-                  return (
-                    <option key={index} value={item.keyMap}>
-                      {item.valueVI}
-                    </option>
-                  );
-                })}
-            </select>
-          </div>
+
           <div className="list-doctor">
             {arrDoctor &&
               arrDoctor.length > 0 &&

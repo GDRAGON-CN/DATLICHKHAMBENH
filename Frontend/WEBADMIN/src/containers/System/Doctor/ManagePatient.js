@@ -57,6 +57,7 @@ class ManagePatient extends Component {
       email: item.patientData.email,
       timeType: item.timeType,
       patientName: item.patientData.firstName,
+      date: item.date,
     };
     this.setState({
       isOpenRemedyModal: true,
@@ -83,6 +84,9 @@ class ManagePatient extends Component {
       timeType: dataModal.timeType,
       patientName: dataModal.patientName,
       language: this.props.language,
+      date: dataModal.date,
+      diagnosis: dataChild.diagnosis,
+      prescription: dataChild.prescription,
     });
 
     if (res && res.errCode === 0) {
@@ -91,7 +95,7 @@ class ManagePatient extends Component {
       await this.fetchDataPatient();
     } else {
       this.setState({ isShowLoading: false });
-      toast.error("Có lỗi xảy ra khi gửi hóa đơn.");
+      toast.error(res && res.errMessage ? res.errMessage : "Có lỗi xảy ra khi gửi hóa đơn.");
     }
   };
 
@@ -136,12 +140,12 @@ class ManagePatient extends Component {
                         dataPatient.map((item, index) => {
                           let gender =
                             this.props.language === "vi"
-                              ? item.patientData.genderData.valueVi
-                              : item.patientData.genderData.valueEn;
+                              ? item?.patientData?.genderData?.valueVi || "Khác"
+                              : item?.patientData?.genderData?.valueEn || "Other";
                           let time =
                             this.props.language === "vi"
-                              ? item.timeTypeDataPatient.valueVi
-                              : item.timeTypeDataPatient.valueEn;
+                              ? item?.timeTypeDataPatient?.valueVi || ""
+                              : item?.timeTypeDataPatient?.valueEn || "";
                           return (
                             <tr key={index}>
                               <td className="text-center">{index + 1}</td>

@@ -2,8 +2,8 @@
   "homeheader": {
     "specialty": "Khám Chuyên khoa",
     "searchdoctor": "Tìm bác sĩ theo chuyên khoa",
-    "health-facility": "Khoa",
-    "select-room": "Chọn khoa phù hợp",
+    "health-facility": "Cẩm nang",
+    "select-room": "Bài viết sức khỏe hữu ích",
     "doctor": "Khám Bác Sĩ Giỏi",
     "select-doctor": "Chọn bác sĩ phù hợp",
     "fee": "Gói khám",
@@ -15,7 +15,7 @@
     "title2": "CHĂM SÓC SỨC KHỎE TOÀN DIỆN",
     "child1": "Khám chuyên khoa",
     "child2": "Khám bác sĩ giỏi",
-    "child3": "Xem theo khoa",
+    "child3": "Cẩm nang sức khỏe",
     "child4": "Xét nghiệm y học",
     "child5": "Sức khỏe tinh thần",
     "child6": "Khám nha khoa"
@@ -27,8 +27,8 @@
       "manage-admin": "Quản lý admin",
       "crud": "CRUD user",
       "crud-redux": "CRUD Redux",
-      "clinic": "Khoa",
-      "manage-clinic": "Quản lý khoa",
+      "clinic": "Cẩm nang",
+      "manage-clinic": "Quản lý cẩm nang",
       "specialty": "Chuyên khoa",
       "manage-specialty": "Quản lý chuyên khoa"
     },

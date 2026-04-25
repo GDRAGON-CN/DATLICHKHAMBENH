@@ -59,8 +59,8 @@ class AllDoctor extends Component {
 
       let position =
         language === LANGUAGES.VI
-          ? item.positionData?.valueVi
-          : item.positionData?.valueEn;
+          ? item.Doctor_Infor?.positionData?.valueVi
+          : item.Doctor_Infor?.positionData?.valueEn;
       let positionSearch = position ? removeAccents(position) : "";
 
       return (
@@ -97,8 +97,8 @@ class AllDoctor extends Component {
                 // Logic hiển thị tên theo ngôn ngữ
                 let pos =
                   language === LANGUAGES.VI
-                    ? item.positionData?.valueVi
-                    : item.positionData?.valueEn;
+                    ? item.Doctor_Infor?.positionData?.valueVi
+                    : item.Doctor_Infor?.positionData?.valueEn;
                 let nameVi = `${pos || ""}, ${item.lastName} ${item.firstName}`;
                 let nameEn = `${pos || ""}, ${item.firstName} ${item.lastName}`;
 

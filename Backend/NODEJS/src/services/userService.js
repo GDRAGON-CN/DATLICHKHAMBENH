@@ -116,10 +116,10 @@ let createNewUser = (data) => {
           firstName: data.firstName,
           lastName: data.lastName,
           address: data.address,
-          gender: data.gender === "1" ? true : false,
+          gender: data.gender,
           roleId: data.roleId,
           phonenumber: data.phonenumber,
-          positionId: data.positionId,
+
           image: data.avatar,
         });
         resolve({
@@ -156,7 +156,7 @@ let updateUserData = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
       console.log("check nodejs", data);
-      if (!data.id || !data.roleId || !data.positionId || !data.gender) {
+      if (!data.id || !data.roleId || !data.gender) {
         resolve({
           errCode: 2,
           errMessage: "Missing required",
@@ -171,7 +171,7 @@ let updateUserData = (data) => {
           (user.lastName = data.lastName),
           (user.address = data.address),
           (user.roleId = data.roleId),
-          (user.positionId = data.positionId),
+
           (user.gender = data.gender),
           (user.phonenumber = data.phonenumber));
         if (data.avatar) {
@@ -263,14 +263,19 @@ let getSearchSuggestions = (keyword) => {
     }
   });
 };
+
 let getAllBookingForAdmin = (date) => {
   return new Promise(async (resolve, reject) => {
     try {
       if (!date) {
         resolve({ errCode: 1, errMessage: "Thiếu tham số ngày tháng!" });
       } else {
+        let whereClause = {};
+        if (date !== "ALL") {
+          whereClause.date = date;
+        }
         let data = await db.Booking.findAll({
-          where: { date: date },
+          where: whereClause,
           include: [
             {
               model: db.User,
@@ -302,6 +307,7 @@ let getAllBookingForAdmin = (date) => {
           ],
           raw: false,
           nest: true,
+          order: [["updatedAt", "DESC"]],
         });
         resolve({ errCode: 0, data: data });
       }
@@ -335,6 +341,48 @@ let updateBookingStatus = (data) => {
     }
   });
 };
+
+let handleChangePassword = (data) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!data.id || !data.oldPassword || !data.newPassword) {
+        resolve({
+          errCode: 1,
+          errMessage: "Missing required parameter",
+        });
+      } else {
+        let user = await db.User.findOne({
+          where: { id: data.id },
+          raw: false,
+        });
+        if (user) {
+          let check = await bcrypt.compareSync(data.oldPassword, user.password);
+          if (check) {
+            user.password = await hashUserPassword(data.newPassword);
+            await user.save();
+            resolve({
+              errCode: 0,
+              errMessage: "Change password succeed",
+            });
+          } else {
+            resolve({
+              errCode: 2,
+              errMessage: "Old password is wrong",
+            });
+          }
+        } else {
+          resolve({
+            errCode: 3,
+            errMessage: "User not found",
+          });
+        }
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
 module.exports = {
   handleUserLogin: handleUserLogin,
   getAllUsers: getAllUsers,
@@ -345,4 +393,5 @@ module.exports = {
   getSearchSuggestions: getSearchSuggestions,
   getAllBookingForAdmin: getAllBookingForAdmin,
   updateBookingStatus: updateBookingStatus,
+  handleChangePassword: handleChangePassword,
 };

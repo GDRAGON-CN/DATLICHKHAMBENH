@@ -254,8 +254,8 @@ class ManageSchedule extends Component {
                         onClick={() => this.handleClickBtnTime(item)}
                       >
                         {language === LANGUAGES.VI
-                          ? item.valueVI
-                          : item.valueEN}
+                          ? item.valueVi
+                          : item.valueEn}
                       </button>
                     );
                   })}

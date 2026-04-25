@@ -93,21 +93,27 @@ class ProfileDoctor extends Component {
 
     let nameVi = "",
       nameEn = "";
-    if (dataProfile && dataProfile.positionData) {
-      nameVi = `${dataProfile.positionData.valueVi}, ${dataProfile.lastName} ${dataProfile.firstName}`;
-      nameEn = `${dataProfile.positionData.valueEn}, ${dataProfile.firstName} ${dataProfile.lastName}`;
+    if (
+      dataProfile &&
+      dataProfile.Doctor_Infor &&
+      dataProfile.Doctor_Infor.positionData
+    ) {
+      nameVi = `${dataProfile.Doctor_Infor.positionData.valueVi}, ${dataProfile.lastName} ${dataProfile.firstName}`;
+      nameEn = `${dataProfile.Doctor_Infor.positionData.valueEn}, ${dataProfile.firstName} ${dataProfile.lastName}`;
     }
 
     return (
       <div className="profile-doctor-container">
         <div className="intro-doctor">
           <div className="content-left">
-            <div
-              className="avatar-img"
-              style={{
-                backgroundImage: `url(${dataProfile && dataProfile.image ? dataProfile.image : ""})`,
-              }}
-            ></div>
+            <Link to={`/detail-doctor/${dataProfile.id}`}>
+              <div
+                className="avatar-img"
+                style={{
+                  backgroundImage: `url(${dataProfile && dataProfile.image ? dataProfile.image : ""})`,
+                }}
+              ></div>
+            </Link>
           </div>
 
           <div className="content-right">
@@ -122,9 +128,6 @@ class ProfileDoctor extends Component {
                     dataProfile.Doctor_Infor.description && (
                       <div>
                         <span>{dataProfile.Doctor_Infor.description}</span>
-                        <Link to={`/detail-doctor/${dataProfile.id}`}>
-                          Xem thêm
-                        </Link>
                       </div>
                     )}
                 </>

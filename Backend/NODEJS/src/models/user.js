@@ -9,11 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      User.belongsTo(models.Allcode, {
-        foreignKey: "positionId",
-        targetKey: "keyMap",
-        as: "positionData",
-      });
+
       User.belongsTo(models.Allcode, {
         foreignKey: "gender",
         targetKey: "keyMap",
@@ -28,6 +24,14 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "patientId",
         as: "patientData",
       });
+      User.hasMany(models.Comment, {
+        foreignKey: "userId",
+        as: "userCommentData",
+      });
+      User.hasMany(models.Comment, {
+        foreignKey: "doctorId",
+        as: "doctorCommentData",
+      });
     }
   }
   User.init(
@@ -40,8 +44,10 @@ module.exports = (sequelize, DataTypes) => {
       gender: DataTypes.STRING,
       roleId: DataTypes.STRING,
       phonenumber: DataTypes.STRING,
-      positionId: DataTypes.STRING,
+
       image: DataTypes.STRING,
+      dateOfBirth: DataTypes.DATE,
+      bloodType: DataTypes.STRING,
     },
     {
       sequelize,

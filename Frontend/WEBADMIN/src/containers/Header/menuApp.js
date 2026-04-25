@@ -3,6 +3,10 @@ export const adminMenu = [
     name: "TRANG QUẢN LÝ CỦA ADMIN",
     menus: [
       {
+        name: "Dashboard Thống kê",
+        link: "/system/admin-dashboard",
+      },
+      {
         name: "Quản lí người dùng",
         link: "/system/user-redux",
       },
@@ -15,17 +19,12 @@ export const adminMenu = [
         link: "/doctor/manage-schedule",
       },
       {
-        name: "Lịch hẹn của bệnh nhân",
-        link: "/system/manage-done-booking",
-      },
-      {
-        name: "Quản lý khoa",
-        link: "/system/manage-clinic",
-      },
-
-      {
         name: "Quản lý chuyên khoa",
         link: "/system/manage-specialty",
+      },
+      {
+        name: "Quản lý cẩm nang",
+        link: "/system/manage-handbook",
       },
     ],
   },

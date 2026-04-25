@@ -33,27 +33,27 @@ let getTopDoctorHome = (limitInput) => {
         include: [
           {
             model: db.Allcode,
-            as: "positionData",
-            attributes: ["valueEn", "valueVi"],
-          },
-          {
-            model: db.Allcode,
             as: "genderData",
             attributes: ["valueEn", "valueVi"],
           },
           {
             model: db.Doctor_Infor,
-            attributes: ["specialtyId"],
+            attributes: ["specialtyId", "positionId"],
             include: [
               {
                 model: db.Specialty,
                 as: "specialtyData",
                 attributes: ["name"],
               },
+              {
+                model: db.Allcode,
+                as: "positionData",
+                attributes: ["valueEn", "valueVi"],
+              },
             ],
           },
         ],
-        raw: true,
+        raw: false,
         nest: true,
       });
       resolve({
@@ -75,23 +75,23 @@ let getAllDoctor = () => {
         attributes: { exclude: ["password"] },
         include: [
           {
-            model: db.Allcode,
-            as: "positionData",
-            attributes: ["valueEn", "valueVi"],
-          },
-          {
             model: db.Doctor_Infor,
-            attributes: ["specialtyId"],
+            attributes: ["specialtyId", "positionId"],
             include: [
               {
                 model: db.Specialty,
                 as: "specialtyData",
                 attributes: ["name"],
               },
+              {
+                model: db.Allcode,
+                as: "positionData",
+                attributes: ["valueEn", "valueVi"],
+              },
             ],
           },
         ],
-        raw: true,
+        raw: false,
         nest: true,
       });
 
@@ -115,7 +115,7 @@ let checkRequiredFeilds = (inputData) => {
     "selectedPayment",
     "selectedProvince",
     "specialtyId",
-    "clinicId",
+    "selectedPosition",
   ];
   let isValid = true;
   let element = "";
@@ -142,25 +142,8 @@ let saveDetailInforDoctor = (inputData) => {
           errMessage: "Missing parameter",
         });
       } else {
-        if (inputData.action === "CREATE") {
-          await db.Markdown.create({
-            contentHTML: inputData.contentHTML,
-            contentMarkdown: inputData.contentMarkdown,
-            descriptions: inputData.descriptions,
-            doctorId: inputData.doctorId,
-          });
-        } else if (inputData.action === "EDIT") {
-          let doctorMarkdown = await db.Markdown.findOne({
-            where: { doctorId: inputData.doctorId },
-            raw: false,
-          });
-          if (doctorMarkdown) {
-            doctorMarkdown.contentHTML = inputData.contentHTML;
-            doctorMarkdown.contentMarkdown = inputData.contentMarkdown;
-            doctorMarkdown.descriptions = inputData.descriptions;
-            await doctorMarkdown.save();
-          }
-        }
+        // No longer using Markdown table, logic moved to Doctor_Infor
+
 
         let doctorInfor = await db.Doctor_Infor.findOne({
           where: {
@@ -175,7 +158,12 @@ let saveDetailInforDoctor = (inputData) => {
           doctorInfor.paymentId = inputData.selectedPayment;
           doctorInfor.note = inputData.note;
           doctorInfor.specialtyId = inputData.specialtyId;
-          doctorInfor.clinicId = inputData.clinicId;
+          doctorInfor.note = inputData.note;
+          doctorInfor.specialtyId = inputData.specialtyId;
+          doctorInfor.positionId = inputData.selectedPosition;
+          doctorInfor.contentHTML = inputData.contentHTML;
+          doctorInfor.contentMarkdown = inputData.contentMarkdown;
+          doctorInfor.description = inputData.description;
           await doctorInfor.save();
         } else {
           await db.Doctor_Infor.create({
@@ -185,7 +173,10 @@ let saveDetailInforDoctor = (inputData) => {
             paymentId: inputData.selectedPayment,
             note: inputData.note,
             specialtyId: inputData.specialtyId,
-            clinicId: inputData.clinicId,
+            positionId: inputData.selectedPosition,
+            contentHTML: inputData.contentHTML,
+            contentMarkdown: inputData.contentMarkdown,
+            description: inputData.description,
           });
         }
 
@@ -215,13 +206,26 @@ let getDetailDoctorById = (inputId) => {
           },
           attributes: {
             exclude: ["password"],
+            include: [
+              [
+                db.sequelize.literal(`(
+                  SELECT AVG(rating)
+                  FROM Comments AS comment
+                  WHERE comment.doctorId = User.id AND comment.isApproved = true
+                )`),
+                "avgRating",
+              ],
+              [
+                db.sequelize.literal(`(
+                  SELECT COUNT(*)
+                  FROM Comments AS comment
+                  WHERE comment.doctorId = User.id AND comment.isApproved = true
+                )`),
+                "reviewCount",
+              ],
+            ],
           },
           include: [
-            {
-              model: db.Allcode,
-              as: "positionData",
-              attributes: ["valueEn", "valueVi"],
-            },
             {
               model: db.Doctor_Infor,
               attributes: {
@@ -243,6 +247,11 @@ let getDetailDoctorById = (inputId) => {
                   as: "paymentTypeData",
                   attributes: ["valueEn", "valueVi"],
                 },
+                {
+                  model: db.Allcode,
+                  as: "positionData",
+                  attributes: ["valueEn", "valueVi"],
+                },
               ],
             },
           ],
@@ -250,7 +259,7 @@ let getDetailDoctorById = (inputId) => {
           nest: true,
         });
         if (data && data.image) {
-          data.image = new Buffer(data.image, "base64").toString("binary");
+          data.image = Buffer.from(data.image, "base64").toString("binary");
         }
         resolve({
           errCode: 0,
@@ -372,11 +381,6 @@ let getExtraInforDoctorById = (doctorId) => {
           },
           include: [
             {
-              model: db.Clinic,
-              as: "clinicData",
-              attributes: ["name", "address"],
-            },
-            {
               model: db.Allcode,
               as: "priceTypeData",
               attributes: ["valueEn", "valueVi"],
@@ -429,11 +433,6 @@ let getProfileInforDoctorById = (doctorId) => {
           },
           include: [
             {
-              model: db.Allcode,
-              as: "positionData",
-              attributes: ["valueEn", "valueVi"],
-            },
-            {
               model: db.Doctor_Infor,
               attributes: {
                 exclude: ["id", "doctorId"],
@@ -454,6 +453,11 @@ let getProfileInforDoctorById = (doctorId) => {
                   as: "paymentTypeData",
                   attributes: ["valueEn", "valueVi"],
                 },
+                {
+                  model: db.Allcode,
+                  as: "positionData",
+                  attributes: ["valueEn", "valueVi"],
+                },
               ],
             },
           ],
@@ -461,7 +465,7 @@ let getProfileInforDoctorById = (doctorId) => {
           nest: true,
         });
         if (data && data.image) {
-          data.image = new Buffer(data.image, "base64").toString("binary");
+          data.image = Buffer.from(data.image, "base64").toString("binary");
         }
         if (!data) data = {};
         resolve({
@@ -530,39 +534,69 @@ let sendRemedy = (data) => {
         !data.doctorId ||
         !data.patientId ||
         !data.timeType ||
-        !data.imgBase64
+        !data.imgBase64 ||
+        !data.date
       ) {
         resolve({
           errCode: 1,
           errMessage: "Missing parameter",
         });
       } else {
+        // Cập nhật trạng thái lịch hẹn
+        let searchDate = String(data.date);
         let appointment = await db.Booking.findOne({
           where: {
             doctorId: data.doctorId,
             patientId: data.patientId,
             timeType: data.timeType,
+            date: searchDate,
             statusId: "S2",
           },
           raw: false,
         });
+
         if (appointment) {
           appointment.statusId = "S3";
           await appointment.save();
+
+          // Tạo lịch sử khám bệnh
+          try {
+            await db.History.create({
+              doctorId: data.doctorId,
+              patientId: data.patientId,
+              description: data.description
+                ? data.description
+                : "Bác sĩ đã xác nhận khám xong và gửi hóa đơn/đơn thuốc.",
+              files: data.imgBase64,
+              diagnosis: data.diagnosis,
+              prescription: data.prescription,
+              bookingId: appointment.id,
+            });
+          } catch (historyError) {
+            console.log("ERROR CREATING HISTORY:", historyError);
+          }
+
+          // Gửi email kèm file
+          try {
+            await emailService.sendAttachment(data);
+            resolve({
+              errCode: 0,
+              errMessage: "OK",
+            });
+          } catch (emailError) {
+            console.log("ERROR SENDING EMAIL ATTACHMENT:", emailError);
+            resolve({
+              errCode: 2,
+              errMessage:
+                "Error sending email attachment. But status updated and history saved.",
+            });
+          }
+        } else {
+          resolve({
+            errCode: 3,
+            errMessage: "Appointment not found or already processed",
+          });
         }
-        await db.History.create({
-          doctorId: data.doctorId,
-          patientId: data.patientId,
-          description: data.description
-            ? data.description
-            : "Bác sĩ đã xác nhận khám xong và gửi hóa đơn/đơn thuốc.",
-          files: data.imgBase64,
-        });
-        await emailService.sendAttachment(data);
-        resolve({
-          errCode: 0,
-          errMessage: "OK",
-        });
       }
     } catch (e) {
       reject(e);
