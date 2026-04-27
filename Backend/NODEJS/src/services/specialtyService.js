@@ -105,7 +105,6 @@ let updateSpecialtyData = (data) => {
           errMessage: "Missing required parameters!",
         });
       } else {
-        console.log(">>> check data update: ", data);
         let specialty = await db.Specialty.findOne({
           where: { id: data.id },
           raw: false,

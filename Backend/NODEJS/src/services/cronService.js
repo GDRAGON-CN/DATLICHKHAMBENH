@@ -5,7 +5,6 @@ import moment from "moment";
 
 let initCronJobs = () => {
   cron.schedule("*/5 * * * *", async () => {
-    console.log(">>> Check & clean expired bookings starting...");
 
     let fifteenMinutesAgo = moment().subtract(15, "minutes").toDate();
 
@@ -24,10 +23,8 @@ let initCronJobs = () => {
       );
 
       if (res[0] > 0) {
-        console.log(`>>> Successfully canceled ${res[0]} expired bookings.`);
       }
     } catch (error) {
-      console.error("Error in Cron Job:", error);
     }
   });
 };

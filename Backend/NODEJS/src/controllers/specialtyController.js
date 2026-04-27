@@ -5,7 +5,6 @@ let createSpecialty = async (req, res) => {
     let data = await specialtyService.createSpecialty(req.body);
     return res.status(200).json(data);
   } catch (e) {
-    console.log(e);
     return res.status(200).json({
       errCode: -1,
       errMessage: "Error from the server",
@@ -17,7 +16,6 @@ let getAllSpecialty = async (req, res) => {
     let data = await specialtyService.getAllSpecialty();
     return res.status(200).json(data);
   } catch (e) {
-    console.log(e);
     return res.status(200).json({
       errCode: -1,
       errMessage: "Error from the server",
@@ -32,7 +30,6 @@ let getDetailSpecialtyById = async (req, res) => {
     );
     return res.status(200).json(infor);
   } catch (e) {
-    console.log(e);
     return res.status(200).json({
       errCode: -1,
       errMessage: "Error from the server",
@@ -45,7 +42,6 @@ let handleEditSpecialty = async (req, res) => {
     let resData = await specialtyService.updateSpecialtyData(data);
     return res.status(200).json(resData);
   } catch (e) {
-    console.log(e);
     return res.status(200).json({
       errCode: -1,
       errMessage: "Error from server",
@@ -63,7 +59,6 @@ let handleDeleteSpecialty = async (req, res) => {
     let resData = await specialtyService.deleteSpecialty(req.body.id);
     return res.status(200).json(resData);
   } catch (e) {
-    console.log(e);
     return res.status(200).json({
       errCode: -1,
       errMessage: "Error from server",
@@ -77,7 +72,6 @@ let getTopSpecialtyHome = async (req, res) => {
     let response = await specialtyService.getTopSpecialtyHome(+limit);
     return res.status(200).json(response);
   } catch (e) {
-    console.log(e);
     return res.status(200).json({
       errCode: -1,
       errMessage: "Error from server...",

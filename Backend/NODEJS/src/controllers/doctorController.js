@@ -7,7 +7,6 @@ let getTopDoctorHome = async (req, res) => {
     let response = await doctorService.getTopDoctorHome(+limit);
     return res.status(200).json(response);
   } catch (e) {
-    console.log(e);
     return res.status(200).json({
       errCode: -1,
       errMessage: "Error from server ...",
@@ -43,7 +42,6 @@ let getDetailDoctorById = async (req, res) => {
     let infor = await doctorService.getDetailDoctorById(req.query.id);
     return res.status(200).json(infor);
   } catch (e) {
-    console.log("RE", e);
     return res.status(200).json({
       errCode: -1,
       errMessage: "Error from this server",
@@ -55,7 +53,6 @@ let bulkCreateSchedule = async (req, res) => {
     let infor = await doctorService.bulkCreateSchedule(req.body);
     return res.status(200).json(infor);
   } catch (e) {
-    console.log("RE", e);
     return res.status(200).json({
       errCode: -1,
       errMessage: "Error from this server",
@@ -70,7 +67,6 @@ let getScheduleDoctorByDate = async (req, res) => {
     );
     return res.status(200).json(infor);
   } catch (e) {
-    console.log("RE", e);
     return res.status(200).json({
       errCode: -1,
       errMessage: "Error from this server",
@@ -82,7 +78,6 @@ let getExtraInforDoctorById = async (req, res) => {
     let infor = await doctorService.getExtraInforDoctorById(req.query.doctorId);
     return res.status(200).json(infor);
   } catch (e) {
-    console.log("RE", e);
     return res.status(200).json({
       errCode: -1,
       errMessage: "Error from this server",
@@ -96,7 +91,6 @@ let getProfileInforDoctorById = async (req, res) => {
     );
     return res.status(200).json(infor);
   } catch (e) {
-    console.log("RE", e);
     return res.status(200).json({
       errCode: -1,
       errMessage: "Error from this server",
@@ -111,7 +105,6 @@ let getListPatientForDoctor = async (req, res) => {
     );
     return res.status(200).json(infor);
   } catch (e) {
-    console.log("RE", e);
     return res.status(200).json({
       errCode: -1,
       errMessage: "Error from this server",

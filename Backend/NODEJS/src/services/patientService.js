@@ -148,7 +148,6 @@ let getListBookingByPatient = (email) => {
         }
       }
     } catch (e) {
-      console.log(e);
       reject(e);
     }
   });
@@ -157,7 +156,6 @@ let getListBookingByPatient = (email) => {
 let cancelBooking = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
-      console.log(">>> Check data từ React gửi qua:", data);
       if (!data.patientId || !data.doctorId || !data.timeType || !data.date) {
         resolve({
           errCode: 1,

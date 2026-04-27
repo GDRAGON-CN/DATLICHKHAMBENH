@@ -61,7 +61,6 @@ let getTopDoctorHome = (limitInput) => {
         data: users,
       });
     } catch (e) {
-      console.log("Error from service:", e);
       reject(e);
     }
   });
@@ -186,7 +185,6 @@ let saveDetailInforDoctor = (inputData) => {
         });
       }
     } catch (e) {
-      console.log("RE", e);
       reject(e);
     }
   });
@@ -357,7 +355,6 @@ let getScheduleDoctorByDate = (doctorId, date) => {
         });
       }
     } catch (e) {
-      console.log("RE", e);
       resolve({
         errCode: -1,
         errMessage: "Error from this server",
@@ -407,7 +404,6 @@ let getExtraInforDoctorById = (doctorId) => {
         });
       }
     } catch (e) {
-      console.log("RE", e);
       resolve({
         errCode: -1,
         errMessage: "Error from this server",
@@ -475,7 +471,6 @@ let getProfileInforDoctorById = (doctorId) => {
         });
       }
     } catch (e) {
-      console.log("RE", e);
       resolve({
         errCode: -1,
         errMessage: "Error from this server",
@@ -573,7 +568,6 @@ let sendRemedy = (data) => {
               bookingId: appointment.id,
             });
           } catch (historyError) {
-            console.log("ERROR CREATING HISTORY:", historyError);
           }
 
           // Gửi email kèm file
@@ -584,7 +578,6 @@ let sendRemedy = (data) => {
               errMessage: "OK",
             });
           } catch (emailError) {
-            console.log("ERROR SENDING EMAIL ATTACHMENT:", emailError);
             resolve({
               errCode: 2,
               errMessage:

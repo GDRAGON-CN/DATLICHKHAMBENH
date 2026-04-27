@@ -2,10 +2,8 @@ import patientService from "../services/patientService";
 let postBookAppointment = async (req, res) => {
   try {
     let data = await patientService.postBookAppointment(req.body);
-    console.log("DATA SEND:", req.body);
     return res.status(200).json(data);
   } catch (e) {
-    console.log(e);
     return res.status(200).json({
       errCode: -1,
       errMessage: "Error from the server",
@@ -16,10 +14,8 @@ let postBookAppointment = async (req, res) => {
 let postVerifyBookAppointment = async (req, res) => {
   try {
     let data = await patientService.postVerifyBookAppointment(req.body);
-    console.log("DATA SEND:", req.body);
     return res.status(200).json(data);
   } catch (e) {
-    console.log(e);
     return res.status(200).json({
       errCode: -1,
       errMessage: "Error from the server",
@@ -43,7 +39,6 @@ let postCancelBooking = async (req, res) => {
     let info = await patientService.cancelBooking(req.body);
     return res.status(200).json(info);
   } catch (e) {
-    console.log(e);
     return res.status(200).json({
       errCode: -1,
       errMessage: "Error from the server",
@@ -56,7 +51,6 @@ let updatePatientProfile = async (req, res) => {
     let data = await patientService.updatePatientProfile(req.body);
     return res.status(200).json(data);
   } catch (e) {
-    console.log(e);
     return res.status(200).json({
       errCode: -1,
       errMessage: "Error from the server",
@@ -69,7 +63,6 @@ let getMedicalHistoryByPatient = async (req, res) => {
     let data = await patientService.getMedicalHistoryByPatient(req.query.patientId);
     return res.status(200).json(data);
   } catch (e) {
-    console.log(e);
     return res.status(200).json({
       errCode: -1,
       errMessage: "Error from the server",
