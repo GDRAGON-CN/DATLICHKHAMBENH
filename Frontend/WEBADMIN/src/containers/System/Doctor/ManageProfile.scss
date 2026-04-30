@@ -1,0 +1,306 @@
+.manage-profile-container {
+  padding: 30px 20px;
+  background: linear-gradient(135deg, #f0f9ff 0%, #f5f5f5 100%);
+  min-height: 100vh;
+
+  .mp-title {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 22px;
+    color: #45c3d2;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+
+    i {
+      margin-right: 10px;
+    }
+  }
+
+  // ── Card chung ──────────────────────────────────────
+  .profile-card,
+  .password-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+    padding: 28px 30px;
+    margin-bottom: 28px;
+  }
+
+  .card-header-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 22px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid #f0f0f0;
+
+    i {
+      font-size: 20px;
+      color: #45c3d2;
+    }
+
+    h5 {
+      margin: 0;
+      font-weight: 700;
+      font-size: 16px;
+      color: #333;
+    }
+  }
+
+  // ── Avatar section ───────────────────────────────────
+  .avatar-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    padding: 20px;
+    background: #f8fdff;
+    border-radius: 10px;
+    border: 1px dashed #b2e8ef;
+
+    .avatar-preview {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #45c3d2;
+      box-shadow: 0 4px 12px rgba(69, 195, 210, 0.25);
+    }
+
+    .avatar-placeholder {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #45c3d2, #27a7b7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(69, 195, 210, 0.3);
+    }
+
+    .avatar-label {
+      font-size: 13px;
+      color: #888;
+      text-align: center;
+    }
+
+    .btn-upload-avatar {
+      padding: 7px 18px;
+      background: transparent;
+      border: 1.5px solid #45c3d2;
+      color: #45c3d2;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover {
+        background: #45c3d2;
+        color: #fff;
+      }
+
+      i {
+        margin-right: 6px;
+      }
+    }
+  }
+
+  // ── Form fields ──────────────────────────────────────
+  .form-group {
+    margin-bottom: 18px;
+
+    label {
+      font-weight: 600;
+      font-size: 13px;
+      color: #555;
+      margin-bottom: 6px;
+      display: block;
+
+      i {
+        color: #45c3d2;
+        margin-right: 6px;
+        width: 14px;
+      }
+    }
+
+    .form-control {
+      border-radius: 8px;
+      border: 1.5px solid #e0e0e0;
+      font-size: 14px;
+      padding: 9px 13px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      color: #333;
+
+      &:focus {
+        border-color: #45c3d2;
+        box-shadow: 0 0 0 3px rgba(69, 195, 210, 0.12);
+        outline: none;
+      }
+
+      &[readOnly] {
+        background: #f9f9f9;
+        color: #888;
+        cursor: not-allowed;
+      }
+    }
+
+    .badge-role {
+      display: inline-block;
+      padding: 5px 14px;
+      background: linear-gradient(135deg, #45c3d2, #27a7b7);
+      color: #fff;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .badge-specialty {
+      display: inline-block;
+      padding: 5px 14px;
+      background: #fff3e0;
+      color: #e67e22;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid #f0c080;
+    }
+  }
+
+  // ── Info display row ─────────────────────────────────
+  .info-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 0;
+    border-bottom: 1px solid #f5f5f5;
+    font-size: 14px;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .info-label {
+      min-width: 140px;
+      font-weight: 600;
+      color: #666;
+
+      i {
+        color: #45c3d2;
+        margin-right: 7px;
+        width: 14px;
+      }
+    }
+
+    .info-value {
+      color: #333;
+      flex: 1;
+    }
+  }
+
+  // ── Buttons ──────────────────────────────────────────
+  .btn-save-profile {
+    background: linear-gradient(135deg, #45c3d2, #27a7b7);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 28px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(69, 195, 210, 0.3);
+
+    &:hover {
+      background: linear-gradient(135deg, #27a7b7, #1e8fa0);
+      box-shadow: 0 6px 16px rgba(69, 195, 210, 0.4);
+      transform: translateY(-1px);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    i {
+      margin-right: 7px;
+    }
+  }
+
+  .btn-change-password {
+    background: linear-gradient(135deg, #f7d919, #e5c817);
+    color: #333;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 28px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(247, 217, 25, 0.3);
+
+    &:hover {
+      background: linear-gradient(135deg, #e5c817, #d4b814);
+      box-shadow: 0 6px 16px rgba(247, 217, 25, 0.4);
+      transform: translateY(-1px);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    i {
+      margin-right: 7px;
+    }
+  }
+
+  // ── Password strength indicator ──────────────────────
+  .password-strength {
+    margin-top: 6px;
+    font-size: 12px;
+    font-weight: 600;
+
+    &.weak { color: #e74c3c; }
+    &.medium { color: #e67e22; }
+    &.strong { color: #27ae60; }
+  }
+
+  .strength-bar {
+    height: 4px;
+    border-radius: 4px;
+    margin-top: 4px;
+    transition: width 0.3s;
+    background: #eee;
+
+    .strength-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.3s, background 0.3s;
+
+      &.weak { width: 33%; background: #e74c3c; }
+      &.medium { width: 66%; background: #e67e22; }
+      &.strong { width: 100%; background: #27ae60; }
+    }
+  }
+
+  // ── Loading skeleton ─────────────────────────────────
+  .skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.4s infinite;
+    border-radius: 6px;
+    height: 38px;
+    width: 100%;
+  }
+
+  @keyframes skeleton-shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+}
