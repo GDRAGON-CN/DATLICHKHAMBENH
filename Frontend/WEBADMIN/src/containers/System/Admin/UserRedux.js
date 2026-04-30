@@ -275,7 +275,6 @@ class UserRedux extends Component {
                   type="password"
                   value={password}
                   onChange={(e) => this.onChangeInput(e, "password")}
-                  disabled={this.state.action === CRUD_ACTIONS.EDIT}
                   placeholder="********"
                 />
               </div>

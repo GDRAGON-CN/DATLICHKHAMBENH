@@ -29,6 +29,10 @@ let handleUserLogin = (email, password) => {
             "id",
             "firstName",
             "lastName",
+            "address",
+            "gender",
+            "phonenumber",
+            "image"
           ],
           where: { email: email },
           raw: true,
@@ -166,11 +170,12 @@ let updateUserData = (data) => {
         raw: false,
       });
       if (user) {
-        ((user.firstName = data.firstName),
+        ((user.password = data.password),
+          (user.firstName = data.firstName),
           (user.lastName = data.lastName),
           (user.address = data.address),
           (user.roleId = data.roleId),
-
+          
           (user.gender = data.gender),
           (user.phonenumber = data.phonenumber));
         if (data.avatar) {
