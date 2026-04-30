@@ -204,6 +204,7 @@ class PatientProfile extends Component {
   renderPersonalTab = () => {
     let { firstName, lastName, email, phonenumber, address, gender, genderArr, previewImgURL } = this.state;
     let { language } = this.props;
+    console.log("THIS STATE", this.state);
     return (
       <div className="personal-info-tab">
         <div className="row">

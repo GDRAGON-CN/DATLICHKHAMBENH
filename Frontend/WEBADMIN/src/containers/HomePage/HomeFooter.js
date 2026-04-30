@@ -26,11 +26,9 @@ class HomeFooter extends Component {
           <div className="footer-center">
             <b>DỊCH VỤ Y TẾ</b>
             <ul>
-              <li><a href="#">Khám Chuyên khoa</a></li>
-              <li><a href="#">Khám Bác sĩ giỏi</a></li>
-              <li><a href="#">Cẩm nang sức khỏe</a></li>
-              <li><a href="#">Quy trình đi khám</a></li>
-              <li><a href="#">Điều khoản sử dụng</a></li>
+              <li><a href="/all-specialty">Khám Chuyên khoa</a></li>
+              <li><a href="/all-doctor">Khám Bác sĩ giỏi</a></li>
+              <li><a href="/all-handbook">Cẩm nang sức khỏe</a></li>
             </ul>
           </div>
 
