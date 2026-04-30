@@ -42,6 +42,10 @@ export const doctorMenu = [
         name: "Quản lý danh sách bệnh nhân",
         link: "/doctor/manage-patient",
       },
+      {
+        name: "Hồ sơ của tôi",
+        link: "/doctor/manage-profile",
+      },
     ],
   },
 ];

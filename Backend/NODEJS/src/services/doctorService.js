@@ -454,6 +454,11 @@ let getProfileInforDoctorById = (doctorId) => {
                   as: "positionData",
                   attributes: ["valueEn", "valueVi"],
                 },
+                {
+                  model: db.Specialty,
+                  as: "specialtyData",
+                  attributes: ["name"],
+                },
               ],
             },
           ],
