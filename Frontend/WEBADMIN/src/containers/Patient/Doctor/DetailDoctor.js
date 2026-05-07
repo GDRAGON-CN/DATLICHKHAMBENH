@@ -132,7 +132,7 @@ class DetailDoctor extends Component {
       patientId: userInfo.id,
       comment: this.state.content,
       rating: this.state.rating,
-      bookingId: null, // Không bắt buộc phải có lịch hẹn
+      bookingId: null,
     });
 
     if (res && res.errCode === 0) {

@@ -542,7 +542,6 @@ let sendRemedy = (data) => {
           errMessage: "Missing parameter",
         });
       } else {
-        // Cập nhật trạng thái lịch hẹn
         let searchDate = String(data.date);
         let appointment = await db.Booking.findOne({
           where: {
@@ -559,7 +558,6 @@ let sendRemedy = (data) => {
           appointment.statusId = "S3";
           await appointment.save();
 
-          // Tạo lịch sử khám bệnh
           try {
             await db.History.create({
               doctorId: data.doctorId,
@@ -575,7 +573,6 @@ let sendRemedy = (data) => {
           } catch (historyError) {
           }
 
-          // Gửi email kèm file
           try {
             await emailService.sendAttachment(data);
             resolve({

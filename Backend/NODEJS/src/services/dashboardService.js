@@ -8,9 +8,6 @@ let getDashboardStats = () => {
             });
 
             if (!bookings) bookings = [];
-
-            // Status Map
-            // S1: New, S2: Confirmed, S3: Done, S4: Cancelled
             let statusCount = {
                 S1: 0,
                 S2: 0,
@@ -18,45 +15,86 @@ let getDashboardStats = () => {
                 S4: 0,
             };
 
-            let dateMap = {};
-
             bookings.forEach(item => {
-                // Count status
                 if (item.statusId && statusCount[item.statusId] !== undefined) {
                     statusCount[item.statusId]++;
                 } else if (item.statusId) {
                     statusCount[item.statusId] = 1;
                 }
+            });
 
-                // Count by date for trends
-                if (item.date) {
-                    let timestamp = parseInt(item.date, 10);
-                    if (!isNaN(timestamp)) {
-                        let d = new Date(timestamp);
-                        let dateStr = `${("0" + d.getDate()).slice(-2)}/${("0" + (d.getMonth() + 1)).slice(-2)}/${d.getFullYear()}`;
-                        if (!dateMap[dateStr]) {
-                            dateMap[dateStr] = 0;
-                        }
-                        dateMap[dateStr]++;
-                    }
+            // 1. Thống kê bác sĩ theo chức danh và chuyên khoa
+            let doctorInfors = await db.Doctor_Infor.findAll({
+                include: [
+                    { model: db.Allcode, as: 'positionData', attributes: ['valueVi', 'valueEn'] },
+                    { model: db.Specialty, as: 'specialtyData', attributes: ['name'] }
+                ],
+                raw: false,
+                nest: true
+            });
+
+            let doctorsByPosition = {};
+            let doctorsBySpecialty = {};
+
+            doctorInfors.forEach(info => {
+                if (info.positionData && info.positionData.valueVi) {
+                    let pos = info.positionData.valueVi;
+                    doctorsByPosition[pos] = (doctorsByPosition[pos] || 0) + 1;
+                }
+                if (info.specialtyData && info.specialtyData.name) {
+                    let spec = info.specialtyData.name;
+                    doctorsBySpecialty[spec] = (doctorsBySpecialty[spec] || 0) + 1;
                 }
             });
 
-            // Format dateMap to array for trends, sorted by date if possible
-            let trendsArray = Object.keys(dateMap).map(key => {
-                let parts = key.split('/');
-                return {
-                    date: key,
-                    count: dateMap[key],
-                    timestamp: new Date(`${parts[2]}-${parts[1]}-${parts[0]}`).getTime()
-                };
-            }).sort((a, b) => a.timestamp - b.timestamp).map(item => ({ date: item.date, count: item.count }));
+            // 2. Điểm đánh giá trung bình
+            let comments = await db.Comment.findAll({
+                where: { doctorId: { [db.Sequelize.Op.ne]: null } },
+                raw: true
+            });
+            let totalRating = 0;
+            let ratingCount = 0;
+            if (comments && comments.length > 0) {
+                comments.forEach(c => {
+                    if (c.rating && c.rating > 0) {
+                        totalRating += c.rating;
+                        ratingCount++;
+                    }
+                });
+            }
+            let averageRating = ratingCount > 0 ? (totalRating / ratingCount).toFixed(1) : 0;
+
+            // 3. Số bài viết cẩm nang
+            let handbookCount = await db.Handbook.count();
+
+            // 4. Thống kê số lượng người dùng theo vai trò
+            let userCounts = await db.User.findAll({
+                attributes: ['roleId', [db.sequelize.fn('COUNT', db.sequelize.col('roleId')), 'count']],
+                group: ['roleId'],
+                raw: true
+            });
+
+            let roleCounts = {
+                R1: 0, // Admin
+                R2: 0, // Doctor
+                R3: 0  // Patient
+            };
+
+            userCounts.forEach(item => {
+                if (roleCounts[item.roleId] !== undefined) {
+                    roleCounts[item.roleId] = item.count;
+                }
+            });
 
             resolve({
                 errCode: 0,
                 data: {
                     statusCount: statusCount,
-                    bookingTrends: trendsArray
+                    doctorsByPosition: doctorsByPosition,
+                    doctorsBySpecialty: doctorsBySpecialty,
+                    averageRating: averageRating,
+                    handbookCount: handbookCount,
+                    roleCounts: roleCounts
                 }
             });
 

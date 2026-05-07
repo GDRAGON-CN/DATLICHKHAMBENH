@@ -96,10 +96,8 @@ let initWebRoute = (app) => {
   router.post("/api/post-comment-handbook", handbookController.postCommentHandbook);
   router.get("/api/get-comment-handbook", handbookController.getCommentHandbook);
 
-  // Dashboard admin
   router.get("/api/get-dashboard-stats", dashboardController.getDashboardStats);
 
-  // Reviews
   router.post("/api/create-new-review", reviewController.handleCreateNewReview);
   router.get(
     "/api/get-reviews-by-doctor-id",

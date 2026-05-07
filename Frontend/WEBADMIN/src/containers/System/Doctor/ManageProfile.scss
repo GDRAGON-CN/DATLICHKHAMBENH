@@ -17,7 +17,6 @@
     }
   }
 
-  // ── Card chung ──────────────────────────────────────
   .profile-card,
   .password-card {
     background: #fff;
@@ -48,7 +47,6 @@
     }
   }
 
-  // ── Avatar section ───────────────────────────────────
   .avatar-section {
     display: flex;
     flex-direction: column;
@@ -109,7 +107,6 @@
     }
   }
 
-  // ── Form fields ──────────────────────────────────────
   .form-group {
     margin-bottom: 18px;
 
@@ -170,7 +167,6 @@
     }
   }
 
-  // ── Info display row ─────────────────────────────────
   .info-row {
     display: flex;
     align-items: center;
@@ -200,8 +196,6 @@
       flex: 1;
     }
   }
-
-  // ── Buttons ──────────────────────────────────────────
   .btn-save-profile {
     background: linear-gradient(135deg, #45c3d2, #27a7b7);
     color: #fff;
@@ -260,7 +254,6 @@
     }
   }
 
-  // ── Password strength indicator ──────────────────────
   .password-strength {
     margin-top: 6px;
     font-size: 12px;
@@ -289,7 +282,6 @@
     }
   }
 
-  // ── Loading skeleton ─────────────────────────────────
   .skeleton {
     background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
     background-size: 200% 100%;

@@ -97,10 +97,22 @@ class DetailHandbook extends Component {
             <h1 className="title">{dataDetailHandbook.name}</h1>
             <div className="meta">
               <span className="author">BookingCare</span>
-              <span className="date">23 tháng 4, 2026</span>
+              <span className="date">
+                {dataDetailHandbook && dataDetailHandbook.createdAt 
+                  ? moment(dataDetailHandbook.createdAt).format("DD/MM/YYYY") 
+                  : ""}
+              </span>
             </div>
           </div>
           <div className="handbook-content-container">
+            {dataDetailHandbook && dataDetailHandbook.image && (
+              <div className="handbook-cover-image">
+                <img
+                  src={dataDetailHandbook.image}
+                  alt={dataDetailHandbook.name || "Handbook Cover"}
+                />
+              </div>
+            )}
             {dataDetailHandbook && !_.isEmpty(dataDetailHandbook) && (
               <div
                 className="handbook-content"

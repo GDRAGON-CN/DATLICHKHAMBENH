@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import "../Doctor/ManageSchedule.scss";
-import { FormattedMessage } from "react-intl";
 import Select from "react-select";
 import DatePicker from "../../../components/Input/DatePicker";
 import moment from "moment";
 import FormattedDate from "../../../components/Formating/FormattedDate";
 import { fetchAllDoctor } from "../../../store/actions";
-import { CRUD_ACTIONS, LANGUAGES, dateFormat } from "../../../utils";
+import { CRUD_ACTIONS, dateFormat } from "../../../utils";
 import * as actions from "../../../store/actions";
 import { toast } from "react-toastify";
 import _ from "lodash";
@@ -47,16 +46,15 @@ class ManageSchedule extends Component {
       });
     }
 
-    let { userInfo, language } = this.props;
+    let { userInfo } = this.props;
     if (userInfo && userInfo.roleId === "R2") {
       if (this.state.selectedDoctor.value !== userInfo.id) {
-        let labelVi = `${userInfo.lastName} ${userInfo.firstName}`;
-        let labelEn = `${userInfo.firstName} ${userInfo.lastName}`;
+        let label = `${userInfo.lastName} ${userInfo.firstName}`;
 
         this.setState(
           {
             selectedDoctor: {
-              label: language === LANGUAGES.VI ? labelVi : labelEn,
+              label: label,
               value: userInfo.id,
             },
           },
@@ -70,13 +68,10 @@ class ManageSchedule extends Component {
 
   buildDataInputSelect = (inputData) => {
     let result = [];
-    let { language } = this.props;
     if (inputData && inputData.length > 0) {
       inputData.map((item, index) => {
         let object = {};
-        let labelVi = `${item.lastName} ${item.firstName}`;
-        let labelEn = `${item.firstName} ${item.lastName}`;
-        object.label = language === LANGUAGES.VI ? labelVi : labelEn;
+        object.label = `${item.lastName} ${item.firstName}`;
         object.value = item.id;
         result.push(object);
       });
@@ -203,13 +198,12 @@ class ManageSchedule extends Component {
   };
   render() {
     let { rangeTime } = this.state;
-    let { language } = this.props;
     let { userInfo } = this.props;
     let isDoctor = userInfo && userInfo.roleId === "R2";
     return (
       <div className="manage-schedule-container">
         <div className="m-s-title">
-          <FormattedMessage id="manage-schedule.title" />
+          Quản lý lịch khám bệnh
         </div>
         <div className="container">
           <div className="row section-selection">
@@ -253,9 +247,7 @@ class ManageSchedule extends Component {
                         }
                         onClick={() => this.handleClickBtnTime(item)}
                       >
-                        {language === LANGUAGES.VI
-                          ? item.valueVi
-                          : item.valueEn}
+                        {item.valueVi}
                       </button>
                     );
                   })}
@@ -280,7 +272,6 @@ const mapStateToProps = (state) => {
   return {
     isLoggedIn: state.user.isLoggedIn,
     userInfo: state.user.userInfo,
-    language: state.app.language,
     allDoctors: state.admin.allDoctors,
     allScheduleTime: state.admin.allScheduleTime,
   };

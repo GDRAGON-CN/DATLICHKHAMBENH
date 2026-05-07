@@ -76,7 +76,7 @@ let getReviewsByDoctorId = (doctorId) => {
           include: [
             {
               model: db.User,
-              as: "userData", // in Comment model it's as: "userData"
+              as: "userData", 
               attributes: ["firstName", "lastName", "image"],
             },
           ],
@@ -85,11 +85,10 @@ let getReviewsByDoctorId = (doctorId) => {
           nest: true,
         });
 
-        // Remap to match what frontend expects (patientReviewData)
         if (reviews && reviews.length > 0) {
           reviews = reviews.map((item) => {
             item.patientReviewData = item.userData;
-            item.comment = item.content; // Remap content to comment
+            item.comment = item.content; 
             return item;
           });
         }

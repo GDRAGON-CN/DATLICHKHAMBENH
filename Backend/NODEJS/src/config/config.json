@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "Dat@3925",
+    "password": "123456",
     "database": "bookingcare",
     "host": "127.0.0.1",
     "dialect": "mysql",

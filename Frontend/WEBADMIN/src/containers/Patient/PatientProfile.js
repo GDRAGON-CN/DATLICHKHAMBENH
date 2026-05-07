@@ -68,7 +68,7 @@ class PatientProfile extends Component {
       if (typeof userInfo.image === "string") {
         imageBase64 = userInfo.image;
       } else {
-        // Handle Buffer from Sequelize
+    
         imageBase64 = Buffer.from(userInfo.image, "base64").toString("binary");
       }
     }
@@ -157,7 +157,7 @@ class PatientProfile extends Component {
 
     if (res && res.errCode === 0) {
       toast.success("Cập nhật thông tin thành công!");
-      // Optionally refresh user info in redux if possible, but for now we just show success
+      
     } else {
       toast.error(res.errMessage || "Cập nhật thất bại!");
     }

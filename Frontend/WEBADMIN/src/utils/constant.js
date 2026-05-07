@@ -13,6 +13,7 @@ export const path = {
   VERIFY_EMAIL_BOOKING: "/verify-booking",
   DETAIL_HANDBOOK: "/detail-handbook/:id",
   ALL_HANDBOOK: "/all-handbook",
+  
 };
 
 export const LANGUAGES = {

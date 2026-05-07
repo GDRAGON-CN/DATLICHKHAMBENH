@@ -11,6 +11,11 @@ export const adminMenu = [
         link: "/system/user-redux",
       },
       {
+        name: "Quản lý lịch hẹn",
+        link: "/system/manage-appointment",
+      },
+
+      {
         name: "Quản lý thông tin bác sĩ",
         link: "/system/manage-doctor",
       },

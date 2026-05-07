@@ -12,11 +12,10 @@ class ManageProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // --- Thông tin cơ bản ---
+
       isLoading: true,
       isSavingProfile: false,
 
-      // Fields hiển thị / edit
       firstName: "",
       lastName: "",
       email: "",
@@ -28,7 +27,6 @@ class ManageProfile extends Component {
       previewImgURL: "",
       avatarBase64: "",
 
-      // --- Đổi mật khẩu ---
       isSavingPassword: false,
       oldPassword: "",
       newPassword: "",
@@ -76,7 +74,6 @@ class ManageProfile extends Component {
     }
   };
 
-  // ── Avatar upload ──────────────────────────────────────
   handleAvatarChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -94,7 +91,6 @@ class ManageProfile extends Component {
     reader.readAsDataURL(file);
   };
 
-  // ── Lưu thông tin cơ bản ──────────────────────────────
   handleSaveProfile = async () => {
     const { userInfo } = this.props;
     const { firstName, lastName, phonenumber, address, gender, avatarBase64 } = this.state;
@@ -133,7 +129,6 @@ class ManageProfile extends Component {
     }
   };
 
-  // ── Đổi mật khẩu ─────────────────────────────────────
   checkPasswordStrength = (pwd) => {
     if (!pwd) return "";
     if (pwd.length < 6) return "weak";
@@ -242,9 +237,7 @@ class ManageProfile extends Component {
 
         <div className="container">
           <div className="row">
-            {/* ── CỘT TRÁI: Ảnh + thông tin chuyên môn ── */}
             <div className="col-md-4">
-              {/* Avatar Card */}
               <div className="profile-card">
                 <div className="card-header-section">
                   <i className="fas fa-camera" />
@@ -279,7 +272,6 @@ class ManageProfile extends Component {
                   </button>
                 </div>
 
-                {/* Thông tin chuyên môn (chỉ đọc) */}
                 <div style={{ marginTop: "20px" }}>
                   <div className="card-header-section">
                     <i className="fas fa-stethoscope" />
@@ -308,9 +300,7 @@ class ManageProfile extends Component {
               </div>
             </div>
 
-            {/* ── CỘT PHẢI: Form chỉnh sửa ── */}
             <div className="col-md-8">
-              {/* Thông tin cá nhân */}
               <div className="profile-card">
                 <div className="card-header-section">
                   <i className="fas fa-user-edit" />
@@ -407,7 +397,6 @@ class ManageProfile extends Component {
                 </div>
               </div>
 
-              {/* Đổi mật khẩu */}
               <div className="password-card">
                 <div className="card-header-section">
                   <i className="fas fa-lock" />

@@ -84,6 +84,8 @@ let getDetailHandbookById = (inputId) => {
               ],
             ],
           },
+          raw: true,
+          nest: true
         });
 
         if (data && data.image) {

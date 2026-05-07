@@ -8,6 +8,7 @@ import ManageSchedule from "../containers/System/Doctor/ManageSchedule";
 import ManageSpecialty from "../containers/System/Admin/ManageSpecialty";
 import ManageHandbook from "../containers/System/Admin/ManageHandbook";
 import AdminDashboard from "../containers/System/Admin/AdminDashboard";
+import ManageAppointment from "../containers/System/Admin/ManageAppointment";
 
 class System extends Component {
   render() {
@@ -46,6 +47,10 @@ class System extends Component {
                 <Route
                   path="/system/admin-dashboard"
                   component={AdminDashboard}
+                />
+                <Route
+                  path="/system/manage-appointment"
+                  component={ManageAppointment}
                 />
               </Switch>
             </div>

@@ -1,15 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { toast } from "react-toastify";
 import "./AdminDashboard.scss";
 import {
   getDashboardStats,
-  getAllBookingForAdmin,
-  updateBookingStatus,
-  getAllDoctors,
+  getTopDoctorHomeService,
+  getAllBookingForAdmin
 } from "../../../services/userService";
-import DatePicker from "../../../components/Input/DatePicker";
-import CommonTable from "./CommonTable";
 import moment from "moment";
 
 class AdminDashboard extends Component {
@@ -17,184 +13,125 @@ class AdminDashboard extends Component {
     super(props);
     this.state = {
       statusCount: {},
-      listBooking: [],
-      currentDate: moment(new Date()).startOf("day").valueOf(),
-      isLoading: false,
-      searchText: "",
-      filterStatus: "ALL",
-      filterDoctor: "ALL",
-      isAllDays: true, // Mặc định xem tất cả ngày, các bộ lọc hoạt động độc lập
-      listDoctors: [],
+      topDoctors: [],
+      recentBookings: [],
+      doctorsByPosition: {},
+      doctorsBySpecialty: {},
+      averageRating: 0,
+      handbookCount: 0,
+      roleCounts: {
+        R1: 0,
+        R2: 0,
+        R3: 0
+      }
     };
   }
 
-  handleSearchChange = (event) => {
-    this.setState({ searchText: event.target.value });
-  };
-
-  handleFilterStatusChange = (event) => {
-    this.setState({ filterStatus: event.target.value });
-  };
-
-  handleFilterDoctorChange = (event) => {
-    this.setState({ filterDoctor: event.target.value });
-  };
-
-  toggleAllDays = () => {
-    this.setState({ isAllDays: !this.state.isAllDays }, () => {
-      this.fetchBookingData();
-    });
-  };
-
   async componentDidMount() {
     this.fetchDashboardData();
-    this.fetchBookingData();
-    this.fetchDoctors();
   }
-
-  fetchDoctors = async () => {
-    let res = await getAllDoctors();
-    if (res && res.errCode === 0) {
-      this.setState({ listDoctors: res.data });
-    }
-  };
 
   fetchDashboardData = async () => {
     try {
       let res = await getDashboardStats();
       if (res && res.errCode === 0) {
-        this.setState({ statusCount: res.data.statusCount });
+        this.setState({ 
+          statusCount: res.data.statusCount || {},
+          doctorsByPosition: res.data.doctorsByPosition || {},
+          doctorsBySpecialty: res.data.doctorsBySpecialty || {},
+          averageRating: res.data.averageRating || 0,
+          handbookCount: res.data.handbookCount || 0,
+          roleCounts: res.data.roleCounts || { R1: 0, R2: 0, R3: 0 }
+        });
+      }
+
+      let resDoctors = await getTopDoctorHomeService(5);
+      if (resDoctors && resDoctors.errCode === 0) {
+        this.setState({ topDoctors: resDoctors.data });
+      }
+
+      let resBookings = await getAllBookingForAdmin('ALL');
+      if (resBookings && resBookings.errCode === 0) {
+        let data = resBookings.data || [];
+        let sorted = data.sort((a,b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+        this.setState({ recentBookings: sorted.slice(0, 5) });
       }
     } catch (e) {
       console.log(e);
     }
   };
 
-  fetchBookingData = async () => {
-    let dateParam = this.state.isAllDays ? "ALL" : this.state.currentDate;
-    let res = await getAllBookingForAdmin(dateParam);
-    if (res && res.errCode === 0) {
-      this.setState({ listBooking: res.data ? res.data : [] });
-    }
-  };
-
-  handleOnChangeDatePicker = (date) => {
-    this.setState({ currentDate: date[0].getTime() }, () => {
-      this.fetchBookingData();
-    });
-  };
-
-  handleBtnChangeStatus = async (item, status) => {
-    let res = await updateBookingStatus({ id: item.id, statusId: status });
-    if (res && res.errCode === 0) {
-      toast.success("Cập nhật trạng thái thành công!");
-      this.fetchBookingData();
-      this.fetchDashboardData();
-    } else {
-      toast.error("Cập nhật thất bại!");
-    }
-  };
-
   render() {
-    let { statusCount, listBooking } = this.state;
-
-    const columns = [
-      {
-        label: "Ngày khám",
-        render: (item) => (
-          <div className="small font-weight-bold">
-            {moment(Number(item.date)).format("DD/MM/YYYY")}
-          </div>
-        ),
-      },
-      {
-        label: "Thời gian",
-        render: (item) => (
-          <span className="badge badge-info">
-            {this.props.language === "vi"
-              ? item.timeTypeDataPatient?.valueVi || ""
-              : item.timeTypeDataPatient?.valueEn || ""}
-          </span>
-        ),
-      },
-      {
-        label: "Bác sĩ",
-        render: (item) => (
-          <div className="font-weight-bold">
-            {item.doctorData?.lastName || ""} {item.doctorData?.firstName || ""}
-          </div>
-        ),
-      },
-      {
-        label: "Bệnh nhân",
-        render: (item) => (
-          <div>
-            <div className="font-weight-bold text-primary">
-              {item.patientData?.lastName} {item.patientData?.firstName}
-            </div>
-            <div className="small text-muted">{item.patientData?.email || ""}</div>
-          </div>
-        ),
-      },
-      {
-        label: "Trạng thái",
-        render: (item) => (
-          <span className={`status-badge ${item.statusId}`}>
-            {this.props.language === "vi"
-              ? item.statusData?.valueVi || ""
-              : item.statusData?.valueEn || ""}
-          </span>
-        ),
-      },
-      {
-        label: "Hành động",
-        render: (item) => (
-          <div className="d-flex gap-2">
-            <button
-              className="btn-action confirm"
-              title="Xác nhận"
-              onClick={() => this.handleBtnChangeStatus(item, "S2")}
-            >
-              <i className="fas fa-check"></i>
-            </button>
-            <button
-              className="btn-action done"
-              title="Hoàn thành"
-              onClick={() => this.handleBtnChangeStatus(item, "S3")}
-            >
-              <i className="fas fa-user-check"></i>
-            </button>
-            <button
-              className="btn-action cancel"
-              title="Hủy lịch"
-              onClick={() => this.handleBtnChangeStatus(item, "S4")}
-            >
-              <i className="fas fa-times"></i>
-            </button>
-          </div>
-        ),
-      },
-    ];
-
-    let filteredData = listBooking.filter((item) => {
-      let search = this.state.searchText.toLowerCase();
-      let pName = `${item.patientData?.lastName || ""} ${item.patientData?.firstName || ""}`.toLowerCase();
-      let email = (item.patientData?.email || "").toLowerCase();
-      let status = this.state.filterStatus;
-      let doctorId = this.state.filterDoctor;
-
-      let matchesSearch = !search || pName.includes(search) || email.includes(search);
-      let matchesStatus = status === "ALL" || item.statusId === status;
-      let matchesDoctor = doctorId === "ALL" || String(item.doctorId) === String(doctorId);
-
-      return matchesSearch && matchesStatus && matchesDoctor;
-    });
+    let { statusCount, topDoctors, recentBookings, doctorsByPosition, doctorsBySpecialty, averageRating, handbookCount, roleCounts } = this.state;
 
     return (
-      <div className="admin-dashboard-container">
-        <div className="title mb-5">Dashboard Thống Kê Tổng Quan</div>
+      <div className="admin-dashboard-container p-4">
+        <div className="title mb-4 font-weight-bold text-primary" style={{ fontSize: "24px" }}>Dashboard Thống Kê Tổng Quan</div>
 
         <div className="dashboard-content">
+          {/* ─── Thẻ người dùng ─────────────────────────── */}
+          <div className="row mb-4">
+            <div className="col-xl-4 col-md-6 mb-4">
+              <div className="card border-left-info shadow h-100 py-2">
+                <div className="card-body">
+                  <div className="row no-gutters align-items-center">
+                    <div className="col mr-2">
+                      <div className="text-xs font-weight-bold text-info text-uppercase mb-1">
+                        Tổng số bệnh nhân
+                      </div>
+                      <div className="h5 mb-0 font-weight-bold text-gray-800">
+                        {roleCounts.R3 || 0}
+                      </div>
+                    </div>
+                    <div className="col-auto">
+                      <i className="fas fa-user-injured fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-xl-4 col-md-6 mb-4">
+              <div className="card border-left-primary shadow h-100 py-2">
+                <div className="card-body">
+                  <div className="row no-gutters align-items-center">
+                    <div className="col mr-2">
+                      <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                        Tổng số bác sĩ
+                      </div>
+                      <div className="h5 mb-0 font-weight-bold text-gray-800">
+                        {roleCounts.R2 || 0}
+                      </div>
+                    </div>
+                    <div className="col-auto">
+                      <i className="fas fa-user-md fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-xl-4 col-md-12 mb-4">
+              <div className="card border-left-success shadow h-100 py-2">
+                <div className="card-body">
+                  <div className="row no-gutters align-items-center">
+                    <div className="col mr-2">
+                      <div className="text-xs font-weight-bold text-success text-uppercase mb-1">
+                        Quản trị viên
+                      </div>
+                      <div className="h5 mb-0 font-weight-bold text-gray-800">
+                        {roleCounts.R1 || 0}
+                      </div>
+                    </div>
+                    <div className="col-auto">
+                      <i className="fas fa-user-shield fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* ─── Thẻ tóm tắt ─────────────────────────── */}
           <div className="row mb-4">
             <div className="col-xl-3 col-md-6 mb-4">
@@ -278,106 +215,147 @@ class AdminDashboard extends Component {
             </div>
           </div>
 
-          {/* ─── Bảng lịch hẹn + Bộ lọc ─────────────── */}
-          <div className="row mt-4">
-            <div className="col-12">
-              <div className="card shadow mb-4">
-                <div className="card-header py-3">
-                  <div className="d-flex justify-content-between align-items-center mb-2">
-                    <h6 className="m-0 font-weight-bold text-primary">Danh sách lịch hẹn</h6>
-                    <span className="badge badge-secondary">{filteredData.length} kết quả</span>
-                  </div>
-
-                  {/* Bộ lọc riêng rẽ từng dòng */}
-                  <div className="filter-panel">
-                    <div className="filter-row">
-                      {/* Tìm kiếm tên/email */}
-                      <div className="filter-item">
-                        <label className="filter-label">
-                          <i className="fas fa-search mr-1"></i> Tìm kiếm
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control form-control-sm"
-                          placeholder="Tên bệnh nhân, email..."
-                          value={this.state.searchText}
-                          onChange={this.handleSearchChange}
-                        />
+          {/* ─── Số liệu thống kê bổ sung ─────────────────────────── */}
+          <div className="row mb-4">
+            <div className="col-xl-6 col-md-6 mb-4">
+              <div className="card border-left-info shadow h-100 py-2">
+                <div className="card-body">
+                  <div className="row no-gutters align-items-center">
+                    <div className="col mr-2">
+                      <div className="text-xs font-weight-bold text-info text-uppercase mb-1">
+                        Điểm Đánh Giá Trung Bình Y Bác Sĩ
                       </div>
-
-                      {/* Lọc theo trạng thái */}
-                      <div className="filter-item">
-                        <label className="filter-label">
-                          <i className="fas fa-filter mr-1"></i> Trạng thái
-                        </label>
-                        <select
-                          className="form-control form-control-sm"
-                          value={this.state.filterStatus}
-                          onChange={this.handleFilterStatusChange}
-                        >
-                          <option value="ALL">Mọi trạng thái</option>
-                          <option value="S1">🟡 Lịch mới</option>
-                          <option value="S2">🔵 Đã xác nhận</option>
-                          <option value="S3">🟢 Hoàn thành</option>
-                          <option value="S4">🔴 Đã hủy</option>
-                        </select>
+                      <div className="h5 mb-0 font-weight-bold text-gray-800">
+                        {averageRating} <i className="fas fa-star text-warning"></i>
                       </div>
-
-                      {/* Lọc theo bác sĩ */}
-                      <div className="filter-item">
-                        <label className="filter-label">
-                          <i className="fas fa-user-md mr-1"></i> Bác sĩ
-                        </label>
-                        <select
-                          className="form-control form-control-sm"
-                          value={this.state.filterDoctor}
-                          onChange={this.handleFilterDoctorChange}
-                        >
-                          <option value="ALL">Tất cả bác sĩ</option>
-                          {this.state.listDoctors.map((doc, idx) => (
-                            <option key={idx} value={doc.id}>
-                              {doc.lastName} {doc.firstName}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-
-                      {/* Lọc theo ngày */}
-                      <div className="filter-item">
-                        <label className="filter-label">
-                          <i className="fas fa-calendar-alt mr-1"></i> Ngày khám
-                        </label>
-                        <div className="d-flex align-items-center gap-2">
-                          <DatePicker
-                            onChange={this.handleOnChangeDatePicker}
-                            className="form-control form-control-sm"
-                            value={this.state.currentDate}
-                            disabled={this.state.isAllDays}
-                          />
-                          <div className="custom-control custom-switch ml-2" style={{ minWidth: "120px" }}>
-                            <input
-                              type="checkbox"
-                              className="custom-control-input"
-                              id="allDaysSwitch"
-                              checked={this.state.isAllDays}
-                              onChange={this.toggleAllDays}
-                            />
-                            <label className="custom-control-label small" htmlFor="allDaysSwitch">
-                              Tất cả ngày
-                            </label>
-                          </div>
-                        </div>
-                      </div>
+                    </div>
+                    <div className="col-auto">
+                      <i className="fas fa-star-half-alt fa-2x text-gray-300"></i>
                     </div>
                   </div>
                 </div>
-
+              </div>
+            </div>
+            
+            <div className="col-xl-6 col-md-6 mb-4">
+              <div className="card border-left-secondary shadow h-100 py-2">
                 <div className="card-body">
-                  <CommonTable
-                    data={filteredData}
-                    columns={columns}
-                    itemsPerPage={10}
-                  />
+                  <div className="row no-gutters align-items-center">
+                    <div className="col mr-2">
+                      <div className="text-xs font-weight-bold text-secondary text-uppercase mb-1">
+                        Số Bài Viết Cẩm Nang
+                      </div>
+                      <div className="h5 mb-0 font-weight-bold text-gray-800">
+                        {handbookCount} Bài Viết
+                      </div>
+                    </div>
+                    <div className="col-auto">
+                      <i className="fas fa-book-medical fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="row mb-4">
+            {/* ─── Số lượng Bác sĩ theo Chức danh ─────────────────────────── */}
+            <div className="col-xl-6 col-lg-6 mb-4">
+              <div className="card shadow mb-4 h-100">
+                <div className="card-header py-3">
+                  <h6 className="m-0 font-weight-bold text-primary"><i className="fas fa-user-md text-primary mr-2"></i>Số lượng bác sĩ theo chức danh</h6>
+                </div>
+                <div className="card-body">
+                   <ul className="list-group list-group-flush">
+                     {Object.keys(doctorsByPosition).length > 0 ? Object.keys(doctorsByPosition).map((pos, index) => {
+                        return (
+                          <li className="list-group-item d-flex justify-content-between align-items-center" key={index}>
+                             {pos}
+                             <span className="badge badge-primary badge-pill">{doctorsByPosition[pos]}</span>
+                          </li>
+                        )
+                     }) : <div>Chưa có dữ liệu</div>}
+                   </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* ─── Số lượng Chuyên gia theo Chuyên khoa ─────────────────────────── */}
+            <div className="col-xl-6 col-lg-6 mb-4">
+              <div className="card shadow mb-4 h-100">
+                <div className="card-header py-3">
+                  <h6 className="m-0 font-weight-bold text-primary"><i className="fas fa-briefcase-medical text-success mr-2"></i>Số lượng chuyên gia theo chuyên khoa</h6>
+                </div>
+                <div className="card-body">
+                   <ul className="list-group list-group-flush" style={{maxHeight: '300px', overflowY: 'auto'}}>
+                     {Object.keys(doctorsBySpecialty).length > 0 ? Object.keys(doctorsBySpecialty).map((spec, index) => {
+                        return (
+                          <li className="list-group-item d-flex justify-content-between align-items-center" key={index}>
+                             {spec}
+                             <span className="badge badge-success badge-pill">{doctorsBySpecialty[spec]}</span>
+                          </li>
+                        )
+                     }) : <div>Chưa có dữ liệu</div>}
+                   </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ─── Bảng phụ ─────────────────────────── */}
+          <div className="row">
+            <div className="col-xl-6 col-lg-6 mb-4">
+              <div className="card shadow mb-4 h-100">
+                <div className="card-header py-3">
+                  <h6 className="m-0 font-weight-bold text-primary"><i className="fas fa-star text-warning mr-2"></i>Top 5 Bác sĩ Nổi Bật</h6>
+                </div>
+                <div className="card-body">
+                   <ul className="list-group list-group-flush">
+                     {topDoctors && topDoctors.length > 0 ? topDoctors.map((item, index) => {
+                        let positionData = item.Doctor_Infor ? item.Doctor_Infor.positionData : null;
+                        let positionVi = positionData ? positionData.valueVi : "";
+                        let nameVi = `${positionVi}, ${item.lastName} ${item.firstName}`;
+                        let imageBase64 = "";
+                        if (item.image) {
+                          imageBase64 = new Buffer(item.image, "base64").toString("binary");
+                        }
+                        return (
+                          <li className="list-group-item d-flex align-items-center" key={index}>
+                             <div className="mr-3" style={{width: "40px", height: "40px", borderRadius: "50%", backgroundImage: `url(${imageBase64})`, backgroundSize: "cover", backgroundPosition: "center"}}></div>
+                             <div>
+                               <div className="font-weight-bold">{nameVi}</div>
+                               <div className="text-muted small"><i className="fas fa-envelope mr-1"></i>{item.email}</div>
+                             </div>
+                          </li>
+                        )
+                     }) : <div>Không có dữ liệu</div>}
+                   </ul>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-xl-6 col-lg-6 mb-4">
+              <div className="card shadow mb-4 h-100">
+                <div className="card-header py-3">
+                  <h6 className="m-0 font-weight-bold text-primary"><i className="fas fa-clock text-info mr-2"></i>Lịch hẹn gần đây nhất</h6>
+                </div>
+                <div className="card-body">
+                   <ul className="list-group list-group-flush">
+                     {recentBookings && recentBookings.length > 0 ? recentBookings.map((item, index) => {
+                        let time = item.timeTypeDataPatient ? item.timeTypeDataPatient.valueVi : "";
+                        return (
+                          <li className="list-group-item" key={index}>
+                             <div className="d-flex justify-content-between align-items-center">
+                               <div className="font-weight-bold">{item.patientData?.firstName} - {time}</div>
+                               <span className={`badge badge-pill ${item.statusId === 'S1' ? 'badge-warning' : (item.statusId === 'S2' ? 'badge-primary' : (item.statusId === 'S3' ? 'badge-success' : 'badge-danger'))}`}>
+                                 {item.statusData?.valueVi}
+                               </span>
+                             </div>
+                             <div className="text-muted small mt-1">Bác sĩ: {item.doctorData?.lastName} {item.doctorData?.firstName} • {moment(new Date(Number(item.date))).format('DD/MM/YYYY')}</div>
+                          </li>
+                        )
+                     }) : <div>Không có dữ liệu</div>}
+                   </ul>
                 </div>
               </div>
             </div>
@@ -389,7 +367,7 @@ class AdminDashboard extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return { language: state.app.language };
+  return {};
 };
 
 const mapDispatchToProps = (dispatch) => {

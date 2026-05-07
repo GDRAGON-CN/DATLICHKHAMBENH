@@ -114,7 +114,7 @@ let createNewUser = (data) => {
       } else {
         let hashPasswordFromBcrypt = await hashUserPassword(data.password);
 
-        await db.User.create({
+        let newUser = await db.User.create({
           email: data.email,
           password: hashPasswordFromBcrypt,
           firstName: data.firstName,
@@ -129,6 +129,7 @@ let createNewUser = (data) => {
         resolve({
           errCode: 0,
           errMessage: "Ok",
+          user: newUser,
         });
       }
     } catch (e) {
@@ -170,14 +171,15 @@ let updateUserData = (data) => {
         raw: false,
       });
       if (user) {
-        ((user.password = data.password),
-          (user.firstName = data.firstName),
-          (user.lastName = data.lastName),
-          (user.address = data.address),
-          (user.roleId = data.roleId),
-          
-          (user.gender = data.gender),
-          (user.phonenumber = data.phonenumber));
+        if (data.password) {
+          user.password = await hashUserPassword(data.password);
+        }
+        user.firstName = data.firstName;
+        user.lastName = data.lastName;
+        user.address = data.address;
+        user.roleId = data.roleId;
+        user.gender = data.gender;
+        user.phonenumber = data.phonenumber;
         if (data.avatar) {
           user.image = data.avatar;
         }
@@ -231,7 +233,7 @@ let getSearchSuggestions = (keyword) => {
         raw: true,
       });
 
-      let clinics = await db.Clinic.findAll({
+      let handbooks = await db.Handbook.findAll({
         where: { name: { [Op.like]: `%${keyword}%` } },
         attributes: ["id", "name"],
         limit: 3,
@@ -242,6 +244,15 @@ let getSearchSuggestions = (keyword) => {
         where: {
           roleId: "R2",
           [Op.or]: [
+            db.sequelize.where(
+              db.sequelize.fn(
+                "concat",
+                db.sequelize.col("lastName"),
+                " ",
+                db.sequelize.col("firstName")
+              ),
+              { [Op.like]: `%${keyword}%` }
+            ),
             { firstName: { [Op.like]: `%${keyword}%` } },
             { lastName: { [Op.like]: `%${keyword}%` } },
           ],
@@ -253,7 +264,7 @@ let getSearchSuggestions = (keyword) => {
 
       let result = [
         ...specialties.map((i) => ({ ...i, type: "SPECIALTY" })),
-        ...clinics.map((i) => ({ ...i, type: "CLINIC" })),
+        ...handbooks.map((i) => ({ ...i, type: "HANDBOOK" })),
         ...doctors.map((i) => ({
           ...i,
           name: `${i.lastName} ${i.firstName}`,
@@ -321,7 +332,6 @@ let getAllBookingForAdmin = (date) => {
   });
 };
 
-// Cập nhật trạng thái lịch hẹn (Admin/Doctor dùng chung)
 let updateBookingStatus = (data) => {
   return new Promise(async (resolve, reject) => {
     try {

@@ -53,71 +53,6 @@
     color: #2d3748;
   }
 
-  .status-badge {
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    display: inline-block;
-
-    &.S1 {
-      background: #feebc8;
-      color: #9c4221;
-    }
-    &.S2 {
-      background: #bee3f8;
-      color: #2a4365;
-    }
-    &.S3 {
-      background: #c6f6d5;
-      color: #22543d;
-    }
-    &.S4 {
-      background: #fed7d7;
-      color: #822727;
-    }
-  }
-
-  .btn-action {
-    padding: 5px 8px;
-    border-radius: 6px;
-    font-size: 13px;
-    transition: all 0.2s;
-    border: 1px solid transparent;
-    cursor: pointer;
-
-    &.confirm {
-      border-color: #4e73df;
-      color: #4e73df;
-      background: #fff;
-      &:hover {
-        background: #4e73df;
-        color: #fff;
-      }
-    }
-
-    &.done {
-      border-color: #1cc88a;
-      color: #1cc88a;
-      background: #fff;
-      &:hover {
-        background: #1cc88a;
-        color: #fff;
-      }
-    }
-
-    &.cancel {
-      border-color: #e74a3b;
-      color: #e74a3b;
-      background: #fff;
-      &:hover {
-        background: #e74a3b;
-        color: #fff;
-      }
-    }
-  }
-
   .card-header {
     background-color: #fff;
     border-bottom: 1px solid #edf2f7;
@@ -145,37 +80,6 @@
       color: #4a5568;
       border-bottom: 1px solid #edf2f7;
     }
-  }
-
-  // ─── Bộ lọc nâng cao ───────────────────────────
-  .filter-panel {
-    background: #f8fafc;
-    border: 1px solid #e8edf3;
-    border-radius: 10px;
-    padding: 16px 20px;
-    margin-top: 12px;
-  }
-
-  .filter-row {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-    align-items: flex-end;
-  }
-
-  .filter-item {
-    flex: 1;
-    min-width: 180px;
-  }
-
-  .filter-label {
-    font-size: 12px;
-    font-weight: 600;
-    color: #718096;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 6px;
-    display: block;
   }
 
   .gap-2 {

@@ -52,8 +52,8 @@ class HomeHeader extends Component {
     this.setState({ keyword: "", showSuggest: false });
     if (item.type === "SPECIALTY") {
       this.props.history.push(`/detail-specialty/${item.id}`);
-    } else if (item.type === "CLINIC") {
-      this.props.history.push(`/detail-clinic/${item.id}`);
+    } else if (item.type === "HANDBOOK") {
+      this.props.history.push(`/detail-handbook/${item.id}`);
     } else if (item.type === "DOCTOR") {
       this.props.history.push(`/detail-doctor/${item.id}`);
     }
@@ -202,8 +202,8 @@ class HomeHeader extends Component {
                   value={keyword}
                   placeholder={
                     language === LANGUAGES.VI
-                      ? "Tìm chuyên khoa, bác sĩ, bệnh viện..."
-                      : "Search specialty, doctor, hospital..."
+                      ? "Tìm chuyên khoa, bác sĩ, cẩm nang..."
+                      : "Search specialty, doctor, handbook..."
                   }
                   onChange={(event) => this.handleOnChangeInput(event)}
                 />
@@ -213,7 +213,7 @@ class HomeHeader extends Component {
                     {listSuggest.map((item, index) => {
                       let icon = "fas fa-user-md";
                       if (item.type === "SPECIALTY") icon = "fas fa-flask";
-                      if (item.type === "CLINIC") icon = "fas fa-hospital";
+                      if (item.type === "HANDBOOK") icon = "fas fa-book";
 
                       return (
                         <div
@@ -224,7 +224,11 @@ class HomeHeader extends Component {
                           <i className={icon}></i>
                           <div className="info">
                             <div className="name">{item.name}</div>
-                            <div className="type">{item.type}</div>
+                            <div className="type">
+                              {item.type === "SPECIALTY" && (language === LANGUAGES.VI ? "Chuyên khoa" : "Specialty")}
+                              {item.type === "HANDBOOK" && (language === LANGUAGES.VI ? "Cẩm nang" : "Handbook")}
+                              {item.type === "DOCTOR" && (language === LANGUAGES.VI ? "Bác sĩ" : "Doctor")}
+                            </div>
                           </div>
                         </div>
                       );
